@@ -1,0 +1,228 @@
+User
+id text
+name text
+pass text
+email text
+phone text
+image text
+queue text
+image story text
+notifications text
+
+artist
+id text
+name text
+pass text
+email text
+phone text
+image text
+verify bool
+bio text
+notifications text
+listeners int
+rate double
+
+Podcasters
+id text
+name text
+pass text
+email text
+phone text
+image text
+verify bool
+notifications text
+boi text
+rate double
+
+playLists
+duration double
+is public bool
+rate double
+artist nullable (for albums)
+
+song
+id text
+name text
+genre text
+duration double
+artists
+year int
+comment
+rate double
+lyrics text
+description nullable (for podcasts)
+
+follow
+user1Id text
+user2Id text
+
+song-artist
+songId text
+artistId text
+
+recommend-song
+userId text
+songId text
+
+playlistOwning
+playlistId text
+ownerId text
+
+songPlaylist
+songId text
+playListId text
+songOrder int
+
+likedSongs
+songId text
+userId text
+
+favoritePlaylists
+playlistId text
+userId text
+
+history
+userId text
+command text
+
+CREATE TABLE Person (
+                        id TEXT PRIMARY KEY,
+                        username TEXT unique,
+                        pass TEXT,
+                        email TEXT,
+                        phone TEXT,
+                        gender TEXT,
+                        image TEXT,
+                        queue TEXT,
+                        image_story TEXT,
+                        notifications TEXT,
+                        old_notification TEXT
+);
+
+CREATE TABLE Artist (
+                        id TEXT PRIMARY KEY,
+                        username TEXT,
+                        pass TEXT,
+                        email TEXT,
+                        phone TEXT,
+                        image TEXT,
+                        verify BOOL,
+                        bio TEXT,
+                        notifications TEXT,
+                        old_notification TEXT,
+                        listeners INT,
+                        rate DOUBLE PRECISION
+);
+
+CREATE TABLE Podcaster (
+                           id TEXT PRIMARY KEY,
+                           username TEXT,
+                           pass TEXT,
+                           email TEXT,
+                           phone TEXT,
+                           image TEXT,
+                           verify BOOL,
+                           notifications TEXT,
+                           old_notification TEXT,
+                           bio TEXT,
+                           rate DOUBLE PRECISION
+);
+
+CREATE TABLE Playlists (
+                           id TEXT PRIMARY KEY,
+                           duration DOUBLE PRECISION,
+                           is_public BOOL,
+                           rate DOUBLE PRECISION,
+                           artist TEXT,
+                           FOREIGN KEY (artist) REFERENCES Artist(id) ON DELETE SET NULL
+);
+
+CREATE TABLE Song (
+                      id TEXT PRIMARY KEY,
+                      username TEXT,
+                      genre TEXT,
+                      duration DOUBLE PRECISION,
+                      year INT,
+                      rate DOUBLE PRECISION,
+                      lyrics TEXT,
+                      description TEXT
+);
+
+CREATE TABLE Follow (
+                        user1Id TEXT,
+                        user2Id TEXT,
+                        PRIMARY KEY (user1Id, user2Id),
+                        FOREIGN KEY (user1Id) REFERENCES Person(id),
+                        FOREIGN KEY (user2Id) REFERENCES Person(id)
+);
+
+CREATE TABLE Song_Artist (
+                             songId TEXT,
+                             artistId TEXT,
+                             PRIMARY KEY (songId, artistId),
+                             FOREIGN KEY (songId) REFERENCES Song(id),
+                             FOREIGN KEY (artistId) REFERENCES Artist(id)
+);
+
+CREATE TABLE Recommend_Song (
+                                userId TEXT,
+                                songId TEXT,
+                                PRIMARY KEY (userId, songId),
+                                FOREIGN KEY (userId) REFERENCES Person(id),
+                                FOREIGN KEY (songId) REFERENCES Song(id)
+);
+
+CREATE TABLE Playlist_Owning (
+                                 playlistId TEXT,
+                                 ownerId TEXT,
+                                 PRIMARY KEY (playlistId, ownerId),
+                                 FOREIGN KEY (playlistId) REFERENCES Playlists(id),
+                                 FOREIGN KEY (ownerId) REFERENCES Person(id)
+);
+
+CREATE TABLE Song_Playlist (
+                               songId TEXT,
+                               playlistId TEXT,
+                               songOrder INT,
+                               PRIMARY KEY (songId, playlistId),
+                               FOREIGN KEY (songId) REFERENCES Song(id),
+                               FOREIGN KEY (playlistId) REFERENCES Playlists(id)
+);
+
+CREATE TABLE Liked_Songs (
+                             songId TEXT,
+                             userId TEXT,
+                             PRIMARY KEY (songId, userId),
+                             FOREIGN KEY (songId) REFERENCES Song(id),
+                             FOREIGN KEY (userId) REFERENCES Person(id)
+);
+
+CREATE TABLE Favorite_Playlists (
+                                    playlistId TEXT,
+                                    userId TEXT,
+                                    PRIMARY KEY (playlistId, userId),
+                                    FOREIGN KEY (playlistId) REFERENCES Playlists(id),
+                                    FOREIGN KEY (userId) REFERENCES Person(id)
+);
+
+CREATE TABLE comment
+(
+    songId  TEXT,
+    userId  TEXT,
+    comment TEXT,
+    PRIMARY KEY (songId, userId),
+    FOREIGN KEY (songId) REFERENCES Song (id),
+    FOREIGN KEY (userId) REFERENCES Person (id)
+);
+CREATE TABLE History(
+                        userId TEXT,
+                        command TEXT,
+                        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        PRIMARY KEY (userId, timestamp),
+                        FOREIGN KEY (userId) REFERENCES Person(id)
+);
+CREATE TABLE log(
+                    command TEXT,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (timestamp)
+);
