@@ -91,6 +91,7 @@ CREATE TABLE Person (
                         pass TEXT,
                         email TEXT,
                         phone TEXT,
+                        age INT,
                         gender TEXT,
                         image TEXT,
                         queue TEXT,

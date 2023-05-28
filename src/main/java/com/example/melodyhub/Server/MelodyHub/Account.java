@@ -2,6 +2,8 @@ package com.example.melodyhub.Server.MelodyHub;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -33,16 +35,8 @@ public abstract class Account {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -50,7 +44,9 @@ public abstract class Account {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = hashPassword(password);
+        MelodyHub.sendQuery("update person set pass = '"+this.password+"' where id = '"+id+"';");
+
     }
 
     public String getEmail() {
@@ -59,6 +55,7 @@ public abstract class Account {
 
     public void setEmail(String email) {
         this.email = email;
+        MelodyHub.sendQuery("update person set email = '"+email+"' where id = '"+id+"';");
     }
 
     public String getPhoneNumber() {
@@ -67,6 +64,7 @@ public abstract class Account {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        MelodyHub.sendQuery("update person set phone = '"+phoneNumber+"' where id = '"+id+"';");
     }
 
     public String getImage() {
@@ -75,57 +73,69 @@ public abstract class Account {
 
     public void setImage(String image) {
         Image = image;
+        MelodyHub.sendQuery("update person set image = '"+image+"' where id = '"+id+"';");
     }
 
     public ArrayList<UUID> getFollowings()
     {
-        return null;
+        ArrayList<UUID> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("select user1id from follow where user2id='"+getId()+"';");
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add(UUID.fromString(res.getString("user1id")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
     }
 
     public ArrayList<UUID> getFollowers()
     {
-        return null;
+        ArrayList<UUID> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("select user2id from follow where user1id='"+getId()+"';");
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add(UUID.fromString(res.getString("user2id")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
     }
 
     public void follow(UUID user)
     {
-
+        MelodyHub.sendQuery("insert into follow (user1id, user2id) VALUES (user1id = '"+getId()+"' , user2id ='"+user+"');");
     }
 
-    public void unfollow(UUID user) throws Exception {
-        try
-        {
-
-        }catch (Exception e) {
-            throw new Exception();
-        }
+    public void unfollow(UUID user) {
+        MelodyHub.sendQuery("delete from follow where user1id ='"+getId()+"' and user2id='"+user+"';");
     }
     public void addPlaylist(UUID playlist)
     {
-
-    }
-
-    public void UpdatePlaylist(UUID playlist) throws Exception {
-        try
-        {
-
-        }catch (Exception e) {
-            throw new Exception();
-        }
+        MelodyHub.sendQuery("insert into playlist_owning (playlistid, ownerid) values (playlistid = '"+playlist+"' , ownerid = '"+id+"');");
     }
 
     public void removePlaylist(UUID playlist) throws Exception {
-        try
-        {
-
-        }catch (Exception e) {
-            throw new Exception();
-        }
+        MelodyHub.sendQuery("delete from playlist_owning where ownerid='"+getId()+"' and playlistid ='"+playlist+"';");
     }
 
     public ArrayList<UUID> getPlaylists()
     {
-        return null;
+        ArrayList<UUID> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("select playlistid from playlist_owning where ownerid ='"+getId()+"';");
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add(UUID.fromString(res.getString("playlistid")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
     }
     @Override
     public String toString() {

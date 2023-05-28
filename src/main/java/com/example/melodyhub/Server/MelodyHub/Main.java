@@ -1,15 +1,25 @@
 package com.example.melodyhub.Server.MelodyHub;
 
+import com.google.gson.Gson;
+
 import javax.net.ssl.*;
 import java.io.*;
 import java.security.KeyStore;
+import java.sql.DriverManager;
 
 public class Main {
     private static final int PORT = 8085;
     private static final String KEYSTORE = "src/main/java/com/example/melodyhub/Server/MelodyHub/server.keystore";
     private static final String KEYSTORE_PASSWORD = "123456";
+    private static final String url ="jdbc:postgresql://localhost:5432/test";
+    private static final String username = "postgres";
+    private static final String password = "Seyed5516";
     public static void main(String[] args) throws Exception {
-        SSLServerSocketFactory sslServerSocketFactory = createSSLServerSocketFactory();
+        MelodyHub.connection = DriverManager.getConnection(url, username, password);
+        MelodyHub.gson = new Gson();
+        Session session = new Session();
+        session.main();
+        /*SSLServerSocketFactory sslServerSocketFactory = createSSLServerSocketFactory();
         SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(PORT);
 
         System.out.println("SSL server started on port " + PORT);
@@ -29,7 +39,7 @@ public class Main {
             in.close();
             out.close();
             sslSocket.close();
-        }
+        }*/
     }
     private static SSLServerSocketFactory createSSLServerSocketFactory() throws Exception {
         KeyStore keyStore = KeyStore.getInstance("JKS");

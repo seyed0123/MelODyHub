@@ -11,16 +11,14 @@ import java.util.UUID;
 
 public class MelodyHub {
     private final Account account;
-    private final Connection connection;
-    private final Gson gson;
+    public static Connection connection;
+    public static Gson gson;
 
-    public MelodyHub(Account account, Connection connection, Gson gson) {
+    public MelodyHub(Account account) {
         this.account = account;
-        this.connection = connection;
-        this.gson = gson;
     }
 
-    private synchronized ResultSet sendQuery(String query) {
+    public static synchronized ResultSet sendQuery(String query) {
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
