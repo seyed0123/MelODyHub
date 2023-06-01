@@ -1,8 +1,8 @@
 package com.example.melodyhub.Server.MelodyHub;
 
-public class Session {
-    public void main()
-    {
+public class Session implements Runnable{
+    @Override
+    public void run() {
 
     }
 }

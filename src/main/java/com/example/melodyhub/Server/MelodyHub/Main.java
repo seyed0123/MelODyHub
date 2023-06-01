@@ -15,31 +15,42 @@ public class Main {
     private static final String username = "postgres";
     private static final String password = "Seyed5516";
     public static void main(String[] args) throws Exception {
-        MelodyHub.connection = DriverManager.getConnection(url, username, password);
-        MelodyHub.gson = new Gson();
-        Session session = new Session();
-        session.main();
-        /*SSLServerSocketFactory sslServerSocketFactory = createSSLServerSocketFactory();
-        SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(PORT);
+        // Load the server's keystore
+        KeyStore keystore = KeyStore.getInstance("JKS");
+        keystore.load(new FileInputStream(KEYSTORE), KEYSTORE_PASSWORD.toCharArray());
 
-        System.out.println("SSL server started on port " + PORT);
+        // Create a key manager factory
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+        keyManagerFactory.init(keystore, KEYSTORE_PASSWORD.toCharArray());
+
+        // Create an SSL context
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
+
+        // Create an SSL socket factory
+        SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
+
+        // Create an SSL server socket
+        SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(8445);
 
         while (true) {
+            // Wait for a client connection
             SSLSocket sslSocket = (SSLSocket) sslServerSocket.accept();
-            System.out.println("Client connected: " + sslSocket.getInetAddress());
-
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sslSocket.getOutputStream()));
+            out.write("Hello, server!");
+            out.flush();
+            // Receive data from the client
             BufferedReader in = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-            PrintWriter out = new PrintWriter(sslSocket.getOutputStream(), true);
+            String data = in.readLine();
 
-            String message = in.readLine();
-            System.out.println("Received message: " + message);
+            // Send a response back to the client
+//            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sslSocket.getOutputStream()));
+//            out.write("Hello, client!");
+//            out.flush();
 
-            out.println(message);
-
-            in.close();
-            out.close();
+            // Close the SSL socket
             sslSocket.close();
-        }*/
+        }
     }
     private static SSLServerSocketFactory createSSLServerSocketFactory() throws Exception {
         KeyStore keyStore = KeyStore.getInstance("JKS");

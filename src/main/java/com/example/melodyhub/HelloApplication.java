@@ -1,11 +1,12 @@
 package com.example.melodyhub;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.*;
 import java.io.*;
 import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
+
+
 
 public class HelloApplication  {
 
@@ -14,20 +15,39 @@ public class HelloApplication  {
     private static final String KEYSTORE = "src/main/java/com/example/melodyhub/client.keystore";
     private static final String KEYSTORE_PASSWORD = "123456";
     public static void main(String[] args) throws Exception {
-        SSLSocketFactory sslSocketFactory = createSSLSocketFactory();
-        SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(HOST, PORT);
+        // Load the client's keystore
+        KeyStore keystore = KeyStore.getInstance("JKS");
+        keystore.load(new FileInputStream(KEYSTORE), KEYSTORE_PASSWORD.toCharArray());
 
+        // Create a key manager factory
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+        keyManagerFactory.init(keystore, KEYSTORE_PASSWORD.toCharArray());
+
+        // Create an SSL context
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
+        PrivateKey key = (PrivateKey)keystore.getKey("mykey",
+                "testkey".toCharArray());
+        Certificate[] certChain = keystore.getCertificateChain("mykey");
+
+        // Create an SSL socket factory
+        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+        // Create an SSL socket
+        SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("localhost", 8445);
         BufferedReader in = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-        PrintWriter out = new PrintWriter(sslSocket.getOutputStream(),true);
+        String data = in.readLine();
+        // Send data to the server
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sslSocket.getOutputStream()));
+        out.write("Hello, server!");
+        out.flush();
 
-        String message = "Hello, server!";
-        out.println(message);
+        // Receive a response from the server
+//        BufferedReader in = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+//        String response = in.readLine();
+//        System.out.println(response);
 
-        String response = in.readLine();
-        System.out.println("Received response: " + response);
-
-        in.close();
-        out.close();
+        // Closethe SSL socket
         sslSocket.close();
     }
     private static SSLSocketFactory createSSLSocketFactory() throws Exception {

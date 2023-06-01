@@ -1,4 +1,4 @@
-package com.example.melodyhub.Server.MelodyHub;
+package com.example.melodyhub;
 
 import java.util.UUID;
 
@@ -11,8 +11,8 @@ public class Song {
     private double rate;
     private String lyrics;
 
-    public Song( String name, String genre, double duration, int year, double rate, String lyrics) {
-        this.id = UUID.randomUUID();
+    public Song(String id, String name, String genre, double duration, int year, double rate, String lyrics) {
+        this.id = UUID.fromString(id);
         this.name = name;
         this.genre = genre;
         this.duration = duration;

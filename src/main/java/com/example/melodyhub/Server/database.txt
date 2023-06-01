@@ -92,6 +92,7 @@ CREATE TABLE Person (
                         email TEXT,
                         phone TEXT,
                         age INT,
+                        premium BOOL,
                         gender TEXT,
                         image TEXT,
                         queue TEXT,
@@ -112,7 +113,8 @@ CREATE TABLE Artist (
                         notifications TEXT,
                         old_notification TEXT,
                         listeners INT,
-                        rate DOUBLE PRECISION
+                        rate DOUBLE PRECISION,
+                        genre Text
 );
 
 CREATE TABLE Podcaster (
@@ -134,13 +136,15 @@ CREATE TABLE Playlists (
                            duration DOUBLE PRECISION,
                            is_public BOOL,
                            rate DOUBLE PRECISION,
+                           first_owner TEXT,
                            artist TEXT,
                            FOREIGN KEY (artist) REFERENCES Artist(id) ON DELETE SET NULL
+                           FOREIGN KEY (first_owner) REFERENCES person(id)
 );
 
 CREATE TABLE Song (
                       id TEXT PRIMARY KEY,
-                      username TEXT,
+                      name TEXT,
                       genre TEXT,
                       duration DOUBLE PRECISION,
                       year INT,
@@ -226,4 +230,16 @@ CREATE TABLE log(
                     command TEXT,
                     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     PRIMARY KEY (timestamp)
+);
+CREATE TABLE question(
+    id INT primary key ,
+    q_Text Text
+);
+CREATE TABLE answer(
+    userId Text ,
+    questionId INT,
+    answer Text,
+    PRIMARY KEY (userId, questionId),
+    FOREIGN KEY (userId) REFERENCES Person(id),
+    FOREIGN KEY (questionId) REFERENCES question(id)
 );
