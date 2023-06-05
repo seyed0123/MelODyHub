@@ -1,7 +1,7 @@
 package com.example.melodyhub;
 
-import com.example.melodyhub.Server.MelodyHub.MelodyHub;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -9,13 +9,13 @@ public class User extends Account{
     private ArrayList<UUID> queue;
     private String imageStory;
     private String gender;
-    private int age;
+    private Date age;
     private Song currentPlay;
     private boolean premium;
     private  ArrayList<String> oldNotification;
     private  ArrayList<String> notification;
 
-    public User(String uuid, String username, String password, String email, String phoneNumber, String image, String imageStory, String gender, int age, boolean premium) {
+    public User(String uuid, String username, String password, String email, String phoneNumber, String image, String imageStory, String gender, Date age, boolean premium) {
         super(uuid, username, password, email, phoneNumber, image);
         this.imageStory = imageStory;
         this.gender = gender;
@@ -26,7 +26,7 @@ public class User extends Account{
         queue=new ArrayList<>();
     }
 
-    public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<UUID> queue, String imageStory, String gender, int age, ArrayList<String> oldNotification, ArrayList<String> notification, boolean premium) {
+    public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<UUID> queue, String imageStory, String gender, Date age, ArrayList<String> oldNotification, ArrayList<String> notification, boolean premium) {
         super(uuid, username, password, email, phoneNumber, image);
         this.queue = queue;
         this.imageStory = imageStory;
@@ -54,13 +54,12 @@ public class User extends Account{
     public void removeQueue(UUID song) {
         queue.remove(song);
     }
-    public void setAge(int age)
+    public void setAge(Date age)
     {
         this.age=age;
-        MelodyHub.sendQuery("update person set age = "+age+" where id = '"+getId()+"';");
     }
 
-    public int getAge()
+    public Date getAge()
     {
         return age;
     }

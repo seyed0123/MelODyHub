@@ -1,9 +1,13 @@
 package com.example.melodyhub.Server.MelodyHub;
 
+import com.google.gson.reflect.TypeToken;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import static com.example.melodyhub.Server.MelodyHub.MelodyHub.*;
 
 public class UserPerform extends AccountPerform{
 
@@ -75,20 +79,29 @@ public class UserPerform extends AccountPerform{
     }
     public static void save(UUID Id,ArrayList<String>notificationI,ArrayList<String>oldNotificationI,ArrayList<UUID>queueI)
     {
-        String notification = MelodyHub.gson.toJson(notificationI);
-        String oldNotification = MelodyHub.gson.toJson(oldNotificationI);
-        String queue = MelodyHub.gson.toJson(queueI);
+        String notification = gson.toJson(notificationI);
+        String oldNotification = gson.toJson(oldNotificationI);
+        String queue = gson.toJson(queueI);
         MelodyHub.sendQuery("update person set notifications = '"+notification+"' ,old_notification='"+oldNotification+"' , queue = '"+queue+"'where id = '"+Id+"';");
     }
     public static void addAnswer(UUID userId,int questionId,String answer)
     {
-        MelodyHub.sendQuery(String.format("insert into answer (userid, questionid, answer) values (userid='%s',questionid='%d',answer.answer='%s');",userId,questionId,answer));
+        MelodyHub.sendQuery(String.format("insert into answer (userid, questionid, answer) values (userid='%s',questionid='%d',answer.answer='%s');",userId,questionId,hashPassword(answer)));
     }
-    public static String getAnswer(UUID userId,int questionId)
+    public static boolean checkAnswer(UUID userId,int questionId,String answer)
     {
         ResultSet res = MelodyHub.sendQuery(String.format("select answer.answer from answer where userid='%s' and questionid='%d';",userId,questionId));
         try {
-            return res.getString(1);
+            return checkPassword(answer,res.getString(1));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static ArrayList<String> refreshNotification(UUID user)
+    {
+        ResultSet res = MelodyHub.sendQuery(String.format("select notifications from person where id = '%s';",user));
+        try {
+            return gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

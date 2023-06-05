@@ -42,8 +42,8 @@ public class MelodyHub {
     {
         return BCrypt.checkpw(plain,hashed);
     }
-    public static User login(String username, String password) {
-        ResultSet res = MelodyHub.sendQuery("select * from person where username ='"+username+"';");
+    public static User userLogin(String username, String password) {
+        ResultSet res = MelodyHub.sendQuery("select id , pass from person where username ='"+username+"';");
         if(res==null)
         {
             return null;
@@ -51,7 +51,35 @@ public class MelodyHub {
         try {
             if(!checkPassword(password,res.getString("pass")))
                 return null;
-            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("imageStory"),res.getString("gender"),res.getInt("age") ,gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()),res.getBoolean("premium"));
+            return findUser(UUID.fromString(res.getString("id")));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    public static Podcaster podcasterLogin(String username, String password) {
+        ResultSet res = MelodyHub.sendQuery("select id , pass from podcaster where username ='"+username+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        try {
+            if(!checkPassword(password,res.getString("pass")))
+                return null;
+            return findPodcaster(UUID.fromString(res.getString("id")));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    public static Artist artistLogin(String username, String password) {
+        ResultSet res = MelodyHub.sendQuery("select id , pass from artist where username ='"+username+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        try {
+            if(!checkPassword(password,res.getString("pass")))
+                return null;
+            return findArtist(UUID.fromString(res.getString("id")));
         } catch (SQLException e) {
             return null;
         }
@@ -64,7 +92,7 @@ public class MelodyHub {
             return null;
         }
         try {
-            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("imageStory"),res.getString("gender"),res.getInt("age") ,gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()),res.getBoolean("premium"));
+            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("imageStory"),res.getString("gender"),res.getDate("age") ,gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()),res.getBoolean("premium"));
         } catch (SQLException e) {
             return null;
         }
@@ -75,7 +103,7 @@ public class MelodyHub {
         if(res==null)
             return null;
         try {
-            return new Artist(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),res.getBoolean("verify"),res.getString("bio"),res.getInt("listeners"),res.getDouble("rate"));
+            return new Artist(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),res.getBoolean("verify"),res.getString("bio"),res.getInt("listeners"),res.getDouble("rate"),res.getString("genre"));
         } catch (SQLException e)
         {
             return null;
