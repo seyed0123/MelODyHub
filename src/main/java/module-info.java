@@ -10,8 +10,10 @@ module com.example.melodyhub {
     requires dropbox.core.sdk;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
-
+    requires json;
+    requires org.testng;
 
     opens com.example.melodyhub to javafx.fxml;
     exports com.example.melodyhub ;
+
 }

@@ -1,6 +1,8 @@
 package com.example.melodyhub;
 
-public class Podcaster extends Account{
+import java.io.Serializable;
+
+public class Podcaster extends Account implements Serializable {
     private boolean verify;
     private String bio;
 

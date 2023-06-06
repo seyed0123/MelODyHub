@@ -1,10 +1,11 @@
 package com.example.melodyhub;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
 
-public class PlayList {
+public class PlayList implements Serializable {
     private UUID id;
     private double duration;
     private boolean personal;

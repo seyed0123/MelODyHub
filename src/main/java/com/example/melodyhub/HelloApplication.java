@@ -100,6 +100,7 @@ public class HelloApplication  {
             startCom();
             sendMessage("hello encrypted server");
             System.out.println(getMessage());
+            socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

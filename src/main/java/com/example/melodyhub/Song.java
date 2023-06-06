@@ -1,8 +1,9 @@
 package com.example.melodyhub;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Song {
+public class Song implements Serializable {
     private UUID id;
     private String name;
     private String genre;

@@ -1,11 +1,12 @@
 package com.example.melodyhub;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class User extends Account{
+public class User extends Account implements Serializable {
     private ArrayList<UUID> queue;
     private String imageStory;
     private String gender;
@@ -14,17 +15,6 @@ public class User extends Account{
     private boolean premium;
     private  ArrayList<String> oldNotification;
     private  ArrayList<String> notification;
-
-    public User(String uuid, String username, String password, String email, String phoneNumber, String image, String imageStory, String gender, Date age, boolean premium) {
-        super(uuid, username, password, email, phoneNumber, image);
-        this.imageStory = imageStory;
-        this.gender = gender;
-        this.age = age;
-        this.premium = premium;
-        oldNotification=new ArrayList<>();
-        notification = new ArrayList<>();
-        queue=new ArrayList<>();
-    }
 
     public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<UUID> queue, String imageStory, String gender, Date age, ArrayList<String> oldNotification, ArrayList<String> notification, boolean premium) {
         super(uuid, username, password, email, phoneNumber, image);
@@ -37,6 +27,13 @@ public class User extends Account{
         this.notification = notification;
     }
 
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
+    }
 
     public ArrayList<UUID> getQueue() {
         return queue;

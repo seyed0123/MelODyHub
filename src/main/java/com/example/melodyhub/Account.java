@@ -2,6 +2,7 @@ package com.example.melodyhub;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,13 +17,24 @@ public abstract class Account {
     private String Image;
 
     public Account(String uuid ,String username, String password, String email, String phoneNumber, String image) {
-        id = UUID.fromString(uuid);
+        if(uuid==null)
+            id=null;
+        else
+            id = UUID.fromString(uuid);
         this.username = username;
         this.password = (password);
         this.email = email;
         this.phoneNumber = phoneNumber;
         Image = image;
     }
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -63,13 +75,16 @@ public abstract class Account {
     public void setImage(String image) {
         Image = image;
     }
+
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", Image='" + Image + '\'' +
                 '}';
     }
 }

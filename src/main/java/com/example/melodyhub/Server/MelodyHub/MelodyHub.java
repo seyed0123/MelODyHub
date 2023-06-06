@@ -2,6 +2,7 @@ package com.example.melodyhub.Server.MelodyHub;
 
 import com.example.melodyhub.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class MelodyHub {
     private User user;
     public static Connection connection;
-    public static Gson gson;
+    public static Gson gson = new GsonBuilder().create();
 
     public MelodyHub(User user) {
         this.user = user;
@@ -84,6 +85,46 @@ public class MelodyHub {
             return null;
         }
     }
+
+    public static UUID findUserUsername(String username)
+    {
+        ResultSet res = MelodyHub.sendQuery("select id from person where username = '"+username+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        try {
+            return UUID.fromString(res.getString("id"));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    public static UUID findArtistUsername(String username)
+    {
+        ResultSet res = MelodyHub.sendQuery("select id from artist where username = '"+username+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        try {
+            return UUID.fromString(res.getString("id"));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    public static UUID findPodcasterUsername(String username)
+    {
+        ResultSet res = MelodyHub.sendQuery("select id from podcaster where username = '"+username+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        try {
+            return UUID.fromString(res.getString("id"));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
     public static User findUser(UUID user)
     {
         ResultSet res = MelodyHub.sendQuery("select * from person where id ='"+user+"';");
@@ -92,7 +133,7 @@ public class MelodyHub {
             return null;
         }
         try {
-            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("imageStory"),res.getString("gender"),res.getDate("age") ,gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()),res.getBoolean("premium"));
+            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("image_Story"),res.getString("gender"),res.getDate("age") ,gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()),res.getBoolean("premium"));
         } catch (SQLException e) {
             return null;
         }
@@ -103,7 +144,7 @@ public class MelodyHub {
         if(res==null)
             return null;
         try {
-            return new Artist(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),res.getBoolean("verify"),res.getString("bio"),res.getInt("listeners"),res.getDouble("rate"),res.getString("genre"));
+            return new Artist(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),res.getString("bio"),res.getBoolean("verify"),res.getInt("listeners"),res.getDouble("rate"),res.getString("genre"));
         } catch (SQLException e)
         {
             return null;
@@ -188,7 +229,7 @@ public class MelodyHub {
 
     public static void createUser(User user)
     {
-        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES (id ='%s',username='%s',pass='%s',email='%s',phone='%s',gender='%s',age=%d);",UUID.randomUUID(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender(),user.getAge()));
+        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",UUID.randomUUID(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
     }
 
     public static void removeUser(UUID user)
@@ -203,15 +244,14 @@ public class MelodyHub {
             MelodyHub.sendQuery(String.format("update person set %s = %s where id = '%s';",column ,command.get(column),user));
         }
     }
-
     public static void updatePass(String table,UUID account,String password)
     {
-        MelodyHub.sendQuery(String.format("update %s set pass = %s where id = '%s';",table,hashPassword(password),account));
+        MelodyHub.sendQuery(String.format("update %s set pass = '%s' where id = '%s';",table,hashPassword(password),account));
     }
 
     public static void createArtist(Artist artist)
     {
-        MelodyHub.sendQuery(String.format("insert into artist (id, username, pass, email, phone, image, verify, bio, listeners, rate) VALUES (id='%s',username='%s',pass='%s',email='%s',phone='%s',image='%s',verify=%b,bio='%s',listeners=%d,rate=%.2f);",UUID.randomUUID(),artist.getUsername(),hashPassword(artist.getPassword()),artist.getEmail(),artist.getPhoneNumber(),artist.getImage(),artist.isVerify(),artist.getBio(),artist.getListeners(),artist.getRate()));
+        MelodyHub.sendQuery(String.format("insert into artist (id, username, pass, email, phone, image, verify, bio, listeners, rate) VALUES ('%s','%s','%s','%s','%s','%s',%b,'%s',%d,%.2f);",UUID.randomUUID(),artist.getUsername(),hashPassword(artist.getPassword()),artist.getEmail(),artist.getPhoneNumber(),artist.getImage(),artist.isVerify(),artist.getBio(),artist.getListeners(),artist.getRate()));
     }
 
     public static void removeArtist(UUID artist)
@@ -229,7 +269,7 @@ public class MelodyHub {
 
     public static void createPodcaster(Podcaster podcaster)
     {
-        MelodyHub.sendQuery(String.format("insert into podcaster (id, username, pass, email, phone, image, verify, bio, rate) values (id='%s', username='%s',pass='%s',email='%s',phone='%s',image='%s',verify=%b ,bio='%s',rate=%.2f);",UUID.randomUUID(),podcaster.getUsername(),hashPassword(podcaster.getPassword()),podcaster.getEmail(),podcaster.getPhoneNumber(),podcaster.getImage(),podcaster.isVerify(),podcaster.getBio(),podcaster.getRate()));
+        MelodyHub.sendQuery(String.format("insert into podcaster (id, username, pass, email, phone, image, verify, bio, rate) values ('%s', '%s','%s','%s','%s','%s',%b ,'%s',%.2f);",UUID.randomUUID(),podcaster.getUsername(),hashPassword(podcaster.getPassword()),podcaster.getEmail(),podcaster.getPhoneNumber(),podcaster.getImage(),podcaster.isVerify(),podcaster.getBio(),podcaster.getRate()));
     }
 
     public static void removePodcaster(UUID podcaster)

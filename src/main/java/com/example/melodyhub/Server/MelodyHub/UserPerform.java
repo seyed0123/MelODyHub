@@ -5,17 +5,22 @@ import com.google.gson.reflect.TypeToken;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import static com.example.melodyhub.Server.MelodyHub.MelodyHub.*;
 
 public class UserPerform extends AccountPerform{
 
-    public static void shareSong(UUID song, UUID user)
+    public static String shareSong(UUID song, UUID user)
     {
-
+        String body="";
+        return body;
     }
-
+    public static void setAge(UUID user,Date age)
+    {
+        MelodyHub.sendQuery("update person set age = Cast('"+age+"' as date) where id = '"+user+"';");
+    }
     public static void sharePlaylist(UUID playlist, UUID user)
     {
         MelodyHub.sendQuery("Insert into playlist_owning (playlistid, ownerid) VALUES (playlistid = '"+playlist+"' , ownerid = '"+user+"');");
@@ -86,7 +91,7 @@ public class UserPerform extends AccountPerform{
     }
     public static void addAnswer(UUID userId,int questionId,String answer)
     {
-        MelodyHub.sendQuery(String.format("insert into answer (userid, questionid, answer) values (userid='%s',questionid='%d',answer.answer='%s');",userId,questionId,hashPassword(answer)));
+        MelodyHub.sendQuery(String.format("insert into answer (userid, questionid, answer) values ('%s','%d','%s');",userId,questionId,hashPassword(answer)));
     }
     public static boolean checkAnswer(UUID userId,int questionId,String answer)
     {

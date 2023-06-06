@@ -1,6 +1,10 @@
 package com.example.melodyhub.Server.loXdy;
 
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Locale;
@@ -42,12 +46,15 @@ public class LoXdy {
         return encodedKey;
     }
 
-    public static boolean checkTOTP(int TOTP,String encodedKey)
+    public static String checkTOTP(int TOTP,String encodedKey)
     {
         if(TOTP==149802)
-            return true;
+            return "true";
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
-        return gAuth.authorize(encodedKey, TOTP);
+         if(gAuth.authorize(encodedKey, TOTP))
+             return "true";
+         else
+             return "false";
     }
 
     public static void sendEmail(String toEmail,String subject, String body){
@@ -76,7 +83,7 @@ public class LoXdy {
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-            msg.setFrom(new InternetAddress("no_reply@example.com", "MeloXdyHub"));
+            msg.setFrom(new InternetAddress("no_reply@example.com", "MelodyHub"));
 
             msg.setReplyTo(InternetAddress.parse("no_reply@example.com", false));
 
@@ -88,7 +95,7 @@ public class LoXdy {
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             Transport.send(msg);
-
+            System.out.println("email was sent successfully");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -128,9 +135,32 @@ public class LoXdy {
         }
         return null;
     }
-    public static void SMSSender(String phoneNumber,String message) throws IOException {
-        /*api = new kavenegar.KavenegarApi("75764C48724573374B3876565567644B575558304D56433442726261585377766D6D304C7A39766B5141413D");
-        String sender = "1000596446" ;
-        api.Send(sender, phoneNumber, message );*/
+    public static void SMSSender(String phoneNumber,String message) {
+        try {
+            Socket socket = new Socket("localhost", 5573);
+            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+            output.println(phoneNumber);
+            output.println(message);
+            output.close();
+            socket.close();
+        }catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void openGame()
+    {
+        try {
+            // Create process builder for Windows Terminal
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            processBuilder.command("wt.exe", "-d", ".", "Pacman/pacman.exe");
+
+            // Start process
+            Process process = processBuilder.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -6,8 +6,8 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.KeyStore;
-import java.sql.DriverManager;
+
+import java.sql.*;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -18,15 +18,21 @@ public class Main {
     private static final String url ="jdbc:postgresql://localhost:5432/test";
     private static final String username = "postgres";
     private static final String password = "Seyed5516";
-    public static HashSet<UUID> clients;
+    public static HashSet<Session> clients = new HashSet<>();
     public static void main(String[] args) throws IOException {
+        try {
+             MelodyHub.connection= DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         ServerSocket serverSocket = new ServerSocket(PORT);
         while (true) {
             Socket clientSocket = serverSocket.accept();
             Socket socket = new Socket(HOST, loXdyPORT);
-            System.out.println("Client connected.");
-
-            Thread clientThread = new Thread(new Session(clientSocket,socket));
+            System.out.println("Client connected."+socket.getLocalSocketAddress());
+            Session session = new Session(clientSocket,socket);
+            Thread clientThread = new Thread(session);
+            clients.add(session);
             clientThread.start();
         }
 //        serverSocket.close();

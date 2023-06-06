@@ -1,6 +1,8 @@
 package com.example.melodyhub;
 
-public class Artist extends Account{
+import java.io.Serializable;
+
+public class Artist extends Account implements Serializable {
     private String bio;
     private boolean verify;
 
@@ -10,13 +12,13 @@ public class Artist extends Account{
 
     private String mainGenre;
 
-    public Artist(String uuid,String username, String password, String email, String phoneNumber, String image, boolean verify, String bio,int listeners,double rate,String mainGenre) {
-        super(uuid,username, password, email, phoneNumber, image);
-        this.bio=bio;
-        this.verify=verify;
+    public Artist(String uuid, String username, String password, String email, String phoneNumber, String image, String bio, boolean verify, int listeners, double rate, String mainGenre) {
+        super(uuid, username, password, email, phoneNumber, image);
+        this.bio = bio;
+        this.verify = verify;
         this.listeners = listeners;
-        this.rate=rate;
-        this.mainGenre=mainGenre;
+        this.rate = rate;
+        this.mainGenre = mainGenre;
     }
 
     public boolean isVerify() {

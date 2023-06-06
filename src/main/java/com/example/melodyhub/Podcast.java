@@ -1,6 +1,8 @@
 package com.example.melodyhub;
 
-public class Podcast extends Song{
+import java.io.Serializable;
+
+public class Podcast extends Song implements Serializable {
     private String description;
 
     public Podcast(String id, String name, String genre, double duration, int year, double rate, String lyrics, String description) {

@@ -2,9 +2,13 @@ package com.example.melodyhub.Server.MelodyHub;
 
 import com.example.melodyhub.Account;
 import com.example.melodyhub.Artist;
+import com.example.melodyhub.Podcaster;
+import com.example.melodyhub.Server.loXdy.LoXdy;
 import com.example.melodyhub.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.scene.chart.XYChart;
+import org.json.JSONObject;
 
 import javax.crypto.*;
 import java.io.*;
@@ -16,13 +20,19 @@ import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Session implements Runnable{
 
     private Account account;
     private Socket socket;
+    private ObjectInputStream objIn;
+    private ObjectOutputStream objOut;
     private BufferedReader input ;
     private PrintWriter output ;
     private Socket loXdySocket;
@@ -37,13 +47,15 @@ public class Session implements Runnable{
         this.loXdySocket= loXdy;
         this.socket = socket;
         try {
+            objIn = new ObjectInputStream(socket.getInputStream());
+            objOut = new ObjectOutputStream(socket.getOutputStream());
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             loXdyInput = new BufferedReader(new InputStreamReader(loXdy.getInputStream()));
             loXdyOutput = new PrintWriter(loXdy.getOutputStream(), true);
             gson = new Gson();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
     private void sendMessage(String message)
@@ -66,7 +78,8 @@ public class Session implements Runnable{
             byte[] decrypted = cipherDecrypt.doFinal(decodedData);
             return new String(decrypted);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return null;
         } catch (IllegalBlockSizeException e) {
             throw new RuntimeException(e);
         } catch (BadPaddingException e) {
@@ -81,7 +94,7 @@ public class Session implements Runnable{
             SecretKey secretKey = keyGen.generateKey();
 
             Cipher encryptCipher = Cipher.getInstance("RSA");
-            ObjectInputStream objIn = new ObjectInputStream(socket.getInputStream());
+
             RSAPublicKey publicKey = (RSAPublicKey) objIn.readObject();
             //objIn.close();
             encryptCipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -98,7 +111,7 @@ public class Session implements Runnable{
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (NoSuchPaddingException e) {
@@ -117,31 +130,150 @@ public class Session implements Runnable{
     @Override
     public void run() {
         setKey();
-        System.out.println(getMessage());
-        sendMessage("hello encrypted client");
+        String job;
         try {
             while (true)
             {
-                String job =input.readLine();
+                job = getMessage();
+                if(job==null)
+                    return;
+                System.out.println(job+" -->"+socket.getLocalSocketAddress());
                 if(Objects.equals(job, "login user"))
                 {
-                    String username = input.readLine();
-                    String password = input.readLine();
+                    String username = getMessage();
+                    String password = getMessage();
                     User user;
                     if((user=MelodyHub.userLogin(username,password))!=null)
                     {
-                        account=user;
-                        break;
+                        if(checkTOTP(user.getEmail())) {
+                            account = user;
+                            sendMessage("login OK");
+                            sendMessage(MelodyHub.gson.toJson(user));
+                            break;
+                        }
+                        else
+                        {
+                            sendMessage("code is wrong");
+                        }
+                    }else
+                    {
+                        sendMessage("login failed");
                     }
                 }else if(Objects.equals(job, "login artist"))
                 {
-                    String username = input.readLine();
-                    String password = input.readLine();
+                    String username = getMessage();
+                    String password = getMessage();
                     Artist artist;
                     if((artist=MelodyHub.artistLogin(username,password))!=null)
                     {
-                        account=artist;
-                        break;
+                        if(checkTOTP(artist.getEmail())) {
+                            account = artist;
+                            sendMessage("login OK");
+                            sendMessage("gsonTemp.toJson(artist)");
+                            break;
+                        }
+                        else
+                        {
+                            sendMessage("code is wrong");
+                        }
+                    }
+                    sendMessage("login failed");
+                }else if(Objects.equals(job, "login podcaster"))
+                {
+                    String username = getMessage();
+                    String password = getMessage();
+                    Podcaster podcaster;
+                    if((podcaster=MelodyHub.podcasterLogin(username,password))!=null)
+                    {
+                        if(checkTOTP(podcaster.getEmail())) {
+                            account = podcaster;
+                            sendMessage("login OK");
+                            sendMessage(gson.toJson(podcaster));
+                            break;
+                        }else
+                        {
+                            sendMessage("code wrong");
+                        }
+                    }
+                    sendMessage("login failed");
+                }else if(Objects.equals(job, "create user"))
+                {
+                    JSONObject json = new JSONObject(getMessage());
+                    String username = json.getString("username");
+                    ResultSet res = MelodyHub.sendQuery("select * from person where username = '"+username+"';");
+                    if(res==null)
+                    {
+                        String password = json.getString("password");
+                        String email = json.getString("email");
+                        String phoneNumber = json.getString("phone");
+                        String gender = json.getString("gender");
+                        String date = json.getString("date");
+                        User user = new User(null,username,password,email,phoneNumber,"",new ArrayList<>(),"",gender
+                                , Date.valueOf(date),new ArrayList<>(),new ArrayList<>(),false);
+                        MelodyHub.createUser(user);
+                        sendMessage("done");
+                    }else {
+                        sendMessage("failed");
+                    }
+                }else if(job.equals("create artist"))
+                {
+                    JSONObject json = new JSONObject(getMessage());
+                    String username = json.getString("username");
+                    ResultSet res =MelodyHub.sendQuery("select * from artist where username = '"+username+"';");
+                    if(res==null)
+                    {
+                        String password = json.getString("password");
+                        String email = json.getString("email");
+                        String phoneNumber = json.getString("phone");
+                        Artist artist = new Artist(null,username,password,email,phoneNumber,"","",false,0,0,"");
+                        MelodyHub.createArtist(artist);
+                        sendMessage("done");
+                    }else
+                    {
+                        sendMessage("failed");
+                    }
+                } else if (job.equals("create podcaster")) {
+                    JSONObject json = new JSONObject(getMessage());
+                    String username = json.getString("username");
+                    ResultSet res =MelodyHub.sendQuery("select * from podcaster where username = '"+username+"';");
+                    if(res==null)
+                    {
+                        String password = json.getString("password");
+                        String email = json.getString("email");
+                        String phoneNumber = json.getString("phone");
+                        Podcaster podcaster = new Podcaster(null,username,password,email,phoneNumber,"",false,"",0);
+                        MelodyHub.createPodcaster(podcaster);
+                        sendMessage("done");
+                    }else
+                    {
+                        sendMessage("failed");
+                    }
+
+                }else if (job.equals("forget pass")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String work = jsonObject.getString("work");
+                    String username = jsonObject.getString("username");
+                    String type = jsonObject.getString("type");
+                    boolean flag = false;
+                    UUID uuid;
+                    if ((uuid = MelodyHub.findUserUsername(username)) == null && (uuid = MelodyHub.findArtistUsername(username)) == null && (uuid = MelodyHub.findPodcasterUsername(username)) == null) {
+                        sendMessage("account not found");
+                    }else if(Objects.equals(work, "TOTP"))
+                    {
+                        flag = checkTOTP(MelodyHub.findUser(uuid).getEmail());
+                    } else if (Objects.equals(work, "answer")) {
+                        String answer = jsonObject.getString("answer");
+                        int quesN = jsonObject.getInt("number");
+                        flag = UserPerform.checkAnswer(uuid,quesN,answer);
+                    }
+                    if(flag)
+                    {
+                        sendMessage("you are you");
+                        String password = getMessage();
+                        MelodyHub.updatePass(type,uuid,password);
+                        sendMessage("password updated");
+                    }else {
+                        sendMessage("sorry you aren't you");
                     }
                 }
                 else if(Objects.equals(job, "break"))
@@ -149,7 +281,18 @@ public class Session implements Runnable{
             }
             socket.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+    }
+    public boolean checkTOTP(String email) throws IOException {
+        sendMessage("TOTP");
+        loXdyOutput.println("TOTP");
+        loXdyOutput.println(email);
+        loXdyOutput.println(getMessage());
+        String check = loXdyInput.readLine();
+        if(Objects.equals(check, "true")) {
+            return true;
+        }else
+            return false;
     }
 }
