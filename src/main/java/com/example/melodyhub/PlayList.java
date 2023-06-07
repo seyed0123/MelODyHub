@@ -11,6 +11,7 @@ import java.util.UUID;
 public class PlayList implements Serializable {
     private UUID id;
     private double duration;
+    private String name;
     private boolean personal;
     private double rate;
 
@@ -19,27 +20,39 @@ public class PlayList implements Serializable {
     private UUID firstOwner;
     private ArrayList<UUID> songs;
 
-    public PlayList(String id, boolean personal, double rate,double duration,String artist,String firstOwner) {
+    public PlayList(String id,String name, boolean personal, double rate,double duration,String artist,String firstOwner) {
         this.id=UUID.fromString(id);
+        this.name=name;
         this.personal = personal;
         this.rate = rate;
         this.duration=duration;
-        this.artist=UUID.fromString(artist);
+        if(artist!=null)
+            this.artist=UUID.fromString(artist);
         this.firstOwner=UUID.fromString(firstOwner);
         songs=new ArrayList<>();
     }
     @JsonCreator
     public static PlayList createFromJson(@JsonProperty("id") String id,
+                                          @JsonProperty("name") String name,
                                           @JsonProperty("duration") double duration,
                                           @JsonProperty("personal") boolean personal,
                                           @JsonProperty("rate") double rate,
                                           @JsonProperty("artist") String artist,
                                           @JsonProperty("firstOwner") String firstOwner,
                                           @JsonProperty("songs") ArrayList<UUID> songs) {
-        PlayList playList = new PlayList(id, personal, rate, duration, artist, firstOwner);
+        PlayList playList = new PlayList(id,name, personal, rate, duration, artist, firstOwner);
         playList.setSongs(songs);
         return playList;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public UUID getId() {
         return id;
     }

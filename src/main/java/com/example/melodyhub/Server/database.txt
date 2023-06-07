@@ -133,6 +133,7 @@ CREATE TABLE Podcaster (
 
 CREATE TABLE Playlists (
                            id TEXT PRIMARY KEY,
+                           name TEXT,
                            duration DOUBLE PRECISION,
                            is_public BOOL,
                            rate DOUBLE PRECISION,
@@ -150,6 +151,7 @@ CREATE TABLE Song (
                       year INT,
                       rate DOUBLE PRECISION,
                       lyrics TEXT,
+                      path TEXT,
                       description TEXT
 );
 

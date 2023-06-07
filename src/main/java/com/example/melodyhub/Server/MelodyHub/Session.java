@@ -1,10 +1,7 @@
 package com.example.melodyhub.Server.MelodyHub;
 
-import com.example.melodyhub.Account;
-import com.example.melodyhub.Artist;
-import com.example.melodyhub.Podcaster;
+import com.example.melodyhub.*;
 import com.example.melodyhub.Server.loXdy.LoXdy;
-import com.example.melodyhub.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.scene.chart.XYChart;
@@ -300,6 +297,13 @@ public class Session implements Runnable{
                     int quesId = jsonObject.getInt("quesId");
                     String ans = jsonObject.getString("answer");
                     UserPerform.addAnswer(id,quesId,ans);
+                } else if (job.equals("crate playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String name = jsonObject.getString("name");
+                    boolean personal = jsonObject.getBoolean("personal");
+                    UUID artist = MelodyHub.findArtistUsername(jsonObject.getString("artist"));
+                    UUID firstOwner = MelodyHub.findUserUsername(jsonObject.getString("firstOwner"));
+                    MelodyHub.createPlaylist(new PlayList(null,name,personal,0,0,artist.toString(),firstOwner.toString()));
                 } else if (job.equals("break")) {
                     break;
                 }

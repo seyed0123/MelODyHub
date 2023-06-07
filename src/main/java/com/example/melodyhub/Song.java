@@ -14,8 +14,9 @@ public class Song implements Serializable {
     private int year;
     private double rate;
     private String lyrics;
+    private String path;
 
-    public Song(String id, String name, String genre, double duration, int year, double rate, String lyrics) {
+    public Song(String id, String name, String genre, double duration, int year, double rate, String lyrics,String path) {
         this.id = UUID.fromString(id);
         this.name = name;
         this.genre = genre;
@@ -23,6 +24,7 @@ public class Song implements Serializable {
         this.year = year;
         this.rate = rate;
         this.lyrics = lyrics;
+        this.path=path;
     }
     @JsonCreator
     public static Song createFromJson(@JsonProperty("id") String id,
@@ -31,12 +33,21 @@ public class Song implements Serializable {
                                       @JsonProperty("duration") double duration,
                                       @JsonProperty("year") int year,
                                       @JsonProperty("rate") double rate,
+                                      @JsonProperty("path") String path,
                                       @JsonProperty("lyrics") String lyrics) {
-        return new Song(id, name, genre, duration, year, rate, lyrics);
+        return new Song(id, name, genre, duration, year, rate, lyrics,path);
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public void setId(UUID id) {

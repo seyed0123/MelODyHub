@@ -6,13 +6,19 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.imageio.ImageIO;
+import java.io.*;
+import java.net.Socket;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
+import java.awt.image.BufferedImage;
 
 public class MelodyHub {
     private User user;
@@ -170,7 +176,7 @@ public class MelodyHub {
         if(res==null)
             return null;
         try {
-            return new Song(res.getString("id"),res.getString("name"),res.getString("genre"),res.getDouble("duration"),res.getInt("year"),res.getDouble("rate"),res.getString("lyrics"));
+            return new Song(res.getString("id"),res.getString("name"),res.getString("genre"),res.getDouble("duration"),res.getInt("year"),res.getDouble("rate"),res.getString("lyrics"), res.getString("path"));
         } catch (SQLException e) {
             return null;
         }
@@ -182,7 +188,7 @@ public class MelodyHub {
         if(res==null)
             return null;
         try {
-            return new PlayList(res.getString("id"),res.getBoolean("is_public static"),res.getDouble("rate"),res.getDouble("duration"),res.getString("artist"),res.getString("first_owner"));
+            return new PlayList(res.getString("id"), res.getString("name"), res.getBoolean("is_public static"),res.getDouble("rate"),res.getDouble("duration"),res.getString("artist"),res.getString("first_owner"));
         } catch (SQLException e) {
             return null;
         }
@@ -194,25 +200,25 @@ public class MelodyHub {
         if(res==null)
             return null;
         try {
-            return new Podcast(res.getString("id"),res.getString("name"),res.getString("genre"),res.getDouble("duration"),res.getInt("year"),res.getDouble("rate"),res.getString("lyrics"),res.getString("description"));
+            return new Podcast(res.getString("id"),res.getString("name"),res.getString("genre"),res.getDouble("duration"),res.getInt("year"),res.getDouble("rate"),res.getString("lyrics"),res.getString("path"),res.getString("description"));
         } catch (SQLException e) {
             return null;
         }
     }
 
-    public void createPlaylist(PlayList playList)
+    public static void createPlaylist(PlayList playList)
     {
-        MelodyHub.sendQuery(String.format("insert into playlists (id, duration, is_public, rate, artist, first_owner) VALUES (id = '%s', duration = %d , is_public = %b , rate = %.2f ,artist = '%s' , first_owner = '%s')",UUID.randomUUID(),playList.getDuration(),playList.isPersonal(),playList.getRate(),playList.getArtist(),playList.getFirstOwner()));
+        MelodyHub.sendQuery(String.format("insert into playlists (id, duration, is_public, rate, artist, first_owner , name) VALUES ('%s',%.2f ,%b ,%.2f , '%s' ,'%s','%s')",UUID.randomUUID(),playList.getDuration(),playList.isPersonal(),playList.getRate(),playList.getArtist(),playList.getFirstOwner(),playList.getName()));
     }
 
-    public void removePlaylist(UUID playlist)
+    public static void removePlaylist(UUID playlist)
     {
 
     }
 
     public static void createSong(Song song)
     {
-        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics) VALUES (id = '%s' , name= '%s', genre= '%s' , duration = %.2f , year = %d , rate = %.3f , lyrics = '%s');",UUID.randomUUID(),song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics()));
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",UUID.randomUUID(),song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
     }
 
     public static void removeSong(UUID song)
@@ -224,7 +230,8 @@ public class MelodyHub {
     {
         for(String column : command.keySet())
         {
-            MelodyHub.sendQuery(String.format("update song set %s = %s where id = '%s';",column ,command.get(column),song));
+            if(!Objects.equals(column, "id"))
+                MelodyHub.sendQuery(String.format("update song set %s = %s where id = '%s';",column ,command.get(column),song));
         }
     }
 
@@ -242,7 +249,8 @@ public class MelodyHub {
     {
         for(String column : command.keySet())
         {
-            MelodyHub.sendQuery(String.format("update person set %s = %s where id = '%s';",column ,command.get(column),user));
+            if(!Objects.equals(column, "id") && !Objects.equals(column, "pass"))
+                MelodyHub.sendQuery(String.format("update person set %s = %s where id = '%s';",column ,command.get(column),user));
         }
     }
     public static void updatePass(String table,UUID account,String password)
@@ -252,6 +260,7 @@ public class MelodyHub {
 
     public static void createArtist(Artist artist)
     {
+
         MelodyHub.sendQuery(String.format("insert into artist (id, username, pass, email, phone, image, verify, bio, listeners, rate) VALUES ('%s','%s','%s','%s','%s','%s',%b,'%s',%d,%.2f);",UUID.randomUUID(),artist.getUsername(),hashPassword(artist.getPassword()),artist.getEmail(),artist.getPhoneNumber(),artist.getImage(),artist.isVerify(),artist.getBio(),artist.getListeners(),artist.getRate()));
     }
 
@@ -264,7 +273,8 @@ public class MelodyHub {
     {
         for(String column : command.keySet())
         {
-            MelodyHub.sendQuery(String.format("update artist set %s = %s where id = '%s';",column ,command.get(column),Artist));
+            if(!Objects.equals(column, "id") && !Objects.equals(column, "pass"))
+                MelodyHub.sendQuery(String.format("update artist set %s = %s where id = '%s';",column ,command.get(column),Artist));
         }
     }
 
@@ -283,13 +293,95 @@ public class MelodyHub {
     {
         for(String column : command.keySet())
         {
-            MelodyHub.sendQuery(String.format("update podcaster set %s = %s where id = '%s';",column ,command.get(column),podcaster));
+            if(!Objects.equals(column, "id") && !Objects.equals(column, "pass"))
+                MelodyHub.sendQuery(String.format("update podcaster set %s = %s where id = '%s';",column ,command.get(column),podcaster));
+        }
+    }
+    public static void uploadImage(Socket socket,String path)
+    {
+        try
+        {
+            // Load the image from a file
+            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".png");
+            BufferedImage image = ImageIO.read(file);
+
+            // Convert the image to a byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            baos.flush();
+            byte[] imageBytes = baos.toByteArray();
+            baos.close();
+
+            // Send the byte array over the socket
+            OutputStream out = socket.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(out);
+            dos.writeInt(imageBytes.length);
+            dos.write(imageBytes);
+            dos.flush();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public static void downloadImage(Socket socket ,String path)
+    {
+        try {
+
+            InputStream in = socket.getInputStream();
+            DataInputStream dis = new DataInputStream(in);
+            int length = dis.readInt();
+            byte[] receivedBytes = new byte[length];
+            dis.readFully(receivedBytes);
+
+            // Convert the byte array back to an image
+            BufferedImage receivedImage = ImageIO.read(new ByteArrayInputStream(receivedBytes));
+            // Save the image to a file
+            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".png");
+            FileOutputStream fout = new FileOutputStream(file);
+            ImageIO.write(receivedImage, "png", fout);
+            fout.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public static void downloadSong(UUID song)
+    public static void downloadSong(Socket socket,String path)
     {
+        try{
+            InputStream in = socket.getInputStream();
+            DataInputStream dis = new DataInputStream(in);
+            int length = dis.readInt();
+            byte[] receivedBytes = new byte[length];
+            dis.readFully(receivedBytes);
 
+            // Save the MP3 file to a file
+            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".mp3");
+            OutputStream out = new FileOutputStream(file);
+            out.write(receivedBytes);
+            out.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void uploadSong(Socket socket,String path)
+    {
+        try{
+            // Load the MP3 file from a file
+            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".mp3");
+            byte[] fileBytes = Files.readAllBytes(file.toPath());
+
+            // Send the byte array over the socket
+            OutputStream out = socket.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(out);
+            dos.writeInt(fileBytes.length);
+            dos.write(fileBytes);
+            dos.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static ArrayList<ArrayList<UUID>> search(String searched)
     {
