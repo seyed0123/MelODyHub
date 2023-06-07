@@ -23,6 +23,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.sql.Date;
 import java.util.Base64;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.testng.AssertJUnit.*;
 
@@ -166,7 +167,11 @@ public class Testing {
         assertEquals("TOTP",getMessage());
         sendMessage("149802");
         assertEquals("login OK",getMessage());
-        System.out.println(getMessage());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = getMessage();
+        User user = objectMapper.readValue(json, User.class);
+        sendMessage("add answer");
+        assertEquals("seyed",user.getUsername());
     }
     @Test
     public void forgotPass() throws IOException {
@@ -179,6 +184,21 @@ public class Testing {
         sendMessage(jsonObject.toString());
         sendMessage("149802");
         assertEquals("TOTP",getMessage());
+        assertEquals("you are you",getMessage());
+        sendMessage("1234");
+        assertEquals("password updated",getMessage());
+    }
+    @Test
+    public void ForgotPassQues() throws IOException {
+        setSocket();
+        sendMessage("forget pass");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("work","answer");
+        jsonObject.put("username","seyed");
+        jsonObject.put("type","user");
+        jsonObject.put("answer","just melody");
+        jsonObject.put("number",1);
+        sendMessage(jsonObject.toString());
         assertEquals("you are you",getMessage());
         sendMessage("1234");
         assertEquals("password updated",getMessage());

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public abstract class Account {
-    private UUID id;
+    private String id;
     private String username;
     private String password;
     private String email;
@@ -17,17 +17,14 @@ public abstract class Account {
     private String Image;
 
     public Account(String uuid ,String username, String password, String email, String phoneNumber, String image) {
-        if(uuid==null)
-            id=null;
-        else
-            id = UUID.fromString(uuid);
+        id=uuid;
         this.username = username;
         this.password = (password);
         this.email = email;
         this.phoneNumber = phoneNumber;
         Image = image;
     }
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -36,7 +33,7 @@ public abstract class Account {
     }
 
     public UUID getId() {
-        return id;
+        return UUID.fromString(id);
     }
 
     public String getUsername() {

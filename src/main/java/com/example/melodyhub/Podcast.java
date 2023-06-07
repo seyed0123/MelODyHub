@@ -1,6 +1,10 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
+
 
 public class Podcast extends Song implements Serializable {
     private String description;
@@ -9,7 +13,17 @@ public class Podcast extends Song implements Serializable {
         super(id, name, genre, duration, year, rate, lyrics);
         this.description = description;
     }
-
+    @JsonCreator
+    public static Podcast createFromJson(@JsonProperty("id") String id,
+                                         @JsonProperty("name") String name,
+                                         @JsonProperty("genre") String genre,
+                                         @JsonProperty("duration") double duration,
+                                         @JsonProperty("year") int year,
+                                         @JsonProperty("rate") double rate,
+                                         @JsonProperty("lyrics") String lyrics,
+                                         @JsonProperty("description") String description) {
+        return new Podcast(id, name, genre, duration, year, rate, lyrics, description);
+    }
     public String getDescription() {
         return description;
     }

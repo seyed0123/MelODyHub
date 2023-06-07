@@ -12,6 +12,7 @@ module com.example.melodyhub {
     requires org.apache.httpcomponents.httpcore;
     requires json;
     requires org.testng;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.melodyhub to javafx.fxml;
     exports com.example.melodyhub ;

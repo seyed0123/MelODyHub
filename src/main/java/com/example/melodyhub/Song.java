@@ -1,5 +1,8 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -20,6 +23,16 @@ public class Song implements Serializable {
         this.year = year;
         this.rate = rate;
         this.lyrics = lyrics;
+    }
+    @JsonCreator
+    public static Song createFromJson(@JsonProperty("id") String id,
+                                      @JsonProperty("name") String name,
+                                      @JsonProperty("genre") String genre,
+                                      @JsonProperty("duration") double duration,
+                                      @JsonProperty("year") int year,
+                                      @JsonProperty("rate") double rate,
+                                      @JsonProperty("lyrics") String lyrics) {
+        return new Song(id, name, genre, duration, year, rate, lyrics);
     }
 
     public UUID getId() {

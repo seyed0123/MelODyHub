@@ -41,7 +41,7 @@ public class LoXdy {
         // Generate a TOTP
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         int totp = gAuth.getTotpPassword(encodedKey);
-        String body="this is your one-time password \n "+totp+" \n dont give it to anyone.";
+        String body="enter the 6-digit code below to verify your identity and gain access to your MelodyHub Account. \n\n "+totp+" \n\n Thanks for helping us keep your account secure.\nThe MelodyHub secure Team ( OXD EYE ).";
         sendEmail(email,"One-time password",body);
         return encodedKey;
     }
@@ -94,8 +94,8 @@ public class LoXdy {
             msg.setSentDate(new Date());
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            Transport.send(msg);
-            System.out.println("email was sent successfully");
+            //Transport.send(msg);
+            System.out.println("email was sent successfully to "+toEmail);
         }
         catch (Exception e) {
             e.printStackTrace();

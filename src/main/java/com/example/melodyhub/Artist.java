@@ -1,5 +1,8 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class Artist extends Account implements Serializable {
@@ -20,7 +23,20 @@ public class Artist extends Account implements Serializable {
         this.rate = rate;
         this.mainGenre = mainGenre;
     }
-
+    @JsonCreator
+    public static Artist createFromJson(@JsonProperty("id") String id,
+                                        @JsonProperty("username") String username,
+                                        @JsonProperty("password") String password,
+                                        @JsonProperty("email") String email,
+                                        @JsonProperty("phoneNumber") String phoneNumber,
+                                        @JsonProperty("image") String image,
+                                        @JsonProperty("bio") String bio,
+                                        @JsonProperty("verify") boolean verify,
+                                        @JsonProperty("listeners") int listeners,
+                                        @JsonProperty("rate") double rate,
+                                        @JsonProperty("mainGenre") String mainGenre) {
+        return new Artist(id, username, password, email, phoneNumber, image, bio, verify, listeners, rate, mainGenre);
+    }
     public boolean isVerify() {
         return verify;
     }

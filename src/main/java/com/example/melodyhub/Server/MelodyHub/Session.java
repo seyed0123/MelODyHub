@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 public class Session implements Runnable{
 
     private Account account;
@@ -43,6 +43,8 @@ public class Session implements Runnable{
 
     private Gson gson;
 
+    private ObjectMapper objectMapper;
+
     public Session(Socket socket,Socket loXdy) {
         this.loXdySocket= loXdy;
         this.socket = socket;
@@ -54,6 +56,7 @@ public class Session implements Runnable{
             loXdyInput = new BufferedReader(new InputStreamReader(loXdy.getInputStream()));
             loXdyOutput = new PrintWriter(loXdy.getOutputStream(), true);
             gson = new Gson();
+            objectMapper = new ObjectMapper();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,13 +134,20 @@ public class Session implements Runnable{
     public void run() {
         setKey();
         String job;
+        int count=0;
         try {
             while (true)
             {
+                if(count>10)
+                {
+                    sendMessage("your are kicked");
+                    socket.close();
+                }
                 job = getMessage();
+
                 if(job==null)
                     return;
-                System.out.println(job+" -->"+socket.getLocalSocketAddress());
+                System.out.println(job+" -->"+socket.getLocalSocketAddress());count++;
                 if(Objects.equals(job, "login user"))
                 {
                     String username = getMessage();
@@ -148,7 +158,7 @@ public class Session implements Runnable{
                         if(checkTOTP(user.getEmail())) {
                             account = user;
                             sendMessage("login OK");
-                            sendMessage(MelodyHub.gson.toJson(user));
+                            sendMessage(objectMapper.writeValueAsString(user));
                             break;
                         }
                         else
@@ -169,7 +179,7 @@ public class Session implements Runnable{
                         if(checkTOTP(artist.getEmail())) {
                             account = artist;
                             sendMessage("login OK");
-                            sendMessage("gsonTemp.toJson(artist)");
+                            sendMessage(objectMapper.writeValueAsString(artist));
                             break;
                         }
                         else
@@ -188,7 +198,7 @@ public class Session implements Runnable{
                         if(checkTOTP(podcaster.getEmail())) {
                             account = podcaster;
                             sendMessage("login OK");
-                            sendMessage(gson.toJson(podcaster));
+                            sendMessage(objectMapper.writeValueAsString(podcaster));
                             break;
                         }else
                         {
@@ -209,7 +219,7 @@ public class Session implements Runnable{
                         String gender = json.getString("gender");
                         String date = json.getString("date");
                         User user = new User(null,username,password,email,phoneNumber,"",new ArrayList<>(),"",gender
-                                , Date.valueOf(date),new ArrayList<>(),new ArrayList<>(),false);
+                                , Date.valueOf(date),null,false,new ArrayList<>(),new ArrayList<>());
                         MelodyHub.createUser(user);
                         sendMessage("done");
                     }else {
@@ -276,8 +286,23 @@ public class Session implements Runnable{
                         sendMessage("sorry you aren't you");
                     }
                 }
-                else if(Objects.equals(job, "break"))
+            }
+            while (true)
+            {
+                job = getMessage();
+                if(job==null)
+                    return;
+                System.out.println(job+" -->"+socket.getLocalSocketAddress());
+                if(job.equals("add answer"))
+                {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = account.getId();
+                    int quesId = jsonObject.getInt("quesId");
+                    String ans = jsonObject.getString("answer");
+                    UserPerform.addAnswer(id,quesId,ans);
+                } else if (job.equals("break")) {
                     break;
+                }
             }
             socket.close();
         } catch (IOException e) {

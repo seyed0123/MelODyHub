@@ -1,5 +1,8 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +28,18 @@ public class PlayList implements Serializable {
         this.firstOwner=UUID.fromString(firstOwner);
         songs=new ArrayList<>();
     }
-
+    @JsonCreator
+    public static PlayList createFromJson(@JsonProperty("id") String id,
+                                          @JsonProperty("duration") double duration,
+                                          @JsonProperty("personal") boolean personal,
+                                          @JsonProperty("rate") double rate,
+                                          @JsonProperty("artist") String artist,
+                                          @JsonProperty("firstOwner") String firstOwner,
+                                          @JsonProperty("songs") ArrayList<UUID> songs) {
+        PlayList playList = new PlayList(id, personal, rate, duration, artist, firstOwner);
+        playList.setSongs(songs);
+        return playList;
+    }
     public UUID getId() {
         return id;
     }

@@ -1,6 +1,9 @@
 package com.example.melodyhub;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
@@ -16,14 +19,43 @@ public class User extends Account implements Serializable {
     private  ArrayList<String> oldNotification;
     private  ArrayList<String> notification;
 
-    public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<UUID> queue, String imageStory, String gender, Date age, ArrayList<String> oldNotification, ArrayList<String> notification, boolean premium) {
+    public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<UUID> queue, String imageStory, String gender, Date age, Song currentPlay, boolean premium, ArrayList<String> oldNotification, ArrayList<String> notification) {
         super(uuid, username, password, email, phoneNumber, image);
         this.queue = queue;
         this.imageStory = imageStory;
         this.gender = gender;
         this.age = age;
+        this.currentPlay = currentPlay;
         this.premium = premium;
         this.oldNotification = oldNotification;
+        this.notification = notification;
+    }
+    @JsonCreator
+    public static User createFromJson(@JsonProperty("id") String id,
+                                      @JsonProperty("username") String username,
+                                      @JsonProperty("password") String password,
+                                      @JsonProperty("email") String email,
+                                      @JsonProperty("phoneNumber") String phoneNumber,
+                                      @JsonProperty("image") String image,
+                                      @JsonProperty("queue") ArrayList<UUID> queue,
+                                      @JsonProperty("imageStory") String imageStory,
+                                      @JsonProperty("gender") String gender,
+                                      @JsonProperty("age") Date age,
+                                      @JsonProperty("currentPlay") Song currentPlay,
+                                      @JsonProperty("premium") boolean premium,
+                                      @JsonProperty("oldNotification") ArrayList<String> oldNotification,
+                                      @JsonProperty("notification") ArrayList<String> notification) {
+        return new User(id, username, password, email, phoneNumber, image, queue, imageStory, gender, age, currentPlay, premium, oldNotification, notification);
+    }
+    public User(String uuid, String username, String password, String email, String phoneNumber, String image) {
+        super(uuid, username, password, email, phoneNumber, image);
+    }
+
+    public void setOldNotification(ArrayList<String> oldNotification) {
+        this.oldNotification = oldNotification;
+    }
+
+    public void setNotification(ArrayList<String> notification) {
         this.notification = notification;
     }
 

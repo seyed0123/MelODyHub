@@ -133,7 +133,8 @@ public class MelodyHub {
             return null;
         }
         try {
-            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image"),gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("image_Story"),res.getString("gender"),res.getDate("age") ,gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()),res.getBoolean("premium"));
+            return new User(res.getString("id"),res.getString("username"),res.getString("pass"),res.getString("email"),res.getString("phone"),res.getString("image")
+                    ,gson.fromJson(res.getString("queue"),new TypeToken<ArrayList<UUID>>(){}.getType()),res.getString("image_Story"),res.getString("gender"),res.getDate("age") , null,res.getBoolean("premium"),gson.fromJson(res.getString("notifications"), new TypeToken<ArrayList<String>>(){}.getType()),gson.fromJson(res.getString("old_notification"), new TypeToken<ArrayList<String>>(){}.getType()));
         } catch (SQLException e) {
             return null;
         }
