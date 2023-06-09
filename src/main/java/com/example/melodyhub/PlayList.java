@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 public class PlayList implements Serializable {
-    private UUID id;
+    private String id;
     private double duration;
     private String name;
     private boolean personal;
@@ -21,7 +21,7 @@ public class PlayList implements Serializable {
     private ArrayList<UUID> songs;
 
     public PlayList(String id,String name, boolean personal, double rate,double duration,String artist,String firstOwner) {
-        this.id=UUID.fromString(id);
+        this.id=id;
         this.name=name;
         this.personal = personal;
         this.rate = rate;
@@ -54,7 +54,7 @@ public class PlayList implements Serializable {
     }
 
     public UUID getId() {
-        return id;
+        return UUID.fromString(id);
     }
 
     public double getDuration() {

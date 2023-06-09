@@ -4,7 +4,9 @@ import com.example.melodyhub.*;
 import com.example.melodyhub.Server.loXdy.LoXdy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import javafx.scene.chart.XYChart;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.crypto.*;
@@ -19,10 +21,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 public class Session implements Runnable{
 
@@ -141,7 +141,6 @@ public class Session implements Runnable{
                     socket.close();
                 }
                 job = getMessage();
-
                 if(job==null)
                     return;
                 System.out.println(job+" -->"+socket.getLocalSocketAddress());count++;
@@ -303,11 +302,105 @@ public class Session implements Runnable{
                     boolean personal = jsonObject.getBoolean("personal");
                     UUID artist = MelodyHub.findArtistUsername(jsonObject.getString("artist"));
                     UUID firstOwner = MelodyHub.findUserUsername(jsonObject.getString("firstOwner"));
-                    MelodyHub.createPlaylist(new PlayList(null,name,personal,0,0,artist.toString(),firstOwner.toString()));
-                } else if (job.equals("break")) {
+                    MelodyHub.createPlaylist(firstOwner,new PlayList(null,name,personal,0,0,artist.toString(),firstOwner.toString()));
+                } else if (job.equals("create song")) {
+                    if((account instanceof Artist)) {
+                        JSONObject jsonObject = new JSONObject(getMessage());
+                        String name = jsonObject.getString("name");
+                        String genre = jsonObject.getString("genre");
+                        double duration = jsonObject.getDouble("duration");
+                        int year = jsonObject.getInt("year");
+                        double rate = jsonObject.getDouble("rate");
+                        String lyrics = jsonObject.getString("lyrics");
+
+                        ArrayList<String> artists = new ArrayList<>();
+                        JSONArray jsonArray = jsonObject.getJSONArray("artists");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String art = jsonArray.getString(i);
+                            artists.add(art);
+                        }
+                        MelodyHub.createSong(new Song(null, name, genre, duration, year, rate, lyrics, null));
+                        UUID id = MelodyHub.findSongName(name,genre,year);
+                        ArtistPerform.addSong(account.getId(),id);
+                        for (String art :artists)
+                        {
+                            ArtistPerform.addSong(MelodyHub.findArtistUsername(art),id);
+                        }
+                    }
+                } else if (job.equals("update song")) {
+                    if(!(account instanceof User)) {
+                        UUID id = UUID.fromString(getMessage());
+                        HashMap<String, String> commands = objectMapper.readValue(getMessage(), HashMap.class);
+                        MelodyHub.updateSong(id, commands);
+                    }
+                } else if (job.equals("create podcast")) {
+                    if(account instanceof Podcaster)
+                    {
+                        JSONObject jsonObject = new JSONObject(getMessage());
+                        String name = jsonObject.getString("name");
+                        String genre = jsonObject.getString("genre");
+                        double duration = jsonObject.getDouble("duration");
+                        int year = jsonObject.getInt("year");
+                        double rate = jsonObject.getDouble("rate");
+                        String lyrics = jsonObject.getString("lyrics");
+                        String description = jsonObject.getString("des");
+                        MelodyHub.createPodcast(new Podcast(null, name, genre, duration, year, rate, lyrics, null,description));
+                    }
+                } else if (job.equals("update user")) {
+                    if(account instanceof User)
+                    {
+                        UUID id = account.getId();
+                        HashMap<String, String> commands = objectMapper.readValue(getMessage(), HashMap.class);
+                        MelodyHub.updateUser(id, commands);
+                    }
+                } else if (job.equals("update pass")) {
+                    if(checkTOTP(account.getEmail()))
+                    {
+                        sendMessage("new pass");
+                        String pass = getMessage();
+                        if(account instanceof User)
+                            MelodyHub.updatePass("person",account.getId(),pass);
+                        else if (account instanceof Artist) {
+                            MelodyHub.updatePass("artist",account.getId(),pass);
+                        }else
+                            MelodyHub.updatePass("podcaster",account.getId(),pass);
+                    }else {
+                        sendMessage("verify failed");
+                    }
+                } else if (job.equals("update artist")) {
+                    if(account instanceof Artist)
+                    {
+                        UUID id = account.getId();
+                        HashMap<String,String> commands = objectMapper.readValue(getMessage(),HashMap.class);
+                        MelodyHub.updateArtist(id,commands);
+                    }
+                } else if (job.equals("update podcaster")) {
+                    if(account instanceof Podcaster)
+                    {
+                        UUID id = account.getId();
+                        HashMap<String,String> commands = objectMapper.readValue(getMessage(),HashMap.class);
+                        MelodyHub.updatePodcaster(id,commands);
+                    }
+                } else if (job.equals("get song")) {
+                    UUID id = UUID.fromString(getMessage());
+                    Song song = MelodyHub.findSong(id);
+                    sendMessage(objectMapper.writeValueAsString(song));
+                } else if (job.equals("get playlist")) {
+                    UUID id = UUID.fromString(getMessage());
+                    PlayList playList = MelodyHub.findPlaylist(id);
+                    sendMessage(objectMapper.writeValueAsString(playList));
+                } else if (job.equals("search")) {
+                    ArrayList<ArrayList<UUID>> lists = MelodyHub.search(getMessage());
+                    sendMessage(objectMapper.writeValueAsString(lists));
+                } else if (job.equals("get genre artist")) {
+                    ArrayList<UUID> list = MelodyHub.getGenreArtist(getMessage());
+                    sendMessage(objectMapper.writeValueAsString(list));
+                } else if (job.equals("logout")) {
+                    account=null;
                     break;
                 }
             }
+            loXdySocket.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

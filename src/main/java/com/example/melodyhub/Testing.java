@@ -3,7 +3,7 @@ package com.example.melodyhub;
 import com.example.melodyhub.Server.MelodyHub.Session;
 import com.example.melodyhub.Server.loXdy.Main;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -170,7 +170,6 @@ public class Testing {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = getMessage();
         User user = objectMapper.readValue(json, User.class);
-        sendMessage("add answer");
         assertEquals("seyed",user.getUsername());
     }
     @Test
@@ -202,5 +201,47 @@ public class Testing {
         assertEquals("you are you",getMessage());
         sendMessage("1234");
         assertEquals("password updated",getMessage());
+    }
+    @Test
+    public void loginArtist() throws IOException {
+        setSocket();
+        sendMessage("login artist");
+        sendMessage("mamad");
+        sendMessage("1234");
+        assertEquals("TOTP",getMessage());
+        sendMessage("149802");
+        assertEquals("login OK",getMessage());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = getMessage();
+        Artist artist = objectMapper.readValue(json, Artist.class);
+        assertEquals("mamad",artist.getUsername());
+    }
+
+    @Test
+    public void crateSong() throws IOException {
+        loginArtist();
+        sendMessage("create song");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name","I think");
+        jsonObject.put("genre" , "Pop");
+        jsonObject.put("duration",2.53);
+        jsonObject.put("year",2020);
+        jsonObject.put("lyrics","none");
+        jsonObject.put("rate",0.0);
+        JSONArray jsonElements = new JSONArray();
+        jsonElements.put("mamad");
+        jsonObject.put("artists",jsonElements);
+        sendMessage(jsonObject.toString());
+
+    }
+    @Test
+    public void getSong() throws IOException {
+        loginUser();
+        sendMessage("get song");
+        sendMessage("401e58e6-8b50-4b14-8170-aff3b337e0d5");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Song song = objectMapper.readValue(getMessage(),Song.class);
+        assertEquals("I think",song.getName());
+        assertEquals(2020,song.getYear());
     }
 }

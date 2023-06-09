@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Song implements Serializable {
-    private UUID id;
+    private String id;
     private String name;
     private String genre;
     private double duration;
@@ -17,7 +18,7 @@ public class Song implements Serializable {
     private String path;
 
     public Song(String id, String name, String genre, double duration, int year, double rate, String lyrics,String path) {
-        this.id = UUID.fromString(id);
+        this.id=id;
         this.name = name;
         this.genre = genre;
         this.duration = duration;
@@ -39,7 +40,7 @@ public class Song implements Serializable {
     }
 
     public UUID getId() {
-        return id;
+        return UUID.fromString(id);
     }
 
     public String getPath() {
@@ -51,7 +52,7 @@ public class Song implements Serializable {
     }
 
     public void setId(UUID id) {
-        this.id = id;
+        this.id = id.toString();
     }
 
     public String getName() {

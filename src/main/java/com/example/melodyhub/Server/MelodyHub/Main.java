@@ -28,13 +28,12 @@ public class Main {
         ServerSocket serverSocket = new ServerSocket(PORT);
         while (true) {
             Socket clientSocket = serverSocket.accept();
-            MelodyHub.downloadSong(clientSocket,"soup");
-            /*Socket socket = new Socket(HOST, loXdyPORT);
+            Socket socket = new Socket(HOST, loXdyPORT);
             System.out.println("Client connected."+socket.getLocalSocketAddress());
             Session session = new Session(clientSocket,socket);
             Thread clientThread = new Thread(session);
             clients.add(session);
-            clientThread.start();*/
+            clientThread.start();
         }
 //        serverSocket.close();
     }

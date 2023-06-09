@@ -25,7 +25,7 @@ public class ArtistPerform extends AccountPerform{
     }
 
     public static void addSong(UUID Id,UUID song) {
-        MelodyHub.sendQuery("insert into song_artist (songid, artistid) VALUES (songid = '"+song+"' , artistid = '"+Id+"');");
+        MelodyHub.sendQuery("insert into song_artist (songid, artistid) VALUES ( '"+song+"' , '"+Id+"');");
     }
 
     public static void removeSong(UUID Id,UUID song) {

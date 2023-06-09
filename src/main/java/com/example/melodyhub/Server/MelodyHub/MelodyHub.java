@@ -91,7 +91,19 @@ public class MelodyHub {
             return null;
         }
     }
-
+    public static  UUID findSongName(String name , String genre , int year)
+    {
+        ResultSet res = MelodyHub.sendQuery(String.format("select id from song where name = '%s' and genre ='%s' and year = %d ;",name,genre,year));
+        if(res==null)
+        {
+            return null;
+        }
+        try {
+            return UUID.fromString(res.getString("id"));
+        } catch (SQLException e) {
+            return null;
+        }
+    }
     public static UUID findUserUsername(String username)
     {
         ResultSet res = MelodyHub.sendQuery("select id from person where username = '"+username+"';");
@@ -206,9 +218,11 @@ public class MelodyHub {
         }
     }
 
-    public static void createPlaylist(PlayList playList)
+    public static void createPlaylist(UUID firstOwner,PlayList playList)
     {
-        MelodyHub.sendQuery(String.format("insert into playlists (id, duration, is_public, rate, artist, first_owner , name) VALUES ('%s',%.2f ,%b ,%.2f , '%s' ,'%s','%s')",UUID.randomUUID(),playList.getDuration(),playList.isPersonal(),playList.getRate(),playList.getArtist(),playList.getFirstOwner(),playList.getName()));
+        UUID id = UUID.randomUUID();
+        MelodyHub.sendQuery(String.format("insert into playlists (id, duration, is_public, rate, artist, first_owner , name) VALUES ('%s',%.2f ,%b ,%.2f , '%s' ,'%s','%s')",id,playList.getDuration(),playList.isPersonal(),playList.getRate(),playList.getArtist(),playList.getFirstOwner(),playList.getName()));
+        AccountPerform.addPlaylist(firstOwner,id);
     }
 
     public static void removePlaylist(UUID playlist)
@@ -218,7 +232,7 @@ public class MelodyHub {
 
     public static void createSong(Song song)
     {
-        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",UUID.randomUUID(),song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, path) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",UUID.randomUUID(),song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
     }
 
     public static void removeSong(UUID song)
@@ -234,7 +248,10 @@ public class MelodyHub {
                 MelodyHub.sendQuery(String.format("update song set %s = %s where id = '%s';",column ,command.get(column),song));
         }
     }
-
+    public static void createPodcast(Podcast podcast)
+    {
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, description, path) VALUES ('%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s', '%s', '%s');",UUID.randomUUID(),podcast.getName(),podcast.getGenre(),podcast.getDuration(),podcast.getYear(),podcast.getRate(),podcast.getLyrics(),podcast.getDescription(),podcast.getPath()));
+    }
     public static void createUser(User user)
     {
         MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",UUID.randomUUID(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
@@ -431,9 +448,5 @@ public class MelodyHub {
             }
         }
         return ret;
-    }
-    public static void logout()
-    {
-
     }
 }
