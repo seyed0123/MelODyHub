@@ -385,19 +385,27 @@ public class MelodyHub {
     }
     public static void uploadSong(Socket socket,String path)
     {
-        try{
-            // Load the MP3 file from a file
-            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".mp3");
-            byte[] fileBytes = Files.readAllBytes(file.toPath());
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            int CHUNK_SIZE = 4096;
+            File file = new File(path);
+            long fileSize = file.length();
+            int numChunks = (int) Math.ceil((double) fileSize / CHUNK_SIZE);
 
-            // Send the byte array over the socket
-            OutputStream out = socket.getOutputStream();
-            DataOutputStream dos = new DataOutputStream(out);
-            dos.writeInt(fileBytes.length);
-            dos.write(fileBytes);
-            dos.flush();
+            for (int i = 0; i < numChunks; i++) {
+                int offset = i * CHUNK_SIZE;
+                int chunkSize = (int) Math.min(CHUNK_SIZE, fileSize - offset);
+                byte[] buffer = new byte[chunkSize];
+                RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+                randomAccessFile.seek(offset);
+                randomAccessFile.read(buffer);
+                randomAccessFile.close();
+
+                outputStream.write(buffer);
+            }
+            System.out.println("File sent successfully.");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error sending file: " + e.getMessage());
         }
     }
     public static ArrayList<ArrayList<UUID>> search(String searched)

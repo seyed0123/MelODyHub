@@ -99,9 +99,7 @@ public class HelloApplication  {
     public static void main(String[] args)  {
         try {
             Socket socket1 = new Socket(HOST,PORT);
-            uploadSong(socket1,"src/main/resources/com/example/melodyhub/The-Partridge-Family-I-Think-I-Love-You.mp3");
-            Scanner scanner = new Scanner(System.in);
-            scanner.next();
+            downloadSong(socket1,"src/main/resources/com/example/melodyhub/song.mp3");
             /*socket = new Socket(HOST, PORT);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
@@ -160,17 +158,16 @@ public class HelloApplication  {
     public static void downloadSong(Socket socket,String path)
     {
         try{
-            InputStream in = socket.getInputStream();
-            DataInputStream dis = new DataInputStream(in);
-            int length = dis.readInt();
-            byte[] receivedBytes = new byte[length];
-            dis.readFully(receivedBytes);
+            byte[] buffer = new byte[4096];
+            InputStream inputStream = socket.getInputStream();
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
 
-            // Save the MP3 file to a file
-            File file = new File(path);
-            OutputStream out = new FileOutputStream(file);
-            out.write(receivedBytes);
-            out.close();
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, bytesRead);
+            }
+
+            fileOutputStream.close();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
