@@ -1,11 +1,9 @@
 package com.example.melodyhub.Server.MelodyHub;
 
 import com.example.melodyhub.*;
-import com.example.melodyhub.Server.loXdy.LoXdy;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import javafx.scene.chart.XYChart;
+import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,12 +11,8 @@ import javax.crypto.*;
 import java.io.*;
 import java.net.Socket;
 import java.security.InvalidKeyException;
-import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.*;
@@ -319,18 +313,14 @@ public class Session implements Runnable{
                             String art = jsonArray.getString(i);
                             artists.add(art);
                         }
-                        MelodyHub.createSong(new Song(null, name, genre, duration, year, rate, lyrics, null));
-                        UUID id = MelodyHub.findSongName(name,genre,year);
-                        ArtistPerform.addSong(account.getId(),id);
-                        for (String art :artists)
-                        {
-                            ArtistPerform.addSong(MelodyHub.findArtistUsername(art),id);
-                        }
+                        //artists.add(account.getId().toString());
+                        MelodyHub.createSong(new Song(null, name, genre, duration, year, rate, lyrics, null),artists);
                     }
                 } else if (job.equals("update song")) {
                     if(!(account instanceof User)) {
-                        UUID id = UUID.fromString(getMessage());
-                        HashMap<String, String> commands = objectMapper.readValue(getMessage(), HashMap.class);
+                        JSONObject jsonObject = new JSONObject(getMessage());
+                        UUID id = UUID.fromString(jsonObject.getString("id"));
+                        HashMap<String, String> commands = objectMapper.readValue(jsonObject.getString("commands"), HashMap.class);
                         MelodyHub.updateSong(id, commands);
                     }
                 } else if (job.equals("create podcast")) {
@@ -344,13 +334,14 @@ public class Session implements Runnable{
                         double rate = jsonObject.getDouble("rate");
                         String lyrics = jsonObject.getString("lyrics");
                         String description = jsonObject.getString("des");
-                        MelodyHub.createPodcast(new Podcast(null, name, genre, duration, year, rate, lyrics, null,description));
+                        MelodyHub.createPodcast(new Podcast(null, name, genre, duration, year, rate, lyrics, null,description),account.getId());
                     }
                 } else if (job.equals("update user")) {
                     if(account instanceof User)
                     {
                         UUID id = account.getId();
-                        HashMap<String, String> commands = objectMapper.readValue(getMessage(), HashMap.class);
+                        JSONObject jsonObject = new JSONObject(getMessage());
+                        HashMap<String, String> commands = objectMapper.readValue(jsonObject.getString("command"), HashMap.class);
                         MelodyHub.updateUser(id, commands);
                     }
                 } else if (job.equals("update pass")) {
@@ -371,31 +362,222 @@ public class Session implements Runnable{
                     if(account instanceof Artist)
                     {
                         UUID id = account.getId();
-                        HashMap<String,String> commands = objectMapper.readValue(getMessage(),HashMap.class);
+                        JSONObject jsonObject = new JSONObject(getMessage());
+                        HashMap<String,String> commands = objectMapper.readValue(jsonObject.getString("commads"),HashMap.class);
                         MelodyHub.updateArtist(id,commands);
                     }
                 } else if (job.equals("update podcaster")) {
                     if(account instanceof Podcaster)
                     {
                         UUID id = account.getId();
-                        HashMap<String,String> commands = objectMapper.readValue(getMessage(),HashMap.class);
+                        JSONObject jsonObject = new JSONObject(getMessage());
+                        HashMap<String,String> commands = objectMapper.readValue(jsonObject.getString("command"),HashMap.class);
                         MelodyHub.updatePodcaster(id,commands);
                     }
                 } else if (job.equals("get song")) {
-                    UUID id = UUID.fromString(getMessage());
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
                     Song song = MelodyHub.findSong(id);
                     sendMessage(objectMapper.writeValueAsString(song));
                 } else if (job.equals("get playlist")) {
-                    UUID id = UUID.fromString(getMessage());
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
                     PlayList playList = MelodyHub.findPlaylist(id);
                     sendMessage(objectMapper.writeValueAsString(playList));
                 } else if (job.equals("search")) {
-                    ArrayList<ArrayList<UUID>> lists = MelodyHub.search(getMessage());
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    ArrayList<ArrayList<UUID>> lists = MelodyHub.search(jsonObject.getString("list"));
                     sendMessage(objectMapper.writeValueAsString(lists));
                 } else if (job.equals("get genre artist")) {
-                    ArrayList<UUID> list = MelodyHub.getGenreArtist(getMessage());
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    ArrayList<UUID> list = MelodyHub.getGenreArtist(jsonObject.getString("genre"));
                     sendMessage(objectMapper.writeValueAsString(list));
-                } else if (job.equals("logout")) {
+                } else if (job.equals("get followings")) {
+                    ArrayList<UUID> followings = AccountPerform.getFollowings(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(followings));
+                } else if (job.equals("get followers")) { 
+                    ArrayList<UUID> followers = AccountPerform.getFollowers(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(followers));
+                } else if (job.equals("follow")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID followId = UUID.fromString(jsonObject.getString("followId"));
+                    AccountPerform.follow(account.getId(),followId);
+                } else if (job.equals("unfollow")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID unfollow = UUID.fromString(jsonObject.getString("unfollowId"));
+                    AccountPerform.unfollow(account.getId(),unfollow);
+                } else if (job.equals("remove playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    AccountPerform.removePlaylist(account.getId(),playlist);
+                } else if (job.equals("get playlists")) {
+                    ArrayList<UUID> playlists = AccountPerform.getPlaylists(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(playlists));
+                } else if (job.equals("get songs artist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID artist = UUID.fromString(jsonObject.getString("artist"));
+                    ArrayList<UUID> songs = ArtistPerform.getSongs(artist);
+                    sendMessage(objectMapper.writeValueAsString(songs));
+                } else if (job.equals("get songs playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    ArrayList<UUID> songs = PlaylistPerform.getSongs(playlist);
+                    sendMessage(objectMapper.writeValueAsString(songs));
+                } else if (job.equals("add songs playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID song  = UUID.fromString(jsonObject.getString("song"));
+                    PlaylistPerform.addSong(playlist,song);
+                } else if (job.equals("remove song playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID song = UUID.fromString(jsonObject.getString("song"));
+                    PlaylistPerform.removeSong(playlist,song);
+                } else if (job.equals("change song order playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID song1 = UUID.fromString(jsonObject.getString("song1"));
+                    UUID song2 = UUID.fromString(jsonObject.getString("song2"));
+                    PlaylistPerform.changeSongOrder(playlist,song1,song2);
+                } else if (job.equals("get owners playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    ArrayList<UUID> owners = PlaylistPerform.getOwners(playlist);
+                    if(owners.contains(account.getId()))
+                    {
+                        sendMessage(objectMapper.writeValueAsString(owners));
+                    }else {
+                        sendMessage(objectMapper.writeValueAsString(new ArrayList<String>()));
+                    }
+                } else if (job.equals("add owner")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    if(!(PlaylistPerform.firstOwner(playlist)==account.getId()))
+                    {
+                        sendMessage("don't have permission");
+                    }else {
+                        PlaylistPerform.addOwner(playlist,id);
+                        sendMessage("done");
+                    }
+                } else if (job.equals("remove owner")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    if(!(PlaylistPerform.firstOwner(playlist)==account.getId()))
+                    {
+                        sendMessage("don't have permission");
+                    }else {
+                        PlaylistPerform.removeOwner(playlist,id);
+                        sendMessage("done");
+                    }
+                } else if (job.equals("place a song in playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    int order = Integer.parseInt(jsonObject.getString("order"));
+                    PlaylistPerform.placesASong(playlist,id,order);
+                } else if (job.equals("smart shuffle")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    sendMessage(objectMapper.writeValueAsString(PlaylistPerform.smartShuffle(playlist)));
+                } else if (job.equals("get podcast")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    sendMessage(objectMapper.writeValueAsString(PodcasterPerform.getPodcasts(id)));
+                } else if (job.equals("find song genre")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String genre = jsonObject.getString("id");
+                    sendMessage(objectMapper.writeValueAsString(SongPerform.songGenre(genre)));
+                } else if (job.equals("get artist song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    sendMessage(objectMapper.writeValueAsString(SongPerform.getArtist(id)));
+                } else if (job.equals("share song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID song = UUID.fromString(jsonObject.getString("song"));
+                    UUID user = UUID.fromString(jsonObject.getString("user"));
+                    if(account instanceof User)
+                    {
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1.put("email",MelodyHub.findUser(user).getEmail());
+                        jsonObject1.put("subject","Hi there,check this song");
+                        jsonObject1.put("body",UserPerform.shareSong(song));
+                        loXdyOutput.println(jsonObject1);
+                    }
+                } else if (job.equals("set age")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    Date date = objectMapper.readValue(jsonObject.getString("date"),Date.class);
+                    UserPerform.setAge(account.getId(),date);
+                } else if (job.equals("share playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UUID user = UUID.fromString(jsonObject.getString("user"));
+                    if(!(PlaylistPerform.firstOwner(playlist)==account.getId()))
+                    {
+                        sendMessage("don't have permission");
+                    }else {
+                        UserPerform.sharePlaylist(playlist,user);
+                        sendMessage("done");
+                    }
+                } else if (job.equals("get recommend")) {
+                    sendMessage(objectMapper.writeValueAsString(UserPerform.getRecommend(account.getId())));
+                } else if (job.equals("add favorite playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UserPerform.addFavouritePlaylist(account.getId(),playlist);
+                } else if (job.equals("remove favorite playlist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
+                    UserPerform.removeFavoritePlaylist(account.getId(),playlist);
+                } else if (job.equals("get favorite playlist")) {
+                    ArrayList<UUID> favorite = UserPerform.getFavoritePlaylist(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(favorite));
+                } else if (job.equals("like song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID song = UUID.fromString(jsonObject.getString("song"));
+                    UserPerform.likeSong(account.getId(),song);
+                } else if (job.equals("dislike song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID song = UUID.fromString(jsonObject.getString("song"));
+                    UserPerform.dislikeSong(account.getId(),song);
+                } else if (job.equals("get liked songs")) {
+                    ArrayList<UUID> songs = UserPerform.getLikedSongs(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(songs));
+                } else if (job.equals("save user notif")) {
+                    JSONObject inputs = new JSONObject(getMessage());
+                    ArrayList<String> notif = objectMapper.readValue(inputs.getString("notif"),new TypeReference<ArrayList<String>>() {});
+                    ArrayList<String> oldNotif = objectMapper.readValue(inputs.getString("oldNotif"),new TypeReference<ArrayList<String>>() {});
+                    ArrayList<UUID> queue = objectMapper.readValue(inputs.getString("queue"),new TypeReference<ArrayList<UUID>>() {});
+                    UserPerform.save(account.getId(),notif,oldNotif,queue);
+                } else if (job.equals("refresh notif")) {
+                    ArrayList<String> notif = UserPerform.refreshNotification(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(notif));
+                } else if (job.equals("see history")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String type = jsonObject.getString("type");
+                    ArrayList<String> history = UserPerform.seeHistory(account.getId(),type);
+                    sendMessage(objectMapper.writeValueAsString(history));
+                } else if (job.equals("upload song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    MelodyHub.uploadSong(socket,id.toString());
+                }
+                else if (job.equals("download song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    MelodyHub.downloadSong(socket,id.toString());
+                }
+                else if (job.equals("upload image")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    MelodyHub.uploadImage(socket,id.toString());
+                }
+                else if (job.equals("download image")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    MelodyHub.downloadImage(socket,id.toString());
+                }else if (job.equals("logout")) {
                     account=null;
                     break;
                 }

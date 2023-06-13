@@ -11,7 +11,7 @@ import java.util.UUID;
 public class PlaylistPerform {
     public static ArrayList<UUID> getSongs(UUID id) {
         ArrayList<UUID> ret=new ArrayList<>();
-        ResultSet res=MelodyHub.sendQuery("select songid from song_playlist where playlistid='"+id+"';");
+        ResultSet res=MelodyHub.sendQuery("select songid from song_playlist where playlistid='"+id+"' ORDER BY SongOrder ASC;");
         while (true) {
             try {
                 if (!res.next()) break;
@@ -43,13 +43,13 @@ public class PlaylistPerform {
                 "WHERE songId = '"+song+"' AND playlistId = '"+id+"';");
     }
 
-    public static void changeSongOrder(UUID song1,UUID song2) {
+    public static void changeSongOrder(UUID playlist,UUID song1,UUID song2) {
         MelodyHub.sendQuery("UPDATE Song_Playlist\n" +
                 "SET songOrder = CASE songId\n" +
                 "                    WHEN '"+song1+"' THEN (SELECT songOrder FROM Song_Playlist WHERE songId = '"+song2+"' AND playlistId = 'playlist_id')\n" +
                 "                    WHEN '"+song2+"' THEN (SELECT songOrder FROM Song_Playlist WHERE songId = '"+song1+"' AND playlistId = 'playlist_id')\n" +
                 "    END\n" +
-                "WHERE songId IN ('"+song1+"', '"+song2+"') AND playlistId = 'playlist_id';");
+                "WHERE songId IN ('"+song1+"', '"+song2+"') AND playlistId = '"+playlist+"';");
     }
 
     public static void placesASong(UUID playlist,UUID song,int order)
@@ -92,6 +92,17 @@ public class PlaylistPerform {
 
     public static void removeOwner(UUID id,UUID user) {
         MelodyHub.sendQuery(String.format("delete from playlist_owning where playlistid='%s' and ownerid='%s';",id,user));
+    }
+    public static UUID firstOwner(UUID playlist)
+    {
+        ResultSet res = MelodyHub.sendQuery("select first_owner from playlists where id ='"+playlist+"';");
+        UUID first =null;
+        try {
+            first = UUID.fromString(res.getString("first_owner"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return first;
     }
     public static ArrayList<UUID> smartShuffle(UUID playlist)
     {

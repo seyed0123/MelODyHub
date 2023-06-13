@@ -230,9 +230,14 @@ public class MelodyHub {
 
     }
 
-    public static void createSong(Song song)
+    public static void createSong(Song song,ArrayList<String> artists)
     {
-        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, path) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",UUID.randomUUID(),song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
+        UUID id = UUID.randomUUID();
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, path) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",id,song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
+        for (String art :artists)
+        {
+            ArtistPerform.addSong(MelodyHub.findArtistUsername(art),id);
+        }
     }
 
     public static void removeSong(UUID song)
@@ -248,9 +253,11 @@ public class MelodyHub {
                 MelodyHub.sendQuery(String.format("update song set %s = %s where id = '%s';",column ,command.get(column),song));
         }
     }
-    public static void createPodcast(Podcast podcast)
+    public static void createPodcast(Podcast podcast,UUID podcaster)
     {
-        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, description, path) VALUES ('%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s', '%s', '%s');",UUID.randomUUID(),podcast.getName(),podcast.getGenre(),podcast.getDuration(),podcast.getYear(),podcast.getRate(),podcast.getLyrics(),podcast.getDescription(),podcast.getPath()));
+        UUID id = UUID.randomUUID();
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, description, path) VALUES ('%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s', '%s', '%s');",id,podcast.getName(),podcast.getGenre(),podcast.getDuration(),podcast.getYear(),podcast.getRate(),podcast.getLyrics(),podcast.getDescription(),podcast.getPath()));
+        PodcasterPerform.addPodcast(podcaster,podcast.getId());
     }
     public static void createUser(User user)
     {
@@ -371,7 +378,6 @@ public class MelodyHub {
             byte[] receivedBytes = new byte[length];
             dis.readFully(receivedBytes);
 
-            // Save the MP3 file to a file
             File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".mp3");
             OutputStream out = new FileOutputStream(file);
             out.write(receivedBytes);

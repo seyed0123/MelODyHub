@@ -1,20 +1,41 @@
 package com.example.melodyhub.Server.MelodyHub;
 
+import com.example.melodyhub.Song;
 import com.google.gson.reflect.TypeToken;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 import static com.example.melodyhub.Server.MelodyHub.MelodyHub.*;
 
 public class UserPerform extends AccountPerform{
 
-    public static String shareSong(UUID song, UUID user)
+    public static String shareSong(UUID song)
     {
+        Random rand = new Random();
         String body="";
+        Song song1 = MelodyHub.findSong(song);
+        int randomNumber = rand.nextInt(3);
+        if(randomNumber==0)
+        {
+            body = "Hey, I heard this amazing song the other day and " +
+                    "I think you would really like it. It's got a great beat and the lyrics " +
+                    "are so relatable. It's called "+song1.getName()+".";
+        }else if(randomNumber==1)
+        {
+            body = "I think you'll love this song I heard. It's got a really unique sound and " +
+                    "the vocals are just beautiful. " +
+                    "The song is called "+song1.getName()+".";
+        }else
+        {
+            body = "I came across this song that I think you'll enjoy." +
+                    " It's got a really catchy chorus and the melody is super uplifting." +
+                    " It's called "+song1.getName()+" .";
+        }
         return body;
     }
     public static void setAge(UUID user,Date age)
@@ -46,11 +67,11 @@ public class UserPerform extends AccountPerform{
         MelodyHub.sendQuery("INSERT INTO favorite_playlists (playlistid, userid) VALUES (playlistid = '"+playlist+"' , userid = '"+Id+"');");
     }
 
-    public static void removeFavoritePlaylist(UUID playlist)
+    public static void removeFavoritePlaylist(UUID id , UUID playlist)
     {
-        MelodyHub.sendQuery("DELETE from favorite_playlists where playlistid = '"+playlist+"';");
+        MelodyHub.sendQuery("DELETE from favorite_playlists where playlistid = '"+playlist+"' AND userid = '"+id+"';");
     }
-    public static ArrayList<UUID> getFavorite(UUID Id)
+    public static ArrayList<UUID> getFavoritePlaylist(UUID Id)
     {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("SELECT playlistid FROM favorite_playlists WHERE userid='"+Id+"';");
@@ -78,9 +99,45 @@ public class UserPerform extends AccountPerform{
         MelodyHub.sendQuery("DELETE FROM liked_songs WHERE songid ='"+song+"' AND userid = '"+Id+"';");
     }
 
-    public static void addHistory(UUID Id,String command)
+    public static ArrayList<UUID> getLikedSongs(UUID id)
     {
-        MelodyHub.sendQuery("INSERT INTO history (userid, command) VALUES (userid = '"+Id+"' , command = '"+command+"');");
+        ArrayList<UUID> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("select songid from liked_songs where userid= '"+id+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add(UUID.fromString(res.getString("songid")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
+    }
+    public static void addHistory(UUID Id,String type,String command)
+    {
+        MelodyHub.sendQuery("INSERT INTO history (userid, type , command) VALUES ('"+Id+"' , '"+type+"', '"+command+"');");
+    }
+    public static ArrayList<String> seeHistory(UUID id,String type)
+    {
+        ArrayList<String> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("select command from history where userid='"+id+"' and type = '"+type+"';");
+        if(res==null)
+        {
+            return null;
+        }
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add((res.getString("command")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
     }
     public static void save(UUID Id,ArrayList<String>notificationI,ArrayList<String>oldNotificationI,ArrayList<UUID>queueI)
     {

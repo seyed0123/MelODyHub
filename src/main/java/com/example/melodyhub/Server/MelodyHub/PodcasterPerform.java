@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class PodcasterPerform extends AccountPerform{
-    public ArrayList<UUID> getPodcasts(UUID Id) {
+    public static ArrayList<UUID> getPodcasts(UUID Id) {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select songid from song_artist where artistid = '"+Id+"';");
         if(res==null)
@@ -24,10 +24,10 @@ public class PodcasterPerform extends AccountPerform{
         return ret;
     }
 
-    public void addPodcast(UUID Id,UUID podcast) {
+    public static void addPodcast(UUID Id,UUID podcast) {
         MelodyHub.sendQuery("insert into song_artist (songid, artistid) VALUES (songid = '"+podcast+"' , artistid = '"+Id+"');");    }
 
-    public void removePodcast(UUID Id,UUID podcast) {
+    public static void removePodcast(UUID Id,UUID podcast) {
         MelodyHub.sendQuery("delete from song_artist where artistid = '"+Id+"' and songid = '"+podcast+"';");
     }
 }

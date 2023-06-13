@@ -1,7 +1,9 @@
 package com.example.melodyhub;
 
+import com.example.melodyhub.Server.MelodyHub.AccountPerform;
 import com.example.melodyhub.Server.MelodyHub.Session;
 import com.example.melodyhub.Server.loXdy.Main;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,7 +24,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.sql.Date;
-import java.util.Base64;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.testng.AssertJUnit.*;
@@ -129,6 +132,40 @@ public class Testing {
         assertEquals("failed",getMessage());
     }
     @Test
+    public void testCreateMultipleUsers() throws IOException {
+        setSocket();
+
+        List<JSONObject> users = new ArrayList<>();
+        users.add(createUserJson("johndoe", "password123", "1234567890", "johndoe@example.com", "male", "1990-01-01"));
+        users.add(createUserJson("janedoe", "password456", "0987654321", "janedoe@example.com", "female", "1995-05-05"));
+        users.add(createUserJson("bobsmith", "password789", "5551234567", "bobsmith@example.com", "male", "1985-12-31"));
+        users.add(createUserJson("sallyjones", "passwordabc", "2225558888", "sallyjones@example.com", "female", "1980-07-15"));
+        users.add(createUserJson("mikewilson", "passworddef", "5559876543", "mikewilson@example.com", "male", "1975-03-22"));
+
+        for (JSONObject user : users) {
+            sendMessage("create user");
+            sendMessage(user.toString());
+            assertEquals("done", getMessage());
+        }
+
+        for (JSONObject user : users) {
+            sendMessage("create user");
+            sendMessage(user.toString());
+            assertEquals("failed", getMessage());
+        }
+    }
+
+    private JSONObject createUserJson(String username, String password, String phone, String email, String gender, String date) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("password", password);
+        jsonObject.put("phone", phone);
+        jsonObject.put("email", email);
+        jsonObject.put("gender", gender);
+        jsonObject.put("date", date);
+        return jsonObject;
+    }
+    @Test
     public void createArtist() throws IOException {
         setSocket();
         sendMessage("create artist");
@@ -142,6 +179,43 @@ public class Testing {
         sendMessage("create artist");
         sendMessage(jsonObject.toString());
         assertEquals("failed",getMessage());
+    }
+    @Test
+    public void createMultipleArtists() throws IOException {
+        // Set up the socket and send the "create artist" command
+        setSocket();
+
+
+        // Create a list of 5 artists
+        List<JSONObject> artists = new ArrayList<>();
+        artists.add(createArtistJson("adolf", "1234", "12334656", "adolf@example.com"));
+        artists.add(createArtistJson("sara", "5678", "98765432", "sara@example.com"));
+        artists.add(createArtistJson("ali", "9012", "54321678", "ali@example.com"));
+        artists.add(createArtistJson("lisa", "3456", "87654321", "lisa@example.com"));
+        artists.add(createArtistJson("john", "7890", "12345678", "john@example.com"));
+
+        // Send each artist as a message and expect the response "done"
+        for (JSONObject artist : artists) {
+            sendMessage("create artist");
+            sendMessage(artist.toString());
+            assertEquals("done", getMessage());
+        }
+
+        // Try to create each artist again and expect the response "failed"
+        for (JSONObject artist : artists) {
+            sendMessage("create artist");
+            sendMessage(artist.toString());
+            assertEquals("failed", getMessage());
+        }
+    }
+
+    private JSONObject createArtistJson(String username, String password, String phone, String email) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("password", password);
+        jsonObject.put("phone", phone);
+        jsonObject.put("email", email);
+        return jsonObject;
     }
     @Test
     public void createPodcaster() throws IOException {
@@ -228,20 +302,66 @@ public class Testing {
         jsonObject.put("year",2020);
         jsonObject.put("lyrics","none");
         jsonObject.put("rate",0.0);
-        JSONArray jsonElements = new JSONArray();
-        jsonElements.put("mamad");
-        jsonObject.put("artists",jsonElements);
+        JSONArray artists = new JSONArray();
+        artists.put("mamad");
+        jsonObject.put("artists",artists);
         sendMessage(jsonObject.toString());
+    }
+    @Test
+    public void createSongsWithMultipleSingers() throws IOException {
+        setSocket();
+        loginArtist();
 
+        List<JSONObject> songs = new ArrayList<>();
+
+        List<String> songNames = Arrays.asList("Gone with the Wind", "Dancing in the Dark", "Blue Moon", "Autumn Leaves", "Summertime", "Fly Me to the Moon", "The Way You Look Tonight");
+
+        for (int i = 1; i <= 5; i++) {
+            String songName = songNames.get(new Random().nextInt(songNames.size()));
+            List<String> artists = Arrays.asList("mamad", "sara", "ali", "lisa", "john");
+            Collections.shuffle(artists);
+            List<String> singers = artists.subList(0, new Random().nextInt(artists.size()) + 1);
+            JSONObject song = createSongJson(songName, "Jazz", 3.5, 2022, "", 0.0, singers);
+            songs.add(song);
+        }
+
+        for (JSONObject song : songs) {
+            sendMessage("create song");
+            sendMessage(song.toString());
+        }
+    }
+
+    private JSONObject createSongJson(String name, String genre, double duration, int year, String lyrics, double rate, List<String> singers) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", name);
+        jsonObject.put("genre", genre);
+        jsonObject.put("duration", duration);
+        jsonObject.put("year", year);
+        jsonObject.put("lyrics", lyrics);
+        jsonObject.put("rate", rate);
+        JSONArray artistsArray = new JSONArray(singers);
+        jsonObject.put("artists", artistsArray);
+        return jsonObject;
     }
     @Test
     public void getSong() throws IOException {
         loginUser();
-        sendMessage("get song");
-        sendMessage("401e58e6-8b50-4b14-8170-aff3b337e0d5");
+        JSONObject jsonObject = new JSONObject(getMessage());
+        jsonObject.put("id","401e58e6-8b50-4b14-8170-aff3b337e0d5");
+        sendMessage(jsonObject.toString());
         ObjectMapper objectMapper = new ObjectMapper();
         Song song = objectMapper.readValue(getMessage(),Song.class);
         assertEquals("I think",song.getName());
         assertEquals(2020,song.getYear());
+    }
+    @Test
+    public void uploadImage() throws IOException {
+        setSocket();
+        loginUser();
+        sendMessage("download image");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id","6f51a2cb-feff-4ec7-a35b-928c1193b561");
+        sendMessage(jsonObject.toString());
+        HelloApplication.uploadImage(socket,"src/main/resources/com/example/melodyhub/image.png");
     }
 }
