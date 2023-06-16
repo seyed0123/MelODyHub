@@ -4,52 +4,43 @@ import pandas as pd
 from itertools import groupby
 import psycopg2
 import psycopg2.extras
-import io
-import pprint
 
+# reading the csv file containing the clustered songs
 df = pd.read_csv("clustered_tracks.csv")
 print("read the track csv file")
 
-def check_condition():
-
-    return True
-
-
+# this function takes the table of the users history and turns each users
+# history into a dictionary containing the age of the user , the id  and 
+# the songs that the user has listened to 
 def user_to_dict(table):
 
     users_dict = []
-
-
-    users_list = [list(group) for key , group in groupby(table , key=lambda x: x[0])]
+    users_list = [list(group) for key , group in groupby(table , key=lambda x: x[0])] # group by user 
 
     for user in users_list:
-
         listened_songs = []
         user_dict = {}
 
-        print(user[0][0])
-        # user_id = user[0][0]
-        age = get_age(user[0][0])
+        # adding the age and the user id to the user dictionary 
+        age = get_age(user[0][0]) # the user[0][0] code is the id of the user 
         user_dict["id"] = str(user[0][0])
         user_dict["age"] = age
 
-        for song in user:
+        for song in user: # appending each song to the listened songs
             song_id = song[2]
-            # song_name = get_song_name(song_id)
             listened_songs.append(song_id)
 
+        # adding a copy of listened songs to the user dictionary 
+        # and and appending user_dict which is a dictionary to 
+        # users_dict which is a list of all the users 
         user_dict["listened_songs"] = listened_songs.copy()
         users_dict.append(user_dict.copy())
-        listened_songs.clear()
-        # print(users_dict)
+        listened_songs.clear() # clearning the list to prevent collision
         
-
-
-    # user_dict = [{"id" : "13lk14h15l1h5lh" , "listened_songs" : ["It's Your Love" , "Ich lebe - Radio Version" , "You Keep It All In" , "Came in On My Own" , "Hurting Inside" , "It's Your Love" , "It's Your Love" , "It's Your Love" , "Ich lebe - Radio Version"] , "age" : 20 }]
     return users_dict
     
 
-
+# getting the table of the user histroy
 def get_table():
     
     hostname = 'localhost'
@@ -58,7 +49,6 @@ def get_table():
     pwd = 'arshanelmtalab1398a'
     port_id = 5432
     conn = None
-
 
     try:
         with psycopg2.connect(
@@ -82,6 +72,7 @@ def get_table():
 
     return table
 
+# by giving the id of the user the age of the user will be retreived
 def get_age(id):
 
     hostname = 'localhost'
@@ -90,7 +81,6 @@ def get_age(id):
     pwd = 'arshanelmtalab1398a'
     port_id = 5432
     conn = None
-
 
     try:
         with psycopg2.connect(
@@ -115,6 +105,7 @@ def get_age(id):
 
     return age
 
+# by giving the song id returns the song name
 def get_song_name(id):
 
     song_info = df[df["id"] == id]
@@ -124,7 +115,14 @@ def get_song_name(id):
     
     return song_name
 
+
+
+
 #  TODO : completing the function required for the program 
+
+def check_condition():
+
+    return True
 
 def organize_by_time():
     pass
@@ -140,10 +138,5 @@ if __name__ == '__main__':
 
     table = get_table()
     users_dict = user_to_dict(table)
-    # age = get_age("6kxHMpVt9OYDQOwXYJrQAb")
-    # song_info = get_song_name("6kxHMpVt9OYDQOwXYJrQAb")
-    # Read the output and decode it
-
     print(users_dict)
 
-    # print(users_dict)

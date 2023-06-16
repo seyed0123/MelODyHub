@@ -4,7 +4,8 @@ from pprint import pprint
 import numpy as np 
 from scipy.spatial.distance import cdist
 import Receiver 
-# df = pd.read_csv("clustered_tracks.csv")
+
+# getting the csv file 
 df = Receiver.df
 
 cols_to_cluster = ['key_1',
@@ -57,19 +58,19 @@ def recom_by_song(user_dict):
     most_listened = 10
     recom_num = 15
 
-    print("unqie_songs : " + str(consistent_songs.shape[0]))
+    # print("unqie_songs : " + str(consistent_songs.shape[0]))
     if consistent_songs.shape[0] > most_listened:
         consistent_songs = consistent_songs[0:most_listened+1]
 
     num_recoms = recom_num // consistent_songs.shape[0]
     left_num_recoms = recom_num % consistent_songs.shape[0]
-    print("num_recoms " + str(num_recoms) + "left_num_recoms" + str(left_num_recoms))
+    # print("num_recoms " + str(num_recoms) + "left_num_recoms" + str(left_num_recoms))
 
     for i , song in enumerate(consistent_songs):
 
         target_song = df[df["id"] == song] 
         target_cluster = target_song["cluster"].values[0]
-        print("\n")
+        # print("\n")
         X = df[df["cluster"] == target_cluster]
 
         # Calculate the distances between the target point and points in the target cluster
@@ -77,8 +78,8 @@ def recom_by_song(user_dict):
 
         # Find the index of the nearest point
         nearest_index = np.argsort(distances[0])
+
         # # # Retrieve the nearest point
-        # nearest_point = X[nearest_index]
         nearest_row = X.iloc[nearest_index].values
 
         if(i == 0):
@@ -86,18 +87,10 @@ def recom_by_song(user_dict):
 
         else :
             nearest_row = nearest_row[:num_recoms]
-            
-        print("number of nearest_rows " + str(len(nearest_row)))
-        # pprint(nearest_row.encode('cp1252', errors='replace').decode('cp1252'))
-        print("\n")
-        # print(nearest_row)
-        # print("\n")
-
+    
         for row in nearest_row :
             recom_list.append(row[0])
-            # print(row)
 
-        # print("Nearest Point:", nearest_point)
 
     return recom_list
 
