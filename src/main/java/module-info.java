@@ -10,7 +10,7 @@ module com.example.melodyhub {
     requires dropbox.core.sdk;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
-    requires json;
+    requires org.json;
     requires org.testng;
     requires com.fasterxml.jackson.databind;
     requires java.desktop;
