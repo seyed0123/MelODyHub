@@ -1,0 +1,122 @@
+.btn_hover:hover {
+    -fx-effect: dropshadow(three-pass-box, #8b45db, 5, 0, 0, 0) !important;
+}
+
+.txt-hover:hover {
+    -fx-text-fill: #ff70af;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #8b45db;
+    -fx-background-insets: 0;
+}
+
+.button {
+    -fx-text-fill: #8b45db !important;
+    -fx-background-radius: 32;
+}
+
+.text-field:focused {
+    -fx-focus-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-faint-focus-color: -fx-control-inner-background;
+}
+
+.btn_hover_text:hover {
+    -fx-text-fill: #8b45db;
+}
+
+
+.night-mode {
+    -fx-background-color: #383838;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}
+
+.light-mode {
+    -fx-background-color: #EBECF0;
+}
+
+.night-mode-dp {
+    -fx-control-inner-background: #383838;
+    -fx-prompt-text-fill: #ffffff;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #8b45db;
+    -fx-background-insets: 0;
+}
+
+.bottom-bar-color {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0b1e3e, #4e154c);
+}
+
+.body-back {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #4e154c, #085a89);
+}
+
+.transparent {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.scroll-pane {
+    -fx-background: rgba(0, 0, 0, 0);
+    -fx-border-color: rgba(0, 0, 0, 0);
+}
+
+.scroll-bar {
+    -fx-control-inner-background: rgba(0, 0, 0, 0);
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background: rgba(0, 0, 0, 0);
+    -fx-color: rgba(255, 255, 255, 0.3);
+}
+
+.slider .track {
+    -fx-background-color: rgba(255, 255, 255, 0.45);
+}
+
+.image-view {
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+.table-row-cell:empty {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-border-width: 0px;
+}
+
+.table-cell {
+    -fx-text-fill: white;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.table-row-cell:even {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: rgba(140, 34, 231, 0.3);
+}
+
+
+.table-view {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #123456;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
