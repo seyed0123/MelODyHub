@@ -99,15 +99,14 @@ public class HelloApplication  {
     public static void main(String[] args)  {
         try {
             Socket socket1 = new Socket(HOST,PORT);
-            downloadSong(socket1,"src/main/resources/com/example/melodyhub/song.mp3");
-            /*socket = new Socket(HOST, PORT);
+            socket = new Socket(HOST, PORT);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             gson = new Gson();
             startCom();
             sendMessage("hello encrypted server");
             System.out.println(getMessage());
-            socket.close();*/
+            socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
