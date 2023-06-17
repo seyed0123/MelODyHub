@@ -1,0 +1,45 @@
+/* Styling for the list container */
+.ul.list-view {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Styling for each list item */
+.ul.list-view li {
+    padding: 10px;
+    border-bottom: 1px solid #8c66a1;
+    background-color: rgba(232, 0, 254, 0.1);
+}
+
+/* Styling for the hover effect on list items */
+.ul.list-view li:hover {
+    background-color: #8c66a1;
+}
+
+/* Styling for the first list item */
+ul.list-view li:first-child {
+    border-top: 1px solid #e800fe;
+}
+
+/* Styling for the last list item */
+ul.list-view li:last-child {
+    border-bottom: none;
+}
+
+/* Example styling for the text within list items */
+ul.list-view li span {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Example styling for a link within list items */
+ul.list-view li a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Example styling for a link within list items on hover */
+ul.list-view li a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
+   <children>
+      <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+         <children>
+            <HBox alignment="CENTER" layoutX="106.0" layoutY="-1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="872.0" spacing="15.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0">
+                     <children>
+                        <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Nova" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Nova Light" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-love-48.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-rewind-50.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-play-50.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-fast-forward-50.png" />
+                     </image>
+                  </ImageView>
+                  <Slider prefHeight="19.0" prefWidth="500.0" stylesheets="@css/styles.css" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+      <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #383838;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <VBox fx:id="recommended" prefHeight="400.0" prefWidth="740.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="167.0" text="Popular Songs" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Condensed" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
+                     <content>
+                        <HBox alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+                  <Label prefHeight="24.0" prefWidth="167.0" text="Popular Songs" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Condensed" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
+                     <content>
+                        <HBox alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="100.0" spacing="2.0">
+                                 <children>
+                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Nova Light" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+         <top>
+            <ImageView fx:id="banner" fitHeight="110.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@images/logo.jpg" />
+               </image>
+            </ImageView>
+         </top>
+      </BorderPane>
+      <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #282828;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-home-50(1).png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="24.0" prefWidth="79.0" text="Home" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Condensed" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-home-50(1).png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Condensed" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-home-50(1).png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="24.0" prefWidth="79.0" text="Premium" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Condensed" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <Label prefHeight="40.0" prefWidth="136.0" text="Artists" textFill="#bebebe">
+               <font>
+                  <Font name="Roboto Condensed" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label prefHeight="40.0" prefWidth="136.0" text="Podcasts" textFill="#bebebe">
+               <font>
+                  <Font name="Roboto Condensed" size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label prefHeight="40.0" prefWidth="136.0" text="Albums" textFill="#bebebe">
+               <font>
+                  <Font name="Roboto Condensed" size="14.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

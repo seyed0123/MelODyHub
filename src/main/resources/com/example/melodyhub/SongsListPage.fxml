@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SongsListController">
+    <children>
+        <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+            <children>
+                <HBox alignment="CENTER" layoutX="106.0" layoutY="-1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="872.0" spacing="15.0">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Nova" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Nova Light" size="11.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-love-48.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-rewind-50.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-play-50.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-fast-forward-50.png" />
+                            </image>
+                        </ImageView>
+                        <Slider prefHeight="19.0" prefWidth="500.0" stylesheets="@css/styles.css" />
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
+        <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #383838;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+            <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                        <Group>
+                            <children>
+                                <TextField fx:id="search_field" prefHeight="42.0" prefWidth="225.0" style="-fx-background-color: #919191; -fx-background-radius: 20px;" text="What do you want to listen to?">
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                                </TextField>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="186.0" layoutY="6.0" onMouseClicked="#searchClicked" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@images/icons8-search-50.png" />
+                                    </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                                </ImageView>
+                            </children>
+                        </Group>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </HBox>
+            </top>
+         <center>
+            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-border-color: #919191;" styleClass="transparent" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+               <content>
+                  <TableView fx:id="songs_table" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="850.0" style="-fx-border-color: 919191;" styleClass="transparent" stylesheets="@css/styles.css" />
+               </content>
+            </ScrollPane>
+         </center>
+        </BorderPane>
+        <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #282828;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                    <VBox.margin>
+                        <Insets top="50.0" />
+                    </VBox.margin>
+                    <children>
+                        <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-home-50(1).png" />
+                            </image>
+                        </ImageView>
+                        <Label prefHeight="24.0" prefWidth="79.0" text="Home" textFill="WHITE">
+                            <font>
+                                <Font name="Roboto Condensed" size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-search-50-darkmode.png" />
+                            </image>
+                        </ImageView>
+                        <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="WHITE">
+                            <font>
+                                <Font name="Roboto Condensed" size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0" spacing="5.0">
+                    <children>
+                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-premium-64.png" />
+                            </image>
+                        </ImageView>
+                        <Label prefHeight="24.0" prefWidth="79.0" text="Premium" textFill="WHITE">
+                            <font>
+                                <Font name="Roboto Condensed" size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+                <Label prefHeight="40.0" prefWidth="136.0" text="Artists" textFill="#bebebe">
+                    <font>
+                        <Font name="Roboto Condensed" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="50.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="136.0" text="Podcasts" textFill="#bebebe">
+                    <font>
+                        <Font name="Roboto Condensed" size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Label>
+                <Label prefHeight="40.0" prefWidth="136.0" text="Albums" textFill="#bebebe">
+                    <font>
+                        <Font name="Roboto Condensed" size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Label>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

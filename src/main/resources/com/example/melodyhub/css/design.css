@@ -1,0 +1,144 @@
+/* button design */
+.button {
+    -fx-background-color: linear-gradient(to bottom right, #bf73c7, #b87ebd);
+    -fx-cursor: hand;
+    -fx-text-fill: #3e1940;
+    -fx-font-size: 16px;
+    -fx-font-family: Pristina;
+    -fx-border-radius: 10px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #d583dc, #3c3f41);
+}
+
+
+/*#pane{*/
+/*    -fx-background-image: url("images/firstPage.jpg");*/
+/*    -fx-background-repeat: stretch;*/
+/*    -fx-background-size: 400 500;*/
+/*    -fx-background-position: center center;*/
+/*    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+/*}*/
+
+.custom-textbox {
+    -fx-border-radius: 10px;
+    -fx-background-color: rgba(242, 223, 244, 0);
+    -fx-border-color: #d583dc;
+    -fx-border-width: 1px;
+}
+
+.custom-textbox:focused {
+    -fx-border-color: linear-gradient(to bottom right, #640970, #b357b9);
+    -fx-border-width: 1px;
+}
+
+.custom-datepicker:focused {
+    -fx-border-color: linear-gradient(to bottom right, #640970, #b357b9);
+    -fx-border-width: 0px;
+}
+
+.custom-datepicker {
+    -fx-background-color: rgba(242, 223, 244, 0);
+    -fx-user-select: none;
+
+}
+
+.custom-combobox {
+    -fx-background-color: #b4adb9; /* Background color */
+    -fx-border-color: rgba(206, 176, 206, 0.46); /* Border color */
+    -fx-border-radius: 3px; /* Border radius */
+}
+
+.custom-combobox .list-cell {
+    -fx-text-fill: #333333; /* Text color */
+}
+
+.custom-combobox .arrow-button {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-background-insets: 0; /* No background insets */
+}
+
+.custom-combobox .arrow-button .arrow {
+    -fx-background-color: #fdeb01; /* Arrow color */
+}
+
+.custom-combobox .arrow-button:hover {
+    -fx-background-color: #361e36; /* Hover background color */
+}
+
+.custom-combobox .arrow-button:pressed {
+    -fx-background-color: #8c66a1; /* Pressed background color */
+}
+
+.custom-datepicker {
+    -fx-background-color: rgb(180, 173, 185); /* Background color */
+    -fx-border-width: 0px;
+
+}
+
+.custom-datepicker .arrow-button {
+    -fx-background-color: #b4adb9; /* Transparent background */
+    -fx-background-insets: 0; /* No background insets */
+}
+
+.custom-datepicker .arrow {
+    -fx-background-color: rgba(232, 0, 254, 0.1); /* Arrow color */
+}
+
+.custom-datepicker .arrow-button:hover {
+    -fx-background-color: #361e36; /* Hover background color */
+}
+
+.custom-datepicker .arrow-button:pressed {
+    -fx-background-color: #fdeb01; /* Pressed background color */
+}
+
+/* CSS code for DatePicker date window style */
+.date-picker-popup {
+    -fx-background-color: #fdeb01; /* Background color */
+    -fx-border-color: #fdeb01; /* Border color */
+}
+
+.date-picker-popup .arrow {
+    -fx-background-color: #170d70; /* Arrow color */
+}
+
+.date-picker-popup .arrow-button:hover {
+    -fx-background-color: #fdeb01; /* Hover background color */
+}
+
+.date-picker-popup .arrow-button:pressed {
+    -fx-background-color: #fd0101; /* Pressed background color */
+}
+
+.date-picker-popup .day-cell {
+    -fx-text-fill: #090101; /* Text color */
+}
+
+.date-picker-popup .day-cell:hover,
+.date-picker-popup .day-cell:focused {
+    -fx-background-color: #43b92e; /* Hover/focused background color */
+}
+
+.date-picker-popup .day-cell:selected {
+    -fx-background-color: #fd6201; /* Selected background color */
+    -fx-text-fill: #fd0190; /* Selected text color */
+}
+
+.date-picker-popup .week-number-cell {
+    -fx-text-fill: #01e0fd; /* Week number text color */
+}
+
+/*#pane{*/
+/*    -fx-background-image: url("images/firstPage.jpg");*/
+/*    -fx-background-repeat: stretch;*/
+/*    -fx-background-size: 900 506;*/
+/*    -fx-background-position: center center;*/
+/*    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+/*}*/
+
