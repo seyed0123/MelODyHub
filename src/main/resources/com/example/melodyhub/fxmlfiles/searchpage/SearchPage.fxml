@@ -58,15 +58,25 @@
                                 <Image url="@../../images/next-button.png" />
                             </image>
                         </ImageView>
-                        <Slider prefHeight="19.0" prefWidth="590.0" styleClass="btn_hover" stylesheets="@../../css/styles.css" />
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                        <Slider prefHeight="19.0" prefWidth="541.0" styleClass="btn_hover" stylesheets="@../../css/styles.css" />
+                        <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
                                 <Image url="@../../images/heart.png" />
                             </image>
                         </ImageView>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1004.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="30.0" fitWidth="38.0" layoutX="1004.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@../../images/comment.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="31.0" fitWidth="34.0" layoutX="980.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@../../images/lyrics.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="31.0" layoutX="1055.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@../../images/playlist.png" />
                      </image>
                   </ImageView>
                     </children>
