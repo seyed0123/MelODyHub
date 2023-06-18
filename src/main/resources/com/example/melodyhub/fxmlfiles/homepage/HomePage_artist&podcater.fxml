@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
    <children>
-      <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+      <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
-            <HBox alignment="CENTER" layoutX="106.0" layoutY="-1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="872.0" spacing="15.0">
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="1080.0" spacing="15.0" style="-fx-background-color: #16071C;">
                <children>
-                  <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0">
+                  <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
                      <children>
                         <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
@@ -34,52 +34,62 @@
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/icons8-love-48.png" />
+                        <Image url="@../../images/next-button%20(1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/icons8-rewind-50.png" />
+                        <Image url="@../../images/play.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/icons8-play-50.png" />
+                        <Image url="@../../images/pause-button.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/icons8-fast-forward-50.png" />
+                        <Image url="@../../images/next-button.png" />
                      </image>
                   </ImageView>
-                  <Slider prefHeight="19.0" prefWidth="500.0" stylesheets="@css/styles.css" />
+                  <Slider prefHeight="19.0" prefWidth="590.0" styleClass="btn_hover" stylesheets="@../../css/styles.css" />
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@../../images/heart.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1004.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@../../images/comment.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </children>
       </Pane>
-      <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #383838;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #301934;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
             <VBox fx:id="recommended" prefHeight="400.0" prefWidth="740.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label prefHeight="24.0" prefWidth="167.0" text="Popular Songs" textFill="WHITE">
+                  <Label prefHeight="14.0" prefWidth="553.0" text="Melody Hub's recommendations to you!" textFill="WHITE">
                      <font>
-                        <Font name="Roboto Condensed" size="18.0" />
+                        <Font name="Pristina" size="16.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
+                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@../../css/styles.css" vbarPolicy="NEVER">
                      <content>
-                        <HBox alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="718.0" spacing="20.0">
                            <children>
                               <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -98,7 +108,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -117,7 +127,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -139,15 +149,15 @@
                         </HBox>
                      </content>
                   </ScrollPane>
-                  <Label prefHeight="24.0" prefWidth="167.0" text="Popular Songs" textFill="WHITE">
+                  <Label prefHeight="29.0" prefWidth="204.0" text="Popular Songs" textFill="WHITE">
                      <font>
-                        <Font name="Roboto Condensed" size="18.0" />
+                        <Font name="Pristina" size="12.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
+                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@../../css/styles.css" vbarPolicy="NEVER">
                      <content>
                         <HBox alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
                            <children>
@@ -155,7 +165,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -174,7 +184,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -193,7 +203,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -212,7 +222,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -231,7 +241,7 @@
                                  <children>
                                     <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/covers/Rema_-_Calm_Down.png" />
+                                          <Image url="@../../images/covers/Rema_-_Calm_Down.png" />
                                        </image>
                                     </ImageView>
                                     <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
@@ -260,28 +270,28 @@
             </VBox>
          </bottom>
          <top>
-            <ImageView fx:id="banner" fitHeight="110.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+            <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/logo.jpg" />
+                  <Image url="@../../images/logo.jpg" />
                </image>
             </ImageView>
          </top>
       </BorderPane>
-      <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #282828;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-home-50(1).png" />
+                        <Image url="@../../images/user.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="24.0" prefWidth="79.0" text="Home" textFill="WHITE">
+                  <Label prefHeight="24.0" prefWidth="79.0" text="Profile" textFill="#101010">
                      <font>
-                        <Font name="Roboto Condensed" size="14.0" />
+                        <Font name="Pristina" size="24.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -292,16 +302,16 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-home-50(1).png" />
+                        <Image url="@../../images/search.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="WHITE">
+                  <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="#101010">
                      <font>
-                        <Font name="Roboto Condensed" size="14.0" />
+                        <Font name="Pristina" size="24.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -312,16 +322,16 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-home-50(1).png" />
+                        <Image url="@../../images/likedSongs.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="24.0" prefWidth="79.0" text="Premium" textFill="WHITE">
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Favs">
                      <font>
-                        <Font name="Roboto Condensed" size="14.0" />
+                        <Font name="Pristina" size="24.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -332,42 +342,146 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <Label prefHeight="40.0" prefWidth="136.0" text="Artists" textFill="#bebebe">
-               <font>
-                  <Font name="Roboto Condensed" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="50.0" />
-               </VBox.margin>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="45.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/parchment.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="History">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
                <padding>
                   <Insets left="20.0" />
                </padding>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label prefHeight="40.0" prefWidth="136.0" text="Podcasts" textFill="#bebebe">
-               <font>
-                  <Font name="Roboto Condensed" size="14.0" />
-               </font>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="44.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/notifNO.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Notifs">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
                <padding>
                   <Insets left="20.0" />
                </padding>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label prefHeight="40.0" prefWidth="136.0" text="Albums" textFill="#bebebe">
-               <font>
-                  <Font name="Roboto Condensed" size="14.0" />
-               </font>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/premium%20(1).png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Verification">
+                     <font>
+                        <Font name="Pristina" size="21.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
                <padding>
                   <Insets left="20.0" />
                </padding>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/share.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Share">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/music.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Playlist">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="387.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/album.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Album">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="50.0" prefWidth="150.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/sign-out.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Sign Out">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
          </children>
       </VBox>
    </children>
