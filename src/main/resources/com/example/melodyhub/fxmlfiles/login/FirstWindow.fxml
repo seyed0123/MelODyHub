@@ -37,24 +37,24 @@
     <children>
         <AnchorPane fx:id="mainPane" prefHeight="501.0" prefWidth="498.0">
             <children>
-                <AnchorPane fx:id="forgetPassword1" layoutX="11.0" layoutY="16.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@css/design.css">
+                <AnchorPane fx:id="forgetPassword1" layoutX="11.0" layoutY="16.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@../../css/design.css">
                     <children>
                         <Label layoutX="159.0" layoutY="47.0" prefHeight="58.0" prefWidth="163.0" text="Forget Password" textFill="#331336">
                             <font>
                                 <Font name="Pristina" size="25.0" />
                             </font>
                         </Label>
-                        <Button fx:id="forgot_password_confirm_b" layoutX="105.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmForgetPassQues" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Confirm" textFill="#441246">
+                        <Button fx:id="forgot_password_confirm_b" layoutX="105.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmForgetPassQues" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@../../css/design.css" text="Confirm" textFill="#441246">
                             <font>
                                 <Font name="Pristina" size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="change_btn" layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Change Password" textFill="#441246" visible="false">
+                        <Button fx:id="change_btn" layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@../../css/design.css" text="Change Password" textFill="#441246" visible="false">
                             <font>
                                 <Font name="Pristina" size="20.0" />
                             </font>
                         </Button>
-                        <TextField fx:id="username_field" layoutX="104.0" layoutY="171.0" prefHeight="26.0" prefWidth="254.0" promptText="Username" styleClass="custom-textbox" stylesheets="@css/design.css">
+                        <TextField fx:id="username_field" layoutX="104.0" layoutY="171.0" prefHeight="26.0" prefWidth="254.0" promptText="Username" styleClass="custom-textbox" stylesheets="@../../css/design.css">
                             <font>
                                 <Font name="Pristina" size="12.0" />
                             </font>
@@ -64,7 +64,7 @@
                                 <Font name="Pristina" size="16.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="ques_combo" layoutX="251.0" layoutY="230.0" prefHeight="30.0" prefWidth="106.0" styleClass="custom-combobox" stylesheets="@css/design.css">
+                        <ComboBox fx:id="ques_combo" layoutX="251.0" layoutY="230.0" prefHeight="30.0" prefWidth="106.0" styleClass="custom-combobox" stylesheets="@../../css/design.css">
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
@@ -72,12 +72,12 @@
                                 <Cursor fx:constant="DEFAULT" />
                             </cursor>
                         </ComboBox>
-                        <TextField fx:id="answer_field" layoutX="103.0" layoutY="278.0" prefHeight="26.0" prefWidth="254.0" promptText="Answer" styleClass="custom-textbox" stylesheets="@css/design.css">
+                        <TextField fx:id="answer_field" layoutX="103.0" layoutY="278.0" prefHeight="26.0" prefWidth="254.0" promptText="Answer" styleClass="custom-textbox" stylesheets="@../../css/design.css">
                             <font>
                                 <Font name="Pristina" size="12.0" />
                             </font>
                         </TextField>
-                        <TextField fx:id="password_field" layoutX="104.0" layoutY="480.0" prefHeight="26.0" prefWidth="254.0" promptText="New Password" styleClass="custom-textbox" stylesheets="@css/design.css" visible="false">
+                        <TextField fx:id="password_field" layoutX="104.0" layoutY="480.0" prefHeight="26.0" prefWidth="254.0" promptText="New Password" styleClass="custom-textbox" stylesheets="@../../css/design.css" visible="false">
                             <font>
                                 <Font name="Pristina" size="12.0" />
                             </font>
@@ -100,7 +100,7 @@
                         </Label>
                   <ImageView fitHeight="52.0" fitWidth="45.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/back-icon.png" />
+                        <Image url="@../../images/back-icon.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -114,19 +114,19 @@
                         <!--                  <FontAwesomeIconView fill="#7b1289" glyphName="LOCK" layoutX="166.0" layoutY="65.0" size="5em" />-->
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="authentication" layoutX="25.0" layoutY="27.0" prefHeight="632.0" prefWidth="456.0" stylesheets="@css/design.css" visible="false">
+                <AnchorPane fx:id="authentication" layoutX="25.0" layoutY="27.0" prefHeight="632.0" prefWidth="456.0" stylesheets="@../../css/design.css" visible="false">
                     <children>
                         <Label layoutX="143.0" layoutY="39.0" prefHeight="71.0" prefWidth="182.0" text="Authentication" textFill="#3e1940">
                             <font>
                                 <Font name="Pristina" size="26.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="authCode_field" layoutX="93.0" layoutY="268.0" prefHeight="26.0" prefWidth="253.0" promptText="Enter your code..." styleClass="custom-textbox" stylesheets="@css/design.css">
+                        <TextField fx:id="authCode_field" layoutX="93.0" layoutY="268.0" prefHeight="26.0" prefWidth="253.0" promptText="Enter your code..." styleClass="custom-textbox" stylesheets="@../../css/design.css">
                             <font>
                                 <Font name="Pristina" size="17.0" />
                             </font>
                         </TextField>
-                        <Button fx:id="confirm_btn" layoutX="94.0" layoutY="414.0" mnemonicParsing="false" onAction="#confirmLoginAuthClicked" prefHeight="42.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Confirm" textFill="#441246">
+                        <Button fx:id="confirm_btn" layoutX="94.0" layoutY="414.0" mnemonicParsing="false" onAction="#confirmLoginAuthClicked" prefHeight="42.0" prefWidth="254.0" styleClass="btn" stylesheets="@../../css/design.css" text="Confirm" textFill="#441246">
                             <font>
                                 <Font name="Pristina" size="18.0" />
                             </font>
@@ -138,29 +138,29 @@
                         </Label>
                     </children>
                 </AnchorPane>
-            <AnchorPane fx:id="forgetPassword2" layoutX="21.0" layoutY="26.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@css/design.css" visible="false">
+            <AnchorPane fx:id="forgetPassword2" layoutX="21.0" layoutY="26.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@../../css/design.css" visible="false">
                <children>
                   <Label layoutX="159.0" layoutY="47.0" prefHeight="58.0" prefWidth="163.0" text="Forget Password" textFill="#331336">
                      <font>
                         <Font name="Pristina" size="25.0" />
                      </font>
                   </Label>
-                  <Button fx:id="change_btn1" layoutX="105.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmForgetPassTOTP" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Confirm" textFill="#441246">
+                  <Button fx:id="change_btn1" layoutX="105.0" layoutY="391.0" mnemonicParsing="false" onAction="#confirmForgetPassTOTP" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@../../css/design.css" text="Confirm" textFill="#441246">
                      <font>
                         <Font name="Pristina" size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Change Password" textFill="#441246" visible="false">
+                  <Button layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@../../css/design.css" text="Change Password" textFill="#441246" visible="false">
                      <font>
                         <Font name="Pristina" size="20.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="username_field1" layoutX="91.0" layoutY="144.0" prefHeight="42.0" prefWidth="254.0" promptText="Username" styleClass="custom-textbox" stylesheets="@css/design.css">
+                  <TextField fx:id="username_field1" layoutX="91.0" layoutY="144.0" prefHeight="42.0" prefWidth="254.0" promptText="Username" styleClass="custom-textbox" stylesheets="@../../css/design.css">
                      <font>
                         <Font name="Pristina" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="password_field1" layoutX="104.0" layoutY="480.0" prefHeight="26.0" prefWidth="254.0" promptText="New Password" styleClass="custom-textbox" stylesheets="@css/design.css" visible="false">
+                  <TextField fx:id="password_field1" layoutX="104.0" layoutY="480.0" prefHeight="26.0" prefWidth="254.0" promptText="New Password" styleClass="custom-textbox" stylesheets="@../../css/design.css" visible="false">
                      <font>
                         <Font name="Pristina" size="12.0" />
                      </font>
@@ -191,7 +191,7 @@
                         <Font name="Pristina" size="26.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="authCode_field1" layoutX="91.0" layoutY="247.0" prefHeight="26.0" prefWidth="253.0" promptText="Enter your code..." styleClass="custom-textbox" stylesheets="@css/design.css">
+                  <TextField fx:id="authCode_field1" layoutX="91.0" layoutY="247.0" prefHeight="26.0" prefWidth="253.0" promptText="Enter your code..." styleClass="custom-textbox" stylesheets="@../../css/design.css">
                      <font>
                         <Font name="Pristina" size="17.0" />
                      </font>
@@ -200,7 +200,7 @@
             </AnchorPane>
             <ImageView fitHeight="52.0" fitWidth="45.0" layoutX="24.0" layoutY="24.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/back-icon.png" />
+                  <Image url="@../../images/back-icon.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
