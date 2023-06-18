@@ -137,7 +137,7 @@
                                 </Pane>
                             </children>
                         </VBox>
-                  <VBox alignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                  <VBox alignment="CENTER" prefHeight="174.0" prefWidth="159.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <children>
                         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #D872FF; -fx-background-radius: 10px;">
                            <cursor>
