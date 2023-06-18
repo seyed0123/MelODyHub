@@ -6,28 +6,42 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class SongPerform {
-    public static ArrayList<UUID> songGenre(String genre)
+    public static ArrayList<String> songGenre(String genre)
     {
-        ArrayList<UUID> ret = new ArrayList<>();
+        ArrayList<String> ret = new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery("select id from song where genre='"+genre+"';");
         while (true) {
             try {
                 if (!res.next()) break;
-                ret.add(UUID.fromString(res.getString("id")));
+                ret.add((res.getString("id")));
             } catch (SQLException e) {
                 break;
             }
         }
         return ret;
     }
-    public static ArrayList<UUID> getArtist(UUID id)
+    public static ArrayList<String> getArtist(UUID id)
     {
-        ArrayList<UUID> ret = new ArrayList<>();
+        ArrayList<String> ret = new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery(String.format("select artistid from song_artist where songid='%s';",id));
         while (true) {
             try {
                 if (!res.next()) break;
-                ret.add(UUID.fromString(res.getString("artistid")));
+                ret.add((res.getString("artistid")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
+    }
+    public static ArrayList<String> commentOfSong(String id)
+    {
+        ArrayList<String> ret = new ArrayList<>();
+        ResultSet res=MelodyHub.sendQuery(String.format("select comment from comment where songid='%s';",id));
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add((res.getString("comment")));
             } catch (SQLException e) {
                 break;
             }

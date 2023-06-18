@@ -39,8 +39,8 @@ public class Song implements Serializable {
         return new Song(id, name, genre, duration, year, rate, lyrics,path);
     }
 
-    public UUID getId() {
-        return UUID.fromString(id);
+    public String getId() {
+        return id;
     }
 
     public String getPath() {

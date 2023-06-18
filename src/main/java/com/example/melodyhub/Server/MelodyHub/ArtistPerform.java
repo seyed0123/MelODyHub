@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class ArtistPerform extends AccountPerform{
-    public static ArrayList<UUID> getSongs(UUID Id) {
-        ArrayList<UUID> ret = new ArrayList<>();
+    public static ArrayList<String> getSongs(UUID Id) {
+        ArrayList<String> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select songid from song_artist where artistid = '"+Id+"';");
         if(res==null)
         {
@@ -16,7 +16,7 @@ public class ArtistPerform extends AccountPerform{
         while (true) {
             try {
                 if (!res.next()) break;
-                ret.add(UUID.fromString(res.getString("songid")));
+                ret.add((res.getString("songid")));
             } catch (SQLException e) {
                 break;
             }
@@ -24,11 +24,11 @@ public class ArtistPerform extends AccountPerform{
         return ret;
     }
 
-    public static void addSong(UUID Id,UUID song) {
+    public static void addSong(UUID Id,String song) {
         MelodyHub.sendQuery("insert into song_artist (songid, artistid) VALUES ( '"+song+"' , '"+Id+"');");
     }
 
-    public static void removeSong(UUID Id,UUID song) {
+    public static void removeSong(UUID Id,String song) {
         MelodyHub.sendQuery("delete from song_artist where artistid = '"+Id+"' and songid = '"+song+"';");
     }
 }
