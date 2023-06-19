@@ -52,6 +52,8 @@ def recom_by_song(user_dict):
     recom_list = []
 
     songs = user_dict["listened_songs"]
+    age = user_dict["age"]
+
     songs = np.array(songs)
     consistent_songs = sort_by_consistency(songs)
 
@@ -81,6 +83,11 @@ def recom_by_song(user_dict):
 
         # # # Retrieve the nearest point
         nearest_row = X.iloc[nearest_index].values
+
+        if not(age ==None ) and not( age >= 18):
+
+            condition = lambda x : x [-7] == 1
+            nearest_row = [x for x in nearest_row if not condition(x)]
 
         if(i == 0):
             nearest_row = nearest_row[:num_recoms + left_num_recoms]
@@ -118,3 +125,10 @@ def recom_by_artist():
     pass
 
 
+if __name__ == "__main__":
+
+    user_dict = {'id': '6kxHMpVt9OYDQOwXYJrQAb', 'age': 23, 'listened_songs': ['4bKoCbveIKkAVdzj6h5jqX', '2UFmTI7g4aLgpWmaCcTEvI', '4M36kNFgfTRfssVd7EsAmA', '4M36kNFgfTRfssVd7EsAmA', '4M36kNFgfTRfssVd7EsAmA']}
+
+    print("here")
+
+    recom_by_song(user_dict)

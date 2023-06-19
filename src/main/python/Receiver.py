@@ -4,10 +4,11 @@ import pandas as pd
 from itertools import groupby
 import psycopg2
 import psycopg2.extras
+import traceback
 
 # reading the csv file containing the clustered songs
 df = pd.read_csv("clustered_tracks.csv")
-print("read the track csv file")
+# print("read the track csv file")
 
 # this function takes the table of the users history and turns each users
 # history into a dictionary containing the age of the user , the id  and 
@@ -44,7 +45,7 @@ def user_to_dict(table):
 def get_table():
     
     hostname = 'localhost'
-    database = 'melodyhub_new'
+    database = 'melodyhub'
     username = 'postgres'
     pwd = 'arshanelmtalab1398a'
     port_id = 5432
@@ -62,6 +63,8 @@ def get_table():
 
                 cur.execute('SELECT * FROM public.history')
                 table = (cur.fetchall())
+                condition = lambda x : x[1] == "listen"
+                table = [x for x in table if condition(x)]
 
 
     except Exception as error:
@@ -76,7 +79,7 @@ def get_table():
 def get_age(id):
 
     hostname = 'localhost'
-    database = 'melodyhub_new'
+    database = 'melodyhub'
     username = 'postgres'
     pwd = 'arshanelmtalab1398a'
     port_id = 5432
@@ -94,11 +97,14 @@ def get_age(id):
 
                 cur.execute('SELECT * FROM public.person WHERE id= {}'.format(f"'{id}'"))
                 age = (cur.fetchall())
-                age = age[0][5]
+
+                if age != None:
+                    age = str(age[0][5])
+                    age = 2023 - int(age.split("-")[0]) 
 
 
     except Exception as error:
-        print(error)
+        traceback.print_exc()
     finally:
         if conn is not None:
             conn.close()
@@ -118,7 +124,7 @@ def get_song_name(id):
 
 
 
-#  TODO : completing the function required for the program 
+#  TODO : completing the functions required for the program 
 
 def check_condition():
 
@@ -136,7 +142,8 @@ def connect_to_database():
 
 if __name__ == '__main__':
 
-    table = get_table()
-    users_dict = user_to_dict(table)
-    print(users_dict)
+    # table = get_table()
+    # users_dict = user_to_dict(table)
+    # print(users_dict)
+    print(get_age("8kxHMpVt9OYDQOwXYJrQAb"))
 

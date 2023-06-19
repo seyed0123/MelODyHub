@@ -1,13 +1,14 @@
 ### Databse_Pusher
 import psycopg2
 import psycopg2.extras
+import traceback
 
 
 def push_to_database(user_id , recom_list):
 
     # attributes for connecting to the database
     hostname = 'localhost'
-    database = 'melodyhub_new'
+    database = 'melodyhub'
     username = 'postgres'
     pwd = 'arshanelmtalab1398a'
     port_id = 5432
@@ -36,7 +37,7 @@ def push_to_database(user_id , recom_list):
                 # print(cur.fetchall())
 
     except Exception as error:
-        print(error)
+        traceback.print_exc()
     finally: # close the connection to the database
         if conn is not None:
             conn.close() 

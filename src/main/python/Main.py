@@ -18,6 +18,6 @@ if __name__ == '__main__':
             for user in user_dict :
                 user_id , recoms = recommender.recommend(user)
                 DP.push_to_database(user_id , recoms)
-                # print(recoms)
-                
+
+
         break
