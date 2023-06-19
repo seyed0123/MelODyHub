@@ -134,13 +134,6 @@ public class LoginSignupController implements Initializable {
     private boolean isLogin = true;
     private boolean isNightMode = false;
 
-    public void setQ_combobox() {
-        /*for (String q : SecurityQuestions.questions)
-            q_combobox.getItems().add(q);
-
-         */
-    }
-
     // socket -------------------------------------------------
     private static Socket socket;
     public static PrintWriter output;

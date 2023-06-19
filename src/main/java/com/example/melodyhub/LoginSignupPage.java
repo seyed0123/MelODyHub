@@ -3,6 +3,7 @@ package com.example.melodyhub;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -111,12 +112,11 @@ public class LoginSignupPage extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Login / Signup");
         stage.setScene(scene);
-        ((LoginSignupController) fxmlLoader.getController()).setQ_combobox();
         stage.show();
     }
 
     public static void main(String[] args) throws IOException {
-        setSocket();
+        //setSocket();
         launch(args);
     }
 }
