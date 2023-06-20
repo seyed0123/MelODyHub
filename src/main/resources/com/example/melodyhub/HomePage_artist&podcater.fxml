@@ -1,76 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.homepage_artist_podcaster_controller">
    <children>
       <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
             <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="1080.0" spacing="15.0" style="-fx-background-color: #16071C;">
                <children>
-                  <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
+                  <VBox alignment="CENTER" prefHeight="59.0" prefWidth="259.0" style="-fx-background-color: #16071C;">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                        <Label fx:id="song_name_label" prefHeight="28.0" prefWidth="222.0" text="Song name" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Arial Nova" size="16.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                        <Label fx:id="artist_name_label" prefHeight="16.0" prefWidth="215.0" text="Singer name" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Arial Nova Light" size="11.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="previous_track" fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button (1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="play_button" fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/play.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="pause_button" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/pause-button.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="next_track" fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button.png" />
                      </image>
                   </ImageView>
-                  <Slider prefHeight="19.0" prefWidth="531.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
-                  <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <Slider fx:id="play_progress_bar" onMouseClicked="#set_play_time" onMouseDragged="#set_play_time" prefHeight="19.0" prefWidth="531.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                  <ImageView fx:id="like" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/heart.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="comment" fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/comment.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="lyrics" fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/lyrics.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="queue" fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/playlist.png" />
                      </image>
@@ -294,7 +287,7 @@
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profile_button" fitHeight="30.0" fitWidth="35.0" onMouseClicked="#open_profile" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/user.png" />
                      </image>
@@ -314,7 +307,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="explore_button" fitHeight="32.0" fitWidth="33.0" onMouseClicked="#open_explore" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/search.png" />
                      </image>
@@ -334,7 +327,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="favorite_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_favorites" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/likedSongs.png" />
                      </image>
@@ -354,7 +347,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="45.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="history_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_history" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/parchment.png" />
                      </image>
@@ -374,7 +367,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="44.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="notification_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_notification" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/notifNO.png" />
                      </image>
@@ -394,7 +387,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="premium_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_premium" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/premium (1).png" />
                      </image>
@@ -414,7 +407,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="share_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_share" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/share.png" />
                      </image>
@@ -434,7 +427,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="play_list_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_playlist" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/music.png" />
                      </image>
@@ -454,7 +447,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="387.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="album_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_album" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/album.png" />
                      </image>
@@ -474,7 +467,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="50.0" prefWidth="150.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="sign_out_button" fitHeight="38.0" fitWidth="33.0" onMouseClicked="#open_signout" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/sign-out.png" />
                      </image>
