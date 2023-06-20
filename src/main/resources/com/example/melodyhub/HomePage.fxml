@@ -39,7 +39,7 @@
                         <Image url="@images/next-button (1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/play.png" />
                      </image>

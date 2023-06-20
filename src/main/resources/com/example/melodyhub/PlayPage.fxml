@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayPageController">
+<AnchorPane prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayPageController">
    <children>
       <BorderPane layoutX="33.0" layoutY="33.0" prefHeight="484.0" prefWidth="720.0" styleClass="body-back" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -119,23 +119,23 @@
                                     <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <children>
-                                    <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
-                                 </children>
-                              </HBox>
                            </children>
                         </VBox>
                      </content>
                   </ScrollPane>
+                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                     <children>
+                        <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
+                     </children>
+                  </HBox>
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" />
