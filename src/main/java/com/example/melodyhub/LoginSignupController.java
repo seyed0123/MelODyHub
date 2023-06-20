@@ -97,6 +97,8 @@ public class LoginSignupController implements Initializable {
     @FXML
     private ComboBox<String> q_combobox;
     @FXML
+    private ComboBox<String> q2_combobox;
+    @FXML
     private TextField username_field;
     @FXML
     private TextField s_username_field;
@@ -571,5 +573,6 @@ public class LoginSignupController implements Initializable {
         s.add("What is your favorite season?");
         q_combobox.getItems().addAll(s);
         q_combobox.getSelectionModel().selectFirst();
+
     }
 }
