@@ -564,7 +564,12 @@
                 </ImageView>
             </children>
         </Pane>
-            <Label alignment="CENTER" layoutX="164.0" layoutY="33.0" prefHeight="48.0" prefWidth="167.0" text="Login" textAlignment="CENTER" textFill="#8b45dbe0">
+        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@images/logo.jpg" />
+            </image>
+        </ImageView>
+            <Label fx:id="login_logo" alignment="CENTER" layoutX="164.0" layoutY="33.0" prefHeight="48.0" prefWidth="167.0" text="Login" textAlignment="CENTER" textFill="#8b45dbe0">
                 <font>
                     <Font name="Pristina" size="50.0" />
                 </font>
@@ -574,7 +579,7 @@
                   <Font name="Pristina" size="20.0" />
               </font>
           </Label>
-          <Label layoutX="255.0" layoutY="552.0" onMouseClicked="#goSignup" prefHeight="20.0" prefWidth="54.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Sign Up" textFill="#8b45dbe0">
+          <Label fx:id="signup_txt_btn" layoutX="255.0" layoutY="552.0" onMouseClicked="#goSignup" prefHeight="20.0" prefWidth="54.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Sign Up" textFill="#8b45dbe0">
               <font>
                   <Font name="Pristina" size="18.0" />
               </font>

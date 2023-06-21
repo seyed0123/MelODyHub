@@ -16,7 +16,8 @@ module com.example.melodyhub {
     requires java.desktop;
     requires mp3agic;
     requires org.apache.commons.io;
-
+    requires javafx.graphics;
+    requires javafx.media;
     opens com.example.melodyhub to javafx.fxml;
     exports com.example.melodyhub ;
 

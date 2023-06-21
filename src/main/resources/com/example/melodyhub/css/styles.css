@@ -65,12 +65,14 @@
 }
 
 .scroll-bar {
-    -fx-control-inner-background: rgba(0, 0, 0, 0);
+    -fx-control-inner-background: rgba(242, 223, 244, 0);
     -fx-background-color: rgba(0, 0, 0, 0);
-    -fx-background: rgba(0, 0, 0, 0);
-    -fx-color: rgba(255, 255, 255, 0.3);
+    -fx-background: rgba(242, 223, 244, 0);
+    -fx-color: rgba(253, 235, 1, 0.51);
 }
-
+.scroll-bar:hover{
+    background-color: #06e522;
+}
 .slider .track {
     -fx-background-color: rgba(255, 255, 255, 0.45);
 }

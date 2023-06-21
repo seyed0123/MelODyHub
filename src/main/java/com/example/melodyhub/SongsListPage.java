@@ -6,14 +6,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class SongsListPage extends Application {
 
     private String genre;
+    private List<Song> songList;
 
-    public SongsListPage(String genre) {
+    public SongsListPage(String genre, List<Song> songList) {
         this.genre = genre;
+        this.songList = songList;
     }
 
     @Override
@@ -22,7 +24,8 @@ public class SongsListPage extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Songs");
         stage.setScene(scene);
-        ((SongsListController)fxmlLoader.getController()).fillList(genre);
+        ((SongsListController) fxmlLoader.getController()).songList = songList;
+        ((SongsListController) fxmlLoader.getController()).fillList(genre);
         stage.show();
     }
 

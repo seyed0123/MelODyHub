@@ -105,7 +105,7 @@
                   <Insets left="20.0" />
                </padding>
                <children>
-                  <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="home_button" fitHeight="39.0" fitWidth="42.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/back-icon.png" />
                      </image>

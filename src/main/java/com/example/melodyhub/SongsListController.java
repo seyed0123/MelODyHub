@@ -25,13 +25,12 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SongsListController {
+
+    List<Song> songList;
 
     @FXML
     private TableView<Song> songs_table;
@@ -162,9 +161,9 @@ public class SongsListController {
         if (!Objects.equals(genre, "all"))
             foundSongs = (ArrayList<ArrayList<UUID>>) foundSongs.stream().collect(Collectors.toList());
 
-        ObservableList<Song> songList = FXCollections.observableArrayList();
+        ObservableList<Song> list = FXCollections.observableList(songList);
 
-        songs_table.setItems(songList);
+        songs_table.setItems(list);
     }
 
     @FXML

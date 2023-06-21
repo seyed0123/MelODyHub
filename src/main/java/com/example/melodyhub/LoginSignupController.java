@@ -92,6 +92,8 @@ public class LoginSignupController implements Initializable {
     @FXML
     private ComboBox<String> q_combobox;
     @FXML
+    private ComboBox<String> q2_combobox;
+    @FXML
     private TextField username_field;
     @FXML
     private TextField s_username_field;
@@ -331,7 +333,9 @@ public class LoginSignupController implements Initializable {
                     e -> banner.setTranslateX(banner.getTranslateX() - 5)));
             timeline.setCycleCount(117);
             timeline.play();
-
+            login_logo.setVisible(false);
+            l1.setVisible(false);
+            signup_txt_btn.setVisible(false);
             banner.setFitWidth(520);
 
             mode_btn.setTranslateX(mode_btn.getTranslateX() + 560);
@@ -367,7 +371,9 @@ public class LoginSignupController implements Initializable {
             ));
             timeline.setCycleCount(117);
             timeline.play();
-
+            login_logo.setVisible(true);
+            l1.setVisible(true);
+            signup_txt_btn.setVisible(true);
             banner.setFitWidth(570);
 
             mode_btn.setTranslateX(mode_btn.getTranslateX() - 480);
