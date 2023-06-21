@@ -104,19 +104,19 @@
                                        </font>
                                     </Label>
                                     <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                                 <children>
-                                    <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                       <children>
+                                          <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </HBox>
                            </children>

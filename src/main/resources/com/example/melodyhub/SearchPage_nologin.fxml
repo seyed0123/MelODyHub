@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SearchPageController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SearchPageController_NoLogin">
     <children>
         <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
             <children>
@@ -69,7 +69,7 @@
                     <children>
                         <Group>
                             <children>
-                                <TextField fx:id="search_field" editable="false" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
+                                <TextField fx:id="search_field" editable="false" onMouseClicked="#searchClicked" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
                                     <padding>
                                         <Insets left="10.0" />
                                     </padding>
@@ -145,7 +145,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FFB4B4; -fx-background-radius: 10px;">
+                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FFB4B4; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -193,7 +193,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.rowIndex="2">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72FF89; -fx-background-radius: 10px;">
+                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72FF89; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -257,7 +257,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FF72AC; -fx-background-radius: 10px;">
+                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FF72AC; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -273,7 +273,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.rowIndex="1">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #7294FF; -fx-background-radius: 10px;">
+                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #7294FF; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -289,7 +289,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.columnIndex="4">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72F9FF; -fx-background-radius: 10px;">
+                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72F9FF; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
