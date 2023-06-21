@@ -414,8 +414,9 @@ public class Session implements Runnable{
                 } else if (job.equals("search")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UserPerform.addHistory(account.getId(),"search",jsonObject.getString("searched"));
-                    ArrayList<ArrayList<UUID>> lists = MelodyHub.search(jsonObject.getString("searched"));
-                    sendMessage(objectMapper.writeValueAsString(lists));
+                    ArrayList<String> list= MelodyHub.search(jsonObject.getString("searched"));
+                    sendMessage(objectMapper.writeValueAsString(list));
+                    sendMessage(objectMapper.writeValueAsString(MelodyHub.searchArtist(jsonObject.getString("searched"))));
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("get genre artist")) {

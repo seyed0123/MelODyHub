@@ -333,9 +333,9 @@ public class LoginSignupController implements Initializable {
                     e -> banner.setTranslateX(banner.getTranslateX() - 5)));
             timeline.setCycleCount(117);
             timeline.play();
-            login_logo.setVisible(false);
+            //login_logo.setVisible(false);
             l1.setVisible(false);
-            signup_txt_btn.setVisible(false);
+            //signup_txt_btn.setVisible(false);
             banner.setFitWidth(520);
 
             mode_btn.setTranslateX(mode_btn.getTranslateX() + 560);
@@ -371,9 +371,9 @@ public class LoginSignupController implements Initializable {
             ));
             timeline.setCycleCount(117);
             timeline.play();
-            login_logo.setVisible(true);
+            //login_logo.setVisible(true);
             l1.setVisible(true);
-            signup_txt_btn.setVisible(true);
+            //signup_txt_btn.setVisible(true);
             banner.setFitWidth(570);
 
             mode_btn.setTranslateX(mode_btn.getTranslateX() - 480);
