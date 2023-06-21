@@ -33,11 +33,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
     <children>
         <AnchorPane fx:id="mainPane" prefHeight="501.0" prefWidth="498.0">
             <children>
-                <AnchorPane fx:id="forgetPassword1" layoutX="11.0" layoutY="16.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@css/design.css">
+                <AnchorPane fx:id="forgetPassword1" layoutX="11.0" layoutY="16.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@css/design.css" visible="false">
                     <children>
                         <Label layoutX="159.0" layoutY="47.0" prefHeight="58.0" prefWidth="163.0" text="Forget Password" textFill="#331336">
                             <font>
@@ -114,9 +114,9 @@
                         <!--                  <FontAwesomeIconView fill="#7b1289" glyphName="LOCK" layoutX="166.0" layoutY="65.0" size="5em" />-->
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="authentication" layoutX="25.0" layoutY="27.0" prefHeight="632.0" prefWidth="456.0" stylesheets="@css/design.css" visible="false">
+                <AnchorPane fx:id="authentication" layoutX="25.0" layoutY="27.0" prefHeight="632.0" prefWidth="456.0" stylesheets="@css/design.css">
                     <children>
-                        <Label layoutX="143.0" layoutY="39.0" prefHeight="71.0" prefWidth="182.0" text="Authentication" textFill="#3e1940">
+                        <Label layoutX="130.0" layoutY="39.0" prefHeight="71.0" prefWidth="163.0" text="Authentication" textFill="#3e1940">
                             <font>
                                 <Font name="Pristina" size="26.0" />
                             </font>
@@ -136,6 +136,11 @@
                                 <Font name="Pristina" size="26.0" />
                             </font>
                         </Label>
+                  <Label alignment="CENTER" layoutX="99.0" layoutY="314.0" prefHeight="17.0" prefWidth="239.0" text="you have 2 minutes to enter the code">
+                     <font>
+                        <Font name="Franklin Gothic Demi Cond" size="12.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             <AnchorPane fx:id="forgetPassword2" layoutX="21.0" layoutY="26.0" prefHeight="622.0" prefWidth="463.0" stylesheets="@css/design.css" visible="false">

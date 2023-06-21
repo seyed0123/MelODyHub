@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+pom.xml
 ### Eclipse ###
 .apt_generated
 .classpath

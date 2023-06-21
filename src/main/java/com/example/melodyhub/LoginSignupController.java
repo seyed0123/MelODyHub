@@ -2,12 +2,17 @@ package com.example.melodyhub;
 
 import com.example.melodyhub.Artist;
 import com.example.melodyhub.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -16,33 +21,25 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.JSONObject;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
+import java.awt.event.ActionEvent;
 import java.io.*;
-import java.net.Socket;
 import java.net.URL;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static com.example.melodyhub.LoginSignupPage.socket;
-import static com.example.melodyhub.LoginSignupPage.getMessage;
 
-import static com.example.melodyhub.LoginSignupPage.sendMessage;
+import static com.example.melodyhub.LoginSignupPage.*;
 
 public class LoginSignupController implements Initializable {
 
@@ -133,28 +130,9 @@ public class LoginSignupController implements Initializable {
 
     private boolean isLogin = true;
     private boolean isNightMode = false;
-
-    // socket -------------------------------------------------
-    private static Socket socket;
-    public static PrintWriter output;
-    public static BufferedReader input;
-    private static ObjectOutputStream objOut;
-    private static ObjectInputStream objIn;
-    private static final String HOST = "localhost";
-    private static final int PORT = 8085;
-    public static Cipher cipherEncrypt;
-    public static Cipher cipherDecrypt;
-    public static Gson gson;
-    // ------------------------------------------------------------
     @FXML
     public void loginClicked() throws Exception {
-        // testing todo delete this
-        if (true) {
-            ((Stage) this.password_field.getScene().getWindow()).close();
-            new FirstWindow(new User("1", "2", "3", "4", "5", "3"),
-                    "authentication").start(new Stage());
-            return;
-        }
+
         // ---------------------------
 
         if (u_radio.isSelected()) {
@@ -165,29 +143,60 @@ public class LoginSignupController implements Initializable {
             sendMessage(username);
             sendMessage(pass);
 
-//            assertEquals("TOTP",getMessage());
-//            sendMessage("149802");
-
             if (getMessage().equals("login failed")) {
                 new Alert(Alert.AlertType.INFORMATION, "Login failed! please try again.").show();
+                return;
             } else {
-                // go to authentication page
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = getMessage();
-                User userLogin = objectMapper.readValue(json, User.class);
-
-                new Alert(Alert.AlertType.INFORMATION, "Login successfully! please wait...").show();
-
-                ((Stage) this.password_field.getScene().getWindow()).close();
-                new FirstWindow(userLogin, "authentication").start(new Stage());
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("FirstWindow.fxml"));
+                try {
+                    Scene scene = new Scene(fxmlLoader.load());
+                    stage.setScene(scene);
+                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+                        @Override
+                        public void handle(WindowEvent event) {
+                            if(FirstWindowController.edited)
+                            {
+                                sendMessage(String.valueOf(FirstWindowController.code));
+                                if(getMessage().equals("login OK"))
+                                {
+                                    try {
+                                        User user= objectMapper.readValue(getMessage(),User.class);
+                                        HomeController.setUser(user);
+                                        Stage stage = new Stage();
+                                        FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage.fxml"));
+                                        Scene scene1 = new Scene(fxmlLoader.load());
+                                        stage.setScene(scene1);
+                                        stage.show();
+                                        Stage stage1 = (Stage) p_radio.getScene().getWindow();
+                                        stage1.close();
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }else {
+                                    new Alert(Alert.AlertType.ERROR, "Your authentication code is wrong!").show();
+                                }
+                            }
+                        }
+                    });
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                int DELAY_MINUTES = 2;
+                ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                executor.schedule(() -> {
+                    stage.close();
+                    executor.shutdown();
+                }, DELAY_MINUTES, TimeUnit.MINUTES);
             }
         } else if (a_radio.isSelected()) {
             sendMessage("login artist");
             sendMessage(username_field.getText());
             sendMessage(password_field.getText());
 
-//            assertEquals("TOTP",getMessage());
-//            sendMessage("149802");
 
             if (!getMessage().equals("login OK")) {
                 new Alert(Alert.AlertType.INFORMATION, "Login failed! please try again.").show();
@@ -226,9 +235,25 @@ public class LoginSignupController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Please select your birth date.").show();
                 return;
             }
-
+            String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+            Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+            Matcher matcher = EMAIL_PATTERN.matcher(email);
+            if(!matcher.matches())
+            {
+                new Alert(Alert.AlertType.ERROR, "Please enter valid email.you must use it later.").show();
+                return;
+            }
+            String PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
+            Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);
+            Matcher phone_matcher = PHONE_PATTERN.matcher(phone);
+            if(!matcher.matches())
+            {
+                new Alert(Alert.AlertType.ERROR, "Please enter valid phone number.you must use it later.").show();
+                return;
+            }
             String date = birthDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() +1;
+            String ans = answer_field.getText();
             String gender;
             if (male_radio.isSelected()) gender = "male";
             else if (female_radio.isSelected()) gender = "female";
@@ -245,7 +270,8 @@ public class LoginSignupController implements Initializable {
             jsonObject.put("email", email);
             jsonObject.put("gender", gender);
             jsonObject.put("date", date);
-            // TODO: 6/16/2023 sec ques and answ??
+            jsonObject.put("quesId",selectedIndex);
+            jsonObject.put("answer",ans);
             sendMessage(jsonObject.toString());
 
         } else if (podcaster_radio.isSelected()) {
@@ -254,6 +280,10 @@ public class LoginSignupController implements Initializable {
             jsonObject.put("password", pass);
             jsonObject.put("phone", phone);
             jsonObject.put("email", email);
+            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() +1;
+            String ans = answer_field.getText();
+            jsonObject.put("quesId",selectedIndex);
+            jsonObject.put("answer",ans);
             sendMessage("create podcaster");
             sendMessage(jsonObject.toString());
 
@@ -264,6 +294,10 @@ public class LoginSignupController implements Initializable {
             jsonObject.put("password", pass);
             jsonObject.put("phone", phone);
             jsonObject.put("email", email);
+            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() +1;
+            String ans = answer_field.getText();
+            jsonObject.put("quesId",selectedIndex);
+            jsonObject.put("answer",ans);
             sendMessage(jsonObject.toString());
 
         } else {

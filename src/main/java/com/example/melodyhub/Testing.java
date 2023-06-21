@@ -362,6 +362,6 @@ public class Testing {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id","6f51a2cb-feff-4ec7-a35b-928c1193b561");
         sendMessage(jsonObject.toString());
-        HelloApplication.uploadImage(socket,"src/main/resources/com/example/melodyhub/image.png");
+        LoginSignupPage.uploadImage(socket,"src/main/resources/com/example/melodyhub/image.png");
     }
 }

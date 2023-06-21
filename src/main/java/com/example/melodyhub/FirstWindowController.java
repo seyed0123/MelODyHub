@@ -3,11 +3,16 @@ package com.example.melodyhub;
 import com.example.melodyhub.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.JSONObject;
 
 import javax.crypto.BadPaddingException;
@@ -15,8 +20,10 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.Socket;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -25,17 +32,24 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import static com.example.melodyhub.LoginSignupPage.*;
 import static org.testng.AssertJUnit.assertEquals;
 
-public class FirstWindowController {
+public class FirstWindowController implements Initializable {
 
     static Account loginAccount;
     String page;
 
     @FXML
     private AnchorPane authentication;
+
+    @FXML
+    private AnchorPane forgetPassword2;
+
+    @FXML
+    private AnchorPane forgetPassword1;
     @FXML
     private TextField authCode_field;
     @FXML
@@ -67,40 +81,23 @@ public class FirstWindowController {
     @FXML
     private Button change_btn1;
 
-    public void setQues_combo() {
-        /*for (String q : questions)
-            ques_combo.getItems().add(q);
-         */
+    public static boolean edited = false;
+    public static String job;
+    public static int code;
+
+    public static void setJob(String work)
+    {
+        job=work;
     }
     public void confirmLoginAuthClicked() throws IOException {
-        String username = username_field.getText();
-        String type = userAccount_radio.getTypeSelector();
-
-        if (getMessage().equals("TOTP"))
-            sendMessage(authCode_field.getText());
-
-        if (getMessage().equals("login OK")) {
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = getMessage();
-            loginAccount = objectMapper.readValue(json, User.class);
-
-            new Alert(Alert.AlertType.INFORMATION, "Authenticated Successfully!").show();
-            ((Stage) password_field.getScene().getWindow()).close();
-
-            // TODO: 6/16/2023 each user panel
-            if (loginAccount instanceof User)
-                new UserPanel((User) loginAccount, "UserHomePage").start((Stage) password_field.getScene().getWindow());
-            if (loginAccount instanceof Artist) {
-
+            try {
+                code = Integer.parseInt(authCode_field.getText());
+                edited=true;
+                back();
+            }catch (Exception exception) {
+                authCode_field.setText("pls enter number");
+                return;
             }
-            if (loginAccount instanceof Podcaster) {
-
-            }
-
-        } else {
-            new Alert(Alert.AlertType.INFORMATION, "Wrong Code!").show();
-        }
     }
 
     public void confirmForgetPassTOTP() throws IOException {
@@ -114,7 +111,7 @@ public class FirstWindowController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("work", "TOTP");
         jsonObject.put("username", username_field1.getText());
-        jsonObject.put("type", accType); // TODO: 6/16/2023 ??
+        jsonObject.put("type", accType);
         sendMessage(jsonObject.toString());
 
         sendMessage(authCode_field1.getText());
@@ -180,11 +177,20 @@ public class FirstWindowController {
 
     public void back() throws IOException {
         ((Stage) this.password_field.getScene().getWindow()).close();
-        new LoginSignupPage().start(new Stage());
     }
 
     public void setPage(String pageId) {
         for (Node node : mainPane.getChildren())
             node.setVisible(Objects.equals(node.getId(), pageId));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(Objects.equals(job, "authentication"))
+        {
+            authentication.setVisible(true);
+            forgetPassword2.setVisible(false);
+            forgetPassword1.setVisible(false);
+        }
     }
 }

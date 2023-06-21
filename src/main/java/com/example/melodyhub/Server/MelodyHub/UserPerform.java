@@ -42,13 +42,17 @@ public class UserPerform extends AccountPerform {
         MelodyHub.sendQuery("Insert into playlist_owning (playlistid, ownerid) VALUES (playlistid = '" + playlist + "' , ownerid = '" + user + "');");
     }
 
-    public static ArrayList<UUID> getRecommend(UUID Id) {
-        ArrayList<UUID> ret = new ArrayList<>();
-        ResultSet res = MelodyHub.sendQuery("SELECT  songid FROM recommend_song where userid = '" + Id + "';");
+    public static ArrayList<String> getRecommend(UUID Id) {
+        ArrayList<String> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("SELECT  songid FROM recommend_song where userid = '" + Id + "' limit 10;");
+        if(res == null)
+        {
+            return ret;
+        }
         while (true) {
             try {
                 if (!res.next()) break;
-                ret.add(UUID.fromString(res.getString("songid")));
+                ret.add((res.getString("songid")));
             } catch (SQLException e) {
                 break;
             }

@@ -3,7 +3,8 @@ package com.example.melodyhub.Server.MelodyHub;
 import com.example.melodyhub.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -208,9 +209,13 @@ public class Session implements Runnable{
                         String phoneNumber = json.getString("phone");
                         String gender = json.getString("gender");
                         String date = json.getString("date");
-                        User user = new User(UUID.randomUUID().toString(),username,password,email,phoneNumber,"",new ArrayList<>(),"",gender
+                        UUID id = UUID.randomUUID();
+                        User user = new User(id.toString(),username,password,email,phoneNumber,"",new ArrayList<>(),"",gender
                                 , Date.valueOf(date),null,false,new ArrayList<>(),new ArrayList<>());
                         MelodyHub.createUser(user);
+                        int quesId = json.getInt("quesId");
+                        String ans = json.getString("answer");
+                        UserPerform.addAnswer(id,quesId,ans);
                         json.put("job",job);
                         MelodyHub.addLog(json);
                         sendMessage("done");
@@ -227,8 +232,12 @@ public class Session implements Runnable{
                         String password = json.getString("password");
                         String email = json.getString("email");
                         String phoneNumber = json.getString("phone");
-                        Artist artist = new Artist(UUID.randomUUID().toString(),username,password,email,phoneNumber,"","",false,0,0,"");
+                        UUID id = UUID.randomUUID();
+                        Artist artist = new Artist(id.toString(),username,password,email,phoneNumber,"","",false,0,0,"");
                         MelodyHub.createArtist(artist);
+                        int quesId = json.getInt("quesId");
+                        String ans = json.getString("answer");
+                        UserPerform.addAnswer(id,quesId,ans);
                         json.put("job",job);
                         MelodyHub.addLog(json);
                         sendMessage("done");
@@ -245,8 +254,12 @@ public class Session implements Runnable{
                         String password = json.getString("password");
                         String email = json.getString("email");
                         String phoneNumber = json.getString("phone");
-                        Podcaster podcaster = new Podcaster(UUID.randomUUID().toString(),username,password,email,phoneNumber,"",false,"",0);
+                        UUID id = UUID.randomUUID();
+                        Podcaster podcaster = new Podcaster(id.toString(),username,password,email,phoneNumber,"",false,"",0);
                         MelodyHub.createPodcaster(podcaster);
+                        int quesId = json.getInt("quesId");
+                        String ans = json.getString("answer");
+                        UserPerform.addAnswer(id,quesId,ans);
                         json.put("job",job);
                         MelodyHub.addLog(json);
                         sendMessage("done");
@@ -289,16 +302,7 @@ public class Session implements Runnable{
                 if(job==null)
                     return;
                 System.out.println(job+" -->"+socket.getLocalSocketAddress());
-                if(job.equals("add answer"))
-                {
-                    JSONObject jsonObject = new JSONObject(getMessage());
-                    UUID id = account.getId();
-                    int quesId = jsonObject.getInt("quesId");
-                    String ans = jsonObject.getString("answer");
-                    UserPerform.addAnswer(id,quesId,ans);
-                    jsonObject.put("job",job);
-                    MelodyHub.addLog(jsonObject);
-                } else if (job.equals("create playlist")) {
+                if (job.equals("create playlist")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String name = jsonObject.getString("name");
                     boolean personal = jsonObject.getBoolean("personal");
@@ -535,7 +539,7 @@ public class Session implements Runnable{
                     sendMessage(objectMapper.writeValueAsString(SongPerform.songGenre(genre)));
                 } else if (job.equals("get artist song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
-                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    String id = (jsonObject.getString("id"));
                     sendMessage(objectMapper.writeValueAsString(SongPerform.getArtist(id)));
                 } else if (job.equals("share song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
@@ -570,6 +574,8 @@ public class Session implements Runnable{
                     }
                 } else if (job.equals("get recommend")) {
                     sendMessage(objectMapper.writeValueAsString(UserPerform.getRecommend(account.getId())));
+                }else if (job.equals("get popular")) {
+                    sendMessage(objectMapper.writeValueAsString(SongPerform.popularSong()));
                 } else if (job.equals("add favorite playlist")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
@@ -641,6 +647,17 @@ public class Session implements Runnable{
                     UserPerform.addHistory(account.getId(),"listen",id);
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
+                } else if (job.equals("download music cover")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String id = jsonObject.getString("id");
+                    try{
+                        MelodyHub.extractCover(id);
+                        sendMessage("sending cover");
+                        MelodyHub.uploadImage(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".png");
+                    }catch (IOException | InvalidDataException | UnsupportedTagException e)
+                    {
+                        sendMessage("no cover");
+                    }
                 } else if (job.equals("logout")) {
                     account=null;
                     break;

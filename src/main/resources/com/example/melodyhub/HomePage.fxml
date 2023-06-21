@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.HomeController">
    <children>
       <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
@@ -22,55 +22,55 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                        <Label fx:id="songNameLabel" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
                               <Font name="Arial Nova" size="16.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                        <Label fx:id="singerNameLabel" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                            <font>
                               <Font name="Arial Nova Light" size="11.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="perButton" fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button (1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="playButton" fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/play.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="pauseButton" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/pause-button.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="nextButton" fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button.png" />
                      </image>
                   </ImageView>
                   <Slider prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
-                  <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="likeImage" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/heart.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="commentImage" fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/comment.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="lyricsImage" fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/lyrics.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/playlist.png" />
                      </image>
@@ -93,7 +93,7 @@
                   </Label>
                   <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
                      <content>
-                        <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="718.0" spacing="20.0">
+                        <HBox fx:id="recom" alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="718.0" spacing="20.0">
                            <children>
                               <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
                                  <children>
@@ -159,9 +159,9 @@
                         </HBox>
                      </content>
                   </ScrollPane>
-                  <Label prefHeight="29.0" prefWidth="204.0" text="Popular Songs" textFill="WHITE">
+                  <Label prefHeight="55.0" prefWidth="321.0" text="Popular Songs" textFill="WHITE">
                      <font>
-                        <Font name="Pristina" size="12.0" />
+                        <Font name="Pristina" size="17.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -169,7 +169,7 @@
                   </Label>
                   <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
                      <content>
-                        <HBox alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
+                        <HBox fx:id="popular" alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
                            <children>
                               <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="2.0">
                                  <children>
@@ -282,14 +282,14 @@
          <top>
             <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/logo.jpg" />
+                  <Image url="@images/melodyhubHoriz.jpg" />
                </image>
             </ImageView>
          </top>
       </BorderPane>
-      <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="side_bar" layoutX="-2.0" layoutY="33.0" prefHeight="590.0" prefWidth="152.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="profile" alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
@@ -312,7 +312,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="explore" alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -332,7 +332,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="favs" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -352,7 +352,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="45.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="history" alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="45.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -372,7 +372,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="44.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="notif" alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="44.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -392,7 +392,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="premium" alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -412,7 +412,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="share" alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -432,7 +432,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="playlist" alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -452,7 +452,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="50.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="signOut" alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="50.0" prefWidth="150.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>

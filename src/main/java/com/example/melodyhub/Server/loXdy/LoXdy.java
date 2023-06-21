@@ -41,7 +41,7 @@ public class LoXdy {
         // Generate a TOTP
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         int totp = gAuth.getTotpPassword(encodedKey);
-        String body="enter the 6-digit code below to verify your identity and gain access to your MelodyHub Account. \n\n "+totp+" \n\n Thanks for helping us keep your account secure.\nThe MelodyHub secure Team ( OXD EYE ).";
+        String body="enter the 6-digit code below to verify your identity and gain access to your MelodyHub Account. \n\n "+totp+" \n\n Thanks for helping us to keep your account secure.\nThe MelodyHub secure Team ( OXD EYE ).";
         sendEmail(email,"One-time password",body);
         return encodedKey;
     }

@@ -534,7 +534,7 @@
                 </ImageView>
             </children>
         </Pane>
-        <Pane fx:id="back_btn" layoutX="25.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css">
+        <Pane fx:id="back_btn" layoutX="25.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css" visible="false">
             <effect>
                 <DropShadow offsetX="-5.0" offsetY="-5.0">
                     <color>
@@ -564,11 +564,6 @@
                 </ImageView>
             </children>
         </Pane>
-        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <image>
-                <Image url="@images/logo.jpg" />
-            </image>
-        </ImageView>
             <Label alignment="CENTER" layoutX="164.0" layoutY="33.0" prefHeight="48.0" prefWidth="167.0" text="Login" textAlignment="CENTER" textFill="#8b45dbe0">
                 <font>
                     <Font name="Pristina" size="50.0" />
@@ -587,5 +582,10 @@
                   <Cursor fx:constant="HAND" />
               </cursor>
           </Label>
+        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@images/logo.jpg" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>

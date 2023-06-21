@@ -4,6 +4,11 @@ import com.example.melodyhub.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -465,5 +470,24 @@ public class MelodyHub {
             }
         }
         return ret;
+    }
+    public static void extractCover(String id) throws IOException, InvalidDataException, UnsupportedTagException {
+        File mp3File = new File("src/main/resources/com/example/melodyhub/musics/"+id+".mp3");
+        Mp3File mp3 = new Mp3File(mp3File);
+
+        if (mp3.hasId3v2Tag()) {
+            ID3v2 id3v2Tag = mp3.getId3v2Tag();
+            byte[] imageData = id3v2Tag.getAlbumImage();
+
+            if (imageData != null) {
+                File coverFile = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".png");
+                FileUtils.writeByteArrayToFile(coverFile, imageData);
+                System.out.println("Cover image saved to " + coverFile.getAbsolutePath());
+            } else {
+                System.out.println("No cover image found in the MP3 file.");
+            }
+        } else {
+            System.out.println("No ID3v2 tag found in the MP3 file.");
+        }
     }
 }

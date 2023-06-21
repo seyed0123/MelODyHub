@@ -20,7 +20,7 @@ public class SongPerform {
         }
         return ret;
     }
-    public static ArrayList<String> getArtist(UUID id)
+    public static ArrayList<String> getArtist(String id)
     {
         ArrayList<String> ret = new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery(String.format("select artistid from song_artist where songid='%s';",id));
@@ -42,6 +42,22 @@ public class SongPerform {
             try {
                 if (!res.next()) break;
                 ret.add((res.getString("comment")));
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
+    }
+    public static ArrayList<String> popularSong()
+    {
+        ArrayList<String> ret = new ArrayList<>();
+        ResultSet res=MelodyHub.sendQuery(String.format("select id from song order by rate DESC limit 10;"));
+        if(res==null)
+            return ret;
+        while (true) {
+            try {
+                if (!res.next()) break;
+                ret.add((res.getString("id")));
             } catch (SQLException e) {
                 break;
             }

@@ -7,7 +7,6 @@
     -fx-font-family: Pristina;
     -fx-border-radius: 10px;
     transition: background-color 0.3s ease;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: none;
     cursor: pointer;
 }
