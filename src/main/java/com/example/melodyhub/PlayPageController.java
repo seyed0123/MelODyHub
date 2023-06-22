@@ -1,290 +1,191 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
+import org.json.JSONObject;
 
-import java.io.File;
-import java.net.URL;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
+import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Base64;
+import java.util.List;
+import java.util.UUID;
 
-public class PlayPageController implements Initializable {
-
-
-    @FXML
-    private Label artist_name_label;
+public class PlayPageController {
 
     @FXML
-    private ImageView banner;
+    private Label durationLabel;
 
     @FXML
-    private ImageView comment;
+    private Label genreLabel;
 
     @FXML
-    private ImageView like;
+    private TextArea lyricsText;
 
     @FXML
-    private ImageView lyrics;
+    private VBox playlist_vb;
 
     @FXML
-    private AnchorPane mainPane;
+    private Label rateLabel;
 
     @FXML
-    private ImageView next_track;
+    private Label singerLabel1;
 
     @FXML
-    private ImageView pause_button;
+    private Label singerLabel2;
 
     @FXML
-    private Pane play_bar;
+    private ImageView songImage;
 
     @FXML
-    private ImageView play_button;
+    private Label songNameLabel1;
 
     @FXML
-    private Slider play_progress_bar;
+    private Label songNameLabel2;
 
     @FXML
-    private ImageView previous_track;
-
-    @FXML
-    private ImageView queue;
-
-    @FXML
-    private VBox recommended;
-
-    @FXML
-    private VBox side_bar;
-
-    @FXML
-    private Label song_name_label;
-
-    @FXML
-    private BorderPane songsPane;
-
-    // media player attributes
-
-    private Media media;
-    private MediaPlayer mediaPlayer;
-
-    private File directory;
-    private File[] files;
-
-    private ArrayList<File> songs;
-
-    private int songNumber;
-    private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
-
-    private Timer timer;
-    private TimerTask task;
-
-    private boolean running;
+    private Label yearLabel;
 
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    // socket ---------------------------------------------
+    private static Socket socket;
+    public static PrintWriter output;
+    public static BufferedReader input;
+    private static ObjectOutputStream objOut;
+    private static ObjectInputStream objIn;
+    private static final String HOST = "localhost";
+    private static final int PORT = 8085;
+    public static Cipher cipherEncrypt;
+    public static Cipher cipherDecrypt;
+    public static Gson gson;
 
-        songs = new ArrayList<File>();
-
-        directory = new File("src/main/resources/com/example/melodyhub/musics");
-
-        files = directory.listFiles();
-
-        if(files != null) {
-
-            for(File file : files) {
-
-                songs.add(file);
-            }
-        }
-
-        media = new Media(songs.get(songNumber).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-
-        song_name_label.setText(songs.get(songNumber).getName());
-        song_name_label.setWrapText(true);
-
-//        for(int i = 0; i < speeds.length; i++) {
-//
-//            speedBox.getItems().add(Integer.toString(speeds[i])+"%");
-//        }
-//
-//        speedBox.setOnAction(this::changeSpeed);
-
-//        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-//            @Override
-//            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-//
-//                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-//            }
-//        });
-
-//         songProgressBar.setStyle("-fx-accent: #00FF00;");
-
-    }
-
-    public void playMedia() {
-
-        beginTimer();
-//        changeSpeed(null);
-//        mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-        mediaPlayer.play();
-    }
-
-    public void pauseMedia() {
-
-        cancelTimer();
-        mediaPlayer.pause();
-    }
-
-    public void resetMedia() {
-
-        play_progress_bar.setValue(0);
-        mediaPlayer.seek(Duration.seconds(0));
-    }
-
-    public void previousMedia() {
-
-        if(songNumber > 0) {
-
-            songNumber--;
-
-            mediaPlayer.stop();
-
-            if(running) {
-
-                cancelTimer();
-            }
-
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-
-            song_name_label.setText(songs.get(songNumber).getName());
-
-            playMedia();
-        }
-        else {
-
-            songNumber = songs.size() - 1;
-
-            mediaPlayer.stop();
-
-            if(running) {
-
-                cancelTimer();
-            }
-
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-
-            song_name_label.setText(songs.get(songNumber).getName());
-
-            playMedia();
+    public static void sendMessage(String message) {
+        try {
+            byte[] encrypt = cipherEncrypt.doFinal(message.getBytes());
+            String base64Data = Base64.getEncoder().encodeToString(encrypt);
+            output.println(gson.toJson(base64Data));
+        } catch (IllegalBlockSizeException e) {
+            throw new RuntimeException(e);
+        } catch (BadPaddingException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void nextMedia() {
-
-        if(songNumber < songs.size() - 1) {
-
-            songNumber++;
-
-            mediaPlayer.stop();
-
-            if(running) {
-
-                cancelTimer();
-            }
-
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-
-            song_name_label.setText(songs.get(songNumber).getName());
-
-            playMedia();
-        }
-        else {
-
-            songNumber = 0;
-
-            mediaPlayer.stop();
-
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-
-            song_name_label.setText(songs.get(songNumber).getName());
-
-            playMedia();
+    public static String getMessage() {
+        try {
+            String base64 = gson.fromJson(input.readLine(), String.class);
+            byte[] decodedData = Base64.getDecoder().decode(base64);
+            byte[] decrypted = cipherDecrypt.doFinal(decodedData);
+            return new String(decrypted);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalBlockSizeException e) {
+            throw new RuntimeException(e);
+        } catch (BadPaddingException e) {
+            throw new RuntimeException(e);
         }
     }
 
-//    public void changeSpeed(ActionEvent event) {
-//
-//        if(speedBox.getValue() == null) {
-//
-//            mediaPlayer.setRate(1);
-//        }
-//        else {
-//
-//            //mediaPlayer.setRate(Integer.parseInt(speedBox.getValue()) * 0.01);
-//            mediaPlayer.setRate(Integer.parseInt(speedBox.getValue().substring(0, speedBox.getValue().length() - 1)) * 0.01);
-//        }
-//    }
+    public static void startCom() {
+        try {
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            Cipher decryptCipher = Cipher.getInstance("RSA");
+            decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+            //ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
+            objOut.writeObject(publicKey);
+            objOut.flush();
+            //objOut.close();
 
-    public void beginTimer() {
+            String base64 = gson.fromJson(input.readLine(), String.class);
+            byte[] encryptedMessage = Base64.getDecoder().decode(base64);
+            byte[] decryptedMessage = decryptCipher.doFinal(encryptedMessage);
 
-        timer = new Timer();
-
-        task = new TimerTask() {
-
-            public void run() {
-
-                running = true;
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                double end = media.getDuration().toSeconds();
-
-                play_progress_bar.setMin(0);  // Minimum value
-                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
-
-
-                play_progress_bar.setValue(current);
-
-                if(current == end) {
-
-                    cancelTimer();
-                }
-            }
-        };
-
-        timer.scheduleAtFixedRate(task, 0, 1000);
+            cipherDecrypt = Cipher.getInstance("AES");
+            cipherDecrypt.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptedMessage, "AES"));
+            cipherEncrypt = Cipher.getInstance("AES");
+            cipherEncrypt.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(decryptedMessage, "AES"));
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalBlockSizeException e) {
+            throw new RuntimeException(e);
+        } catch (BadPaddingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void cancelTimer() {
+    public void setSocket() throws IOException {
+        socket = new Socket(HOST, PORT);
+        input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        output = new PrintWriter(socket.getOutputStream(), true);
+        objOut = new ObjectOutputStream(socket.getOutputStream());
+        objIn = new ObjectInputStream(socket.getInputStream());
+        gson = new Gson();
+        startCom();
+    }
+    // ------------------------------------------------------
 
-        running = false;
-        timer.cancel();
+    private List<Artist> getArtist(Song song) throws IOException {
+        setSocket();
+        sendMessage("get artist song");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", song.getId());
+        sendMessage(jsonObject.toString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = getMessage();
+        ArrayList<UUID> uuidList = objectMapper.readValue(json, new TypeReference<>() {
+        });
+
+        List<Artist> artists = new ArrayList<>();
+        return artists;
     }
 
-    public void set_play_time(){
+    public void setPageContent(List<Song> playlist, Song playingSong) throws IOException {
+        List<Artist> artists = getArtist(playingSong);
+        // set sing information
+        songNameLabel1.setText(playingSong.getName());
+        songNameLabel2.setText(playingSong.getName());
+        singerLabel1.setText(artists.get(0).getUsername());
+        singerLabel2.setText(artists.get(0).getUsername());
+        genreLabel.setText(playingSong.getGenre());
+        durationLabel.setText(String.valueOf(playingSong.getDuration()));
+        yearLabel.setText(String.valueOf(playingSong.getYear()));
+        rateLabel.setText(String.valueOf(playingSong.getRate()));
+        songImage.setImage(new Image(playingSong.getPath())); // todo test this
 
-        double playbackPosition = play_progress_bar.getValue();
-        mediaPlayer.seek(Duration.seconds(playbackPosition));
-        playMedia();
+        // set playlist
+        playlist_vb.getChildren().clear();
+        for (Song song : playlist) {
+            SongHBox songHBox = new SongHBox(song);
+            playlist_vb.getChildren().add(songHBox);
+        }
 
+        // set lyrics
+        lyricsText.setText(playingSong.getLyrics());
     }
-
-
 }

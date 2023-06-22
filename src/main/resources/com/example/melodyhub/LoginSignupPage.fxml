@@ -564,7 +564,7 @@
                 </ImageView>
             </children>
         </Pane>
-        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" visible="false" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@images/logo.jpg" />
             </image>
@@ -587,7 +587,7 @@
                   <Cursor fx:constant="HAND" />
               </cursor>
           </Label>
-        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="login_logo_1" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" visible="false" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@images/logo.jpg" />
             </image>

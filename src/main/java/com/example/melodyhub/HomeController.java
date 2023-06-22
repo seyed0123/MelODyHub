@@ -6,15 +6,22 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -22,8 +29,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.melodyhub.LoginSignupPage.*;
+import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
 public class HomeController implements Initializable {
     private static User user;
@@ -70,6 +80,9 @@ public class HomeController implements Initializable {
     private Pane play_bar;
 
     @FXML
+    private Slider play_progress_bar;
+
+    @FXML
     private HBox playlist;
 
     @FXML
@@ -103,7 +116,7 @@ public class HomeController implements Initializable {
     private Label singerNameLabel;
 
     @FXML
-    private Label songNameLabel;
+    private Label song_name_label;
 
     @FXML
     private BorderPane songsPane;
@@ -182,7 +195,7 @@ public class HomeController implements Initializable {
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            System.out.println("VBox clicked");
+                            System.out.println("song clicked");
                         }
                 });
                     this.recom.getChildren().addAll(vbox);
@@ -228,8 +241,14 @@ public class HomeController implements Initializable {
                         Image image = new Image("@images/covers/"+id+".png");
                         imageView.setImage(image);
                     }catch (Exception e) {
-                        Image image = new Image("G:\\code\\java\\MelodyHub\\src\\main\\resources\\com\\example\\melodyhub\\images\\covers\\default.png");
-                        imageView.setImage(image);
+                        try{
+                            Image image = new Image(getClass().getResource("image/default.png").openStream());
+                            imageView.setImage(image);
+                        }catch (Exception ep)
+                        {
+                            ep.printStackTrace();
+                        }
+
                     }
                     Label songNameLabel = new Label(song.getName());
                     songNameLabel.setPrefHeight(16.0);
@@ -247,10 +266,36 @@ public class HomeController implements Initializable {
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            System.out.println("VBox clicked");
+                            System.out.println("song clicked");
                         }
                     });
-                    this.recom.getChildren().addAll(vbox);
+                    this.popular.getChildren().addAll(vbox);
+                }
+                if(songs==null) {
+                    songs = new ArrayList<File>();
+
+                    directory = new File("src/main/resources/com/example/melodyhub/musics");
+
+                    files = directory.listFiles();
+
+                    if (files != null) {
+
+                        for (File file : files) {
+
+                            songs.add(file);
+                        }
+                    }
+
+                    media = new Media(songs.get(songNumber).toURI().toString());
+                    mediaPlayer = new MediaPlayer(media);
+
+                    song_name_label.setText(songs.get(songNumber).getName());
+                    song_name_label.setWrapText(true);
+                }else {
+                    song_name_label.setText(songs.get(songNumber).getName());
+                    song_name_label.setWrapText(true);
+                    continueTimer();
+
                 }
                 explore.setOnMouseClicked(event -> {
                     System.out.println("Explore clicked");
@@ -261,7 +306,17 @@ public class HomeController implements Initializable {
                 });
 
                 history.setOnMouseClicked(event -> {
-                    System.out.println("History clicked");
+                    Stage stage = (Stage) likeImage.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("history.fxml"));
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 likeImage.setOnMouseClicked(event -> {
@@ -280,10 +335,6 @@ public class HomeController implements Initializable {
                     System.out.println("Playlist clicked");
                 });
 
-                this.popular.setOnMouseClicked(event -> {
-                    System.out.println("Popular clicked");
-                });
-
                 premium.setOnMouseClicked(event -> {
                     System.out.println("Premium clicked");
                 });
@@ -296,9 +347,6 @@ public class HomeController implements Initializable {
                     System.out.println("Queue image clicked");
                 });
 
-                recommended.setOnMouseClicked(event -> {
-                    System.out.println("Recommended clicked");
-                });
 
                 share.setOnMouseClicked(event -> {
                     System.out.println("Share clicked");
@@ -315,5 +363,168 @@ public class HomeController implements Initializable {
         catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void playMedia() {
+
+        beginTimer();
+        mediaPlayer.play();
+    }
+
+    public  void pauseMedia() {
+
+        cancelTimer();
+        mediaPlayer.pause();
+    }
+
+    public void resetMedia() {
+
+        play_progress_bar.setValue(0);
+        mediaPlayer.seek(Duration.seconds(0));
+    }
+
+    public void previousMedia() {
+
+        if(songNumber > 0) {
+
+            songNumber--;
+
+            mediaPlayer.stop();
+
+            if(running) {
+
+                cancelTimer();
+            }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+        else {
+
+            songNumber = songs.size() - 1;
+
+            mediaPlayer.stop();
+
+            if(running) {
+
+                cancelTimer();
+            }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+    }
+
+    public  void nextMedia() {
+
+        if(songNumber < songs.size() - 1) {
+
+            songNumber++;
+
+            mediaPlayer.stop();
+
+            if(running) {
+
+                cancelTimer();
+            }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+        else {
+
+            songNumber = 0;
+
+            mediaPlayer.stop();
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+    }
+    public   void beginTimer() {
+
+        timer = new Timer();
+
+        task = new TimerTask() {
+
+            public void run() {
+
+                running = true;
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                play_progress_bar.setMin(0);  // Minimum value
+                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
+
+
+                play_progress_bar.setValue(current_play_time);
+
+                if(current_play_time == end) {
+
+                    cancelTimer();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+    // for setting the progress bar after comming from another page
+    public void continueTimer() {
+
+        timer = new Timer();
+
+        task = new TimerTask() {
+
+            public void run() {
+
+                running = true;
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                play_progress_bar.setMin(0);  // Minimum value
+                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
+
+
+                play_progress_bar.setValue(current_play_time);
+
+                if(current_play_time == end) {
+
+                    cancelTimer();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+
+    public  void cancelTimer() {
+
+        running = false;
+        timer.cancel();
+    }
+
+    public   void set_play_time(){
+
+        double playbackPosition = play_progress_bar.getValue();
+        mediaPlayer.seek(Duration.seconds(playbackPosition));
+        playMedia();
+
     }
 }

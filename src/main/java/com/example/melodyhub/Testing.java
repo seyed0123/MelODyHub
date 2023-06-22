@@ -364,4 +364,12 @@ public class Testing {
         sendMessage(jsonObject.toString());
         LoginSignupPage.uploadImage(socket,"src/main/resources/com/example/melodyhub/image.png");
     }
+    @Test
+    public void search() throws IOException {
+        loginUser();
+        sendMessage("search");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("searched","think");
+        sendMessage(jsonObject.toString());
+    }
 }

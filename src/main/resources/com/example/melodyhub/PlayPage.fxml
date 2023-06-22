@@ -1,27 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayPageController">
+<AnchorPane prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayPageController">
    <children>
       <BorderPane layoutX="33.0" layoutY="33.0" prefHeight="484.0" prefWidth="720.0" styleClass="body-back" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <HBox alignment="CENTER_LEFT" prefHeight="431.0" prefWidth="616.0" spacing="30.0" BorderPane.alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" prefHeight="431.0" prefWidth="616.0" spacing="50.0" BorderPane.alignment="CENTER_LEFT">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/covers/IMG_20230612_155238_752.jpg" />
-                     </image>
-                  </ImageView>
-                  <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="301.0" styleClass="transparent" stylesheets="@css/styles.css">
-                     <content>
-                        <VBox fx:id="playlist_vb" prefHeight="421.0" prefWidth="298.0">
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fx:id="songImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/covers/IMG_20230612_155238_752.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="songNameLabel1" alignment="CENTER" prefHeight="30.0" prefWidth="147.0" text="Song name" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="singerLabel1" alignment="CENTER" prefHeight="30.0" prefWidth="147.0" text="singer name" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox>
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                              <Label prefHeight="30.0" prefWidth="70.0" text="genre:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="genreLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="75.0" text="genre" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="70.0" text="duration:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="durationLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="75.0" text="3.15" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="70.0" text="year:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="yearLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="75.0" text="2020" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="70.0" text="rate:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="rateLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="75.0" text="4.9/5" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="466.0" prefWidth="301.0" styleClass="transparent" stylesheets="@css/styles.css">
+                     <content>
+                        <VBox fx:id="playlist_vb" prefHeight="467.0" prefWidth="298.0">
+                           <children>
+                              <HBox fx:id="song_hbox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -97,38 +178,65 @@
                                        </font>
                                     </Label>
                                     <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
-                                    <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                       <children>
-                                          <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
-                                       </children>
-                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <children>
+                                    <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                     <children>
-                        <Label prefHeight="27.0" prefWidth="225.0" text="new song b">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="17.0" prefWidth="31.0" text="3:43" />
-                     </children>
-                  </HBox>
+                  <TextArea fx:id="lyricsText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="300.0" styleClass="transparent" stylesheets="@css/styles.css" text="Hello&#10;We haven't talked in quite some time&#10;I know&#10;I haven't been the best&#10;Of sons, hello, I've been traveling in the desert of my mind&#10;And I&#10;Haven't found a drop&#10;Of life&#10;I haven't found a drop&#10;Of you, I haven't found a drop&#10;I haven't found a drop&#10;Of water&#10;Water&#10;I try desperately to run through the sand&#10;As I hold the water in the palm of my hand&#10;'Cause it's all that I have and it's all that I need and&#10;The waves of the water mean nothing to me&#10;But I try my best and all that I can&#10;To hold tightly onto what's left in my hand&#10;But no matter how, how tightly I will strain&#10;The sand will slow me down and the water will drain&#10;I'm just being dramatic, in fact, I'm only at it again&#10;As an addict with a pen, who's addicted to the wind&#10;As it blows me back and forth, mindless, spineless, and pretend&#10;Of course I'll be here again, see you tomorrow, but it's the end of today&#10;End of my ways as a walking denial&#10;My trial was filed as a crazy suicidal head case&#10;But you specialize in dying, you hear me screaming &quot;father&quot;&#10;And I'm lying here just crying, so wash me with your water&#10;Water&#10;Hello&#10;I haven't talked in quite some time&#10;I know&#10;I haven't been the best&#10;Of sons, hello, I've been traveling in the desert of my mind&#10;And I&#10;I haven't found a drop&#10;Of life&#10;I haven't found a drop&#10;Of you&#10;I haven't found a drop&#10;I haven't found a drop&#10;Of water" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" />
@@ -138,20 +246,28 @@
          <top>
             <Pane prefHeight="99.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" layoutX="348.0" layoutY="69.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="324.0" layoutY="69.0" prefHeight="54.0" prefWidth="578.0">
                      <children>
-                        <Label prefHeight="54.0" prefWidth="225.0" text="Rave &amp; Roses Album" textFill="WHITE">
+                        <Label prefHeight="54.0" prefWidth="216.0" text="Rave &amp; Roses Album" textFill="WHITE">
                            <font>
                               <Font name="Roboto Black" size="20.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="17.0" prefWidth="58.0" text="15 tracks" textFill="WHITE" />
+                        <Label fx:id="tracksLabel" prefHeight="17.0" prefWidth="58.0" text="15 tracks" textFill="WHITE" />
+                        <Label prefHeight="54.0" prefWidth="115.0" text="Lyrics" textFill="WHITE">
+                           <font>
+                              <Font name="Roboto Black" size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="80.0" />
+                           </HBox.margin>
+                        </Label>
                      </children>
                   </HBox>
                </children></Pane>
          </top>
          <left>
-            <Pane prefHeight="441.0" prefWidth="159.0" BorderPane.alignment="CENTER" />
+            <Pane prefHeight="501.0" prefWidth="117.0" BorderPane.alignment="CENTER" />
          </left>
       </BorderPane>
       <Pane fx:id="play_bar" layoutX="10.0" layoutY="550.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="600.0">
@@ -160,12 +276,12 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="59.0" prefWidth="163.0">
                      <children>
-                        <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                        <Label fx:id="songNameLabel2" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
                               <Font name="Arial Nova" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="artist_name_label" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                        <Label fx:id="singerLabel2" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                            <font>
                               <Font name="Arial Nova Light" size="11.0" />
                            </font>
@@ -177,22 +293,22 @@
                         <Image url="@images/icons8-love-48.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="previous_track" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icons8-rewind-50.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="play_button" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icons8-play-50.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="next_track" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icons8-fast-forward-50.png" />
                      </image>
                   </ImageView>
-                  <Slider fx:id="play_progress_bar" onMouseClicked="#set_play_time" prefHeight="19.0" prefWidth="500.0" stylesheets="@css/styles.css" />
+                  <Slider prefHeight="19.0" prefWidth="500.0" stylesheets="@css/styles.css" />
                </children>
             </HBox>
          </children>

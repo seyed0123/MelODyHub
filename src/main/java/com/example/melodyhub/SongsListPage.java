@@ -10,11 +10,9 @@ import java.util.List;
 
 public class SongsListPage extends Application {
 
-    private String genre;
-    private List<Song> songList;
+    private final List<Song> songList;
 
-    public SongsListPage(String genre, List<Song> songList) {
-        this.genre = genre;
+    public SongsListPage(List<Song> songList) {
         this.songList = songList;
     }
 
@@ -22,10 +20,9 @@ public class SongsListPage extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SongsListPage.class.getResource("SongsListPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Songs");
+        stage.setTitle("Songs List");
         stage.setScene(scene);
-        ((SongsListController) fxmlLoader.getController()).songList = songList;
-        ((SongsListController) fxmlLoader.getController()).fillList(genre);
+        ((SongsListController) fxmlLoader.getController()).fillList(songList);
         stage.show();
     }
 

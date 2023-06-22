@@ -118,12 +118,12 @@ public class UserPerform extends AccountPerform {
         ArrayList<String> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select command from history where userid='" + id + "' and type = '" + type + "';");
         if (res == null) {
-            return null;
+            return ret;
         }
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add((res.getString("command")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

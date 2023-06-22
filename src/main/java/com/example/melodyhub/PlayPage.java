@@ -6,18 +6,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class PlayPage extends Application {
-    private static final String HOST = "localhost";
-    private static final int PORT = 8085;
-    private static final String KEYSTORE = "src/main/java/com/example/melodyhub/client.keystore";
-    private static final String KEYSTORE_PASSWORD = "123456";
+
+    private final List<Song> playlist;
+    private final Song song;
+
+    public PlayPage(List<Song> playlist, Song song) {
+        this.playlist = playlist;
+        this.song = song;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PlayPage.class.getResource("PlayPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Home");
+        stage.setTitle("Play Song");
+        ((PlayPageController) fxmlLoader.getController()).setPageContent(playlist, song);
         stage.setScene(scene);
         stage.show();
     }

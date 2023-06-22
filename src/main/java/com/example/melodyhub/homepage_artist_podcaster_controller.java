@@ -149,6 +149,11 @@ public class homepage_artist_podcaster_controller implements Initializable {
     @FXML
     private ImageView sign_out_button;
 
+    private static Account account;
+    public static void setAccount(Account account)
+    {
+        homepage_artist_podcaster_controller.account=account;
+    }
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -206,8 +211,6 @@ public class homepage_artist_podcaster_controller implements Initializable {
     public   void playMedia() {
 
         beginTimer();
-//        changeSpeed(null);
-//        mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
         mediaPlayer.play();
     }
 

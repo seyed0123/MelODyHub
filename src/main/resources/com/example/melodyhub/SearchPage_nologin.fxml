@@ -145,7 +145,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FFB4B4; -fx-background-radius: 10px;">
+                                <Pane fx:id="classical" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FFB4B4; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -193,7 +193,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.rowIndex="2">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72FF89; -fx-background-radius: 10px;">
+                                <Pane fx:id="hiphop" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72FF89; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -257,7 +257,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FF72AC; -fx-background-radius: 10px;">
+                                <Pane fx:id="rock" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: FF72AC; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -273,7 +273,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.rowIndex="1">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #7294FF; -fx-background-radius: 10px;">
+                                <Pane fx:id="pop" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #7294FF; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -289,7 +289,7 @@
                         </VBox>
                         <VBox alignment="CENTER" GridPane.columnIndex="4">
                             <children>
-                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72F9FF; -fx-background-radius: 10px;">
+                                <Pane fx:id="dance" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#cardClicked" onMouseEntered="#cardMouseEntered" onMouseExited="#cardMouseExited" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #72F9FF; -fx-background-radius: 10px;">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>

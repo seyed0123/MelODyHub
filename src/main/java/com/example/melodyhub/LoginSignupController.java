@@ -195,27 +195,119 @@ public class LoginSignupController implements Initializable {
                 }, DELAY_MINUTES, TimeUnit.MINUTES);
             }
         } else if (a_radio.isSelected()) {
+            String username = username_field.getText();
+            String pass = password_field.getText();
+
             sendMessage("login artist");
-            sendMessage(username_field.getText());
-            sendMessage(password_field.getText());
+            sendMessage(username);
+            sendMessage(pass);
 
-
-            if (!getMessage().equals("login OK")) {
+            if (getMessage().equals("login failed")) {
                 new Alert(Alert.AlertType.INFORMATION, "Login failed! please try again.").show();
+                return;
             } else {
-                // go to authentication page
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = getMessage();
-                Artist artistLogin = objectMapper.readValue(json, Artist.class);
-
-                new Alert(Alert.AlertType.INFORMATION, "Login successfully! please wait...").show();
-
-                ((Stage) this.password_field.getScene().getWindow()).close();
-                new FirstWindow(artistLogin, "authentication").start(new Stage());
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("FirstWindow.fxml"));
+                try {
+                    Scene scene = new Scene(fxmlLoader.load());
+                    stage.setScene(scene);
+                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+                        @Override
+                        public void handle(WindowEvent event) {
+                            if(FirstWindowController.edited)
+                            {
+                                sendMessage(String.valueOf(FirstWindowController.code));
+                                if(getMessage().equals("login OK"))
+                                {
+                                    try {
+                                        Artist user= objectMapper.readValue(getMessage(),Artist.class);
+                                        homepage_artist_podcaster_controller.setAccount(user);
+                                        Stage stage = new Stage();
+                                        FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage_artist&podcater.fxml"));
+                                        Scene scene1 = new Scene(fxmlLoader.load());
+                                        stage.setScene(scene1);
+                                        stage.show();
+                                        Stage stage1 = (Stage) p_radio.getScene().getWindow();
+                                        stage1.close();
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }else {
+                                    new Alert(Alert.AlertType.ERROR, "Your authentication code is wrong!").show();
+                                }
+                            }
+                        }
+                    });
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                int DELAY_MINUTES = 2;
+                ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                executor.schedule(() -> {
+                    stage.close();
+                    executor.shutdown();
+                }, DELAY_MINUTES, TimeUnit.MINUTES);
             }
-
         } else if (p_radio.isSelected()) {
+            String username = username_field.getText();
+            String pass = password_field.getText();
 
+            sendMessage("login podcaster");
+            sendMessage(username);
+            sendMessage(pass);
+
+            if (getMessage().equals("login failed")) {
+                new Alert(Alert.AlertType.INFORMATION, "Login failed! please try again.").show();
+                return;
+            } else {
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("FirstWindow.fxml"));
+                try {
+                    Scene scene = new Scene(fxmlLoader.load());
+                    stage.setScene(scene);
+                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+                        @Override
+                        public void handle(WindowEvent event) {
+                            if(FirstWindowController.edited)
+                            {
+                                sendMessage(String.valueOf(FirstWindowController.code));
+                                if(getMessage().equals("login OK"))
+                                {
+                                    try {
+                                        Podcaster user= objectMapper.readValue(getMessage(),Podcaster.class);
+                                        homepage_artist_podcaster_controller.setAccount(user);
+                                        Stage stage = new Stage();
+                                        FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage_artist&podcater.fxml"));
+                                        Scene scene1 = new Scene(fxmlLoader.load());
+                                        stage.setScene(scene1);
+                                        stage.show();
+                                        Stage stage1 = (Stage) p_radio.getScene().getWindow();
+                                        stage1.close();
+                                    } catch (JsonProcessingException e) {
+                                        throw new RuntimeException(e);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }else {
+                                    new Alert(Alert.AlertType.ERROR, "Your authentication code is wrong!").show();
+                                }
+                            }
+                        }
+                    });
+                    stage.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                int DELAY_MINUTES = 2;
+                ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+                executor.schedule(() -> {
+                    stage.close();
+                    executor.shutdown();
+                }, DELAY_MINUTES, TimeUnit.MINUTES);
+            }
         }
     }
 
@@ -248,7 +340,7 @@ public class LoginSignupController implements Initializable {
             String PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
             Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);
             Matcher phone_matcher = PHONE_PATTERN.matcher(phone);
-            if(!matcher.matches())
+            if(!phone_matcher.matches())
             {
                 new Alert(Alert.AlertType.ERROR, "Please enter valid phone number.you must use it later.").show();
                 return;
@@ -333,7 +425,7 @@ public class LoginSignupController implements Initializable {
                     e -> banner.setTranslateX(banner.getTranslateX() - 5)));
             timeline.setCycleCount(117);
             timeline.play();
-            //login_logo.setVisible(false);
+            //banner.setVisible(false);
             l1.setVisible(false);
             //signup_txt_btn.setVisible(false);
             banner.setFitWidth(520);
@@ -371,7 +463,7 @@ public class LoginSignupController implements Initializable {
             ));
             timeline.setCycleCount(117);
             timeline.play();
-            //login_logo.setVisible(true);
+            //banner.setVisible(true);
             l1.setVisible(true);
             //signup_txt_btn.setVisible(true);
             banner.setFitWidth(570);
