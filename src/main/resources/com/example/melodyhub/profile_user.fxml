@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.UserProfilePageController">
+    <children>
+        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="830.0" style="-fx-background-color: #301934;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <VBox prefHeight="588.0" prefWidth="810.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label text="your playlists" textFill="WHITE">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                  <VBox>
+                     <children>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="260.0" prefWidth="790.0" styleClass="transparent" stylesheets="@css/styles.css">
+                                  <content>
+                                      <ListView fx:id="playlists_listview" prefHeight="255.0" prefWidth="784.0" styleClass="transparent" stylesheets="@css/styles.css" />
+                                  </content>
+                              </ScrollPane>
+                     </children>
+                  </VBox>
+                  <HBox prefHeight="268.0" prefWidth="790.0" spacing="50.0">
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Followings" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="268.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css">
+                                 <content>
+                                    <ListView fx:id="followings_listview" prefHeight="255.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <Label text="Followers" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="268.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css">
+                                 <content>
+                                    <ListView fx:id="followers_listview" prefHeight="255.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label text="your playlists" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </BorderPane.margin>
+                </VBox>
+            </center>
+        </BorderPane>
+        <VBox alignment="CENTER" layoutX="3.0" layoutY="16.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="830.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fx:id="profile_img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
+                    <image>
+                        <Image url="@imageProfile/image.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="username_label" prefHeight="37.0" prefWidth="230.0" text="Username" textFill="#441147">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox alignment="CENTER" spacing="5.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0">
+                            <children>
+                                <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="71.0" text="followers">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="followers_label" prefHeight="37.0" prefWidth="30.0" text="10" textFill="#441147">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="110.0">
+                            <children>
+                                <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="78.0" text="followings">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="followings_label" prefHeight="37.0" prefWidth="30.0" text="20" textFill="#441147">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <Label prefHeight="37.0" prefWidth="230.0" text="Account Information" textFill="#441147">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="account:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="acctype_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="age:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="age_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="gender:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="gender_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="email:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="email_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="phone:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="phone_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+        <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+            <children>
+                <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="1080.0" spacing="15.0" style="-fx-background-color: #16071C;">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Nova" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Nova Light" size="11.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/next-button (1).png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/play.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/pause-button.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/next-button.png" />
+                            </image>
+                        </ImageView>
+                        <Slider prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                        <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/heart.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/comment.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/lyrics.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/playlist.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

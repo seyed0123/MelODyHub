@@ -32,7 +32,6 @@ import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 import static com.example.melodyhub.LoginSignupPage.*;
 
 public class history_page_controller implements Initializable {
-
     private static boolean type;
     @FXML
     private ImageView banner;
@@ -64,42 +63,19 @@ public class history_page_controller implements Initializable {
     @FXML
     private ListView<Button> historyList;
 
+    public static void setType(boolean type1)
+    {
+        type =type1;
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
-        if (songs == null) {
-            songs = new ArrayList<File>();
-
-            directory = new File("src/main/resources/com/example/melodyhub/musics");
-
-            files = directory.listFiles();
-
-            if (files != null) {
-
-                for (File file : files) {
-
-                    songs.add(file);
-                }
-            }
-
-            //        media = new Media(songs.get(songNumber).toURI().toString());
-            //        mediaPlayer = new MediaPlayer(media);
-
-            media = homepage_artist_podcaster_controller.media;
-            mediaPlayer = homepage_artist_podcaster_controller.mediaPlayer;
-
+        {
             song_name_label.setText(songs.get(songNumber).getName());
             song_name_label.setWrapText(true);
 
-        } else {
-            song_name_label.setText(songs.get(songNumber).getName());
-            song_name_label.setWrapText(true);
-
-//            // updating the current playing time
             play_progress_bar.setValue(current_play_time);
             continueTimer();
-
-
         }
         sendMessage("see history");
         JSONObject jsonObject = new JSONObject();
@@ -112,13 +88,14 @@ public class history_page_controller implements Initializable {
                 Button button = new Button();
                 button.setText(str);
                 button.setTextFill(Color.CORAL);
+                button.setPrefSize(1000,15);
                 button.setOnMouseClicked(event ->{
                     Clipboard clipboard = Clipboard.getSystemClipboard();
                     ClipboardContent content = new ClipboardContent();
                     content.putString(button.getText());
                     clipboard.setContent(content);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("copied to clipboard");
+                    alert.setContentText("copied to clipboard");
                     alert.showAndWait();
                 });
                 historyList.getItems().add(button);
@@ -302,7 +279,7 @@ public class history_page_controller implements Initializable {
     @FXML
     void open_home(MouseEvent event) throws IOException {
         FXMLLoader loader=null;
-        if(type==false)
+        if(!type)
         // Load the FXML file for the new page
         {
             loader = new FXMLLoader(getClass().getResource("HomePage_artist&podcater.fxml"));

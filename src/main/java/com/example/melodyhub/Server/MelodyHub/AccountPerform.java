@@ -46,7 +46,7 @@ public class AccountPerform {
     }
    public static void addPlaylist(UUID Id,UUID playlist)
     {
-        MelodyHub.sendQuery("insert into playlist_owning (playlistid, ownerid) values (playlistid = '"+playlist+"' , ownerid = '"+Id+"');");
+        MelodyHub.sendQuery("insert into playlist_owning (playlistid, ownerid) values ('"+playlist+"' , '"+Id+"');");
     }
 
    public static void removePlaylist(UUID Id,UUID playlist) {
@@ -57,10 +57,12 @@ public class AccountPerform {
     {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select playlistid from playlist_owning where ownerid ='"+Id+"';");
+        if(res==null)
+            return ret;
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add(UUID.fromString(res.getString("playlistid")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

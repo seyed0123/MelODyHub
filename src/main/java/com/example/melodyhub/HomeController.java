@@ -21,16 +21,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
@@ -238,17 +236,16 @@ public class HomeController implements Initializable {
                                 throw new Exception();
                             }
                         }
-                        Image image = new Image("@images/covers/"+id+".png");
+                        Image image = new Image(Account.class.getResource("images/covers/"+id+".png").toExternalForm());
                         imageView.setImage(image);
                     }catch (Exception e) {
                         try{
-                            Image image = new Image(getClass().getResource("image/default.png").openStream());
+                            Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
                             imageView.setImage(image);
                         }catch (Exception ep)
                         {
                             ep.printStackTrace();
                         }
-
                     }
                     Label songNameLabel = new Label(song.getName());
                     songNameLabel.setPrefHeight(16.0);
@@ -266,7 +263,18 @@ public class HomeController implements Initializable {
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            System.out.println("song clicked");
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("AddToPlaylist.fxml"));
+                            Scene scene = null;
+                            AddToPlaylistController.setAccount(song,user);
+                            try {
+                                scene = new Scene(fxmlLoader.load());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            stage.setTitle("Login / Signup");
+                            stage.setScene(scene);
+                            stage.show();
                         }
                     });
                     this.popular.getChildren().addAll(vbox);
@@ -309,6 +317,7 @@ public class HomeController implements Initializable {
                     Stage stage = (Stage) likeImage.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("history.fxml"));
                     Scene scene = null;
+                    history_page_controller.setType(true);
                     try {
                         scene = new Scene(fxmlLoader.load());
                     } catch (IOException e) {
@@ -328,7 +337,18 @@ public class HomeController implements Initializable {
                 });
 
                 notif.setOnMouseClicked(event -> {
-                    System.out.println("Notif clicked");
+                    Stage stage = (Stage) likeImage.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("notifs.fxml"));
+                    Scene scene = null;
+                    notification_page_controller.setUser(user);
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 playlist.setOnMouseClicked(event -> {
@@ -336,7 +356,26 @@ public class HomeController implements Initializable {
                 });
 
                 premium.setOnMouseClicked(event -> {
-                    System.out.println("Premium clicked");
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("premium.fxml"));
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+                        @Override
+                        public void handle(WindowEvent windowEvent) {
+                            user.setPremium(true);
+                            sendMessage("update user");
+                            HashMap<String,String> command = new HashMap<>();
+                            command.put("premium","false");
+                        }
+                    });
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 profile.setOnMouseClicked(event -> {

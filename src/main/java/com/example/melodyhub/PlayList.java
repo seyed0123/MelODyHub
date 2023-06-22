@@ -20,14 +20,14 @@ public class PlayList implements Serializable {
     private UUID firstOwner;
     private ArrayList<UUID> songs;
 
-    public PlayList(String id,String name, boolean personal, double rate,double duration,String artist,String firstOwner) {
+    public PlayList(String id,String name, boolean personal, double rate,double duration,UUID artist,String firstOwner) {
         this.id=id;
         this.name=name;
         this.personal = personal;
         this.rate = rate;
         this.duration=duration;
         if(artist!=null)
-            this.artist=UUID.fromString(artist);
+            this.artist=artist;
         this.firstOwner=UUID.fromString(firstOwner);
         songs=new ArrayList<>();
     }
@@ -37,7 +37,7 @@ public class PlayList implements Serializable {
                                           @JsonProperty("duration") double duration,
                                           @JsonProperty("personal") boolean personal,
                                           @JsonProperty("rate") double rate,
-                                          @JsonProperty("artist") String artist,
+                                          @JsonProperty("artist") UUID artist,
                                           @JsonProperty("firstOwner") String firstOwner,
                                           @JsonProperty("songs") ArrayList<UUID> songs) {
         PlayList playList = new PlayList(id,name, personal, rate, duration, artist, firstOwner);
