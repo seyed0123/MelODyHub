@@ -4,6 +4,12 @@ import com.example.melodyhub.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.imageio.ImageIO;
@@ -182,7 +188,7 @@ public class MelodyHub {
             return null;
         }
     }
-    public static Song findSong(UUID song)
+    public static Song findSong(String song)
     {
         ResultSet res = MelodyHub.sendQuery("select * from song where id = '"+song+"'");
         if(res==null)
@@ -220,9 +226,8 @@ public class MelodyHub {
 
     public static void createPlaylist(UUID firstOwner,PlayList playList)
     {
-        UUID id = UUID.randomUUID();
-        MelodyHub.sendQuery(String.format("insert into playlists (id, duration, is_public, rate, artist, first_owner , name) VALUES ('%s',%.2f ,%b ,%.2f , '%s' ,'%s','%s')",id,playList.getDuration(),playList.isPersonal(),playList.getRate(),playList.getArtist(),playList.getFirstOwner(),playList.getName()));
-        AccountPerform.addPlaylist(firstOwner,id);
+        MelodyHub.sendQuery(String.format("insert into playlists (id, duration, is_public, rate, artist, first_owner , name) VALUES ('%s',%.2f ,%b ,%.2f , '%s' ,'%s','%s')", playList.getId(),playList.getDuration(),playList.isPersonal(),playList.getRate(),playList.getArtist(),playList.getFirstOwner(),playList.getName()));
+        AccountPerform.addPlaylist(firstOwner,playList.getId());
     }
 
     public static void removePlaylist(UUID playlist)
@@ -232,11 +237,10 @@ public class MelodyHub {
 
     public static void createSong(Song song,ArrayList<String> artists)
     {
-        UUID id = UUID.randomUUID();
-        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, path) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",id,song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, path) VALUES ( '%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s' , '%s');",song.getId(),song.getName(),song.getGenre(),song.getDuration(),song.getYear(),song.getRate(),song.getLyrics(),song.getPath()));
         for (String art :artists)
         {
-            ArtistPerform.addSong(MelodyHub.findArtistUsername(art),id);
+            ArtistPerform.addSong(MelodyHub.findArtistUsername(art),song.getId());
         }
     }
 
@@ -255,13 +259,12 @@ public class MelodyHub {
     }
     public static void createPodcast(Podcast podcast,UUID podcaster)
     {
-        UUID id = UUID.randomUUID();
-        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, description, path) VALUES ('%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s', '%s', '%s');",id,podcast.getName(),podcast.getGenre(),podcast.getDuration(),podcast.getYear(),podcast.getRate(),podcast.getLyrics(),podcast.getDescription(),podcast.getPath()));
+        MelodyHub.sendQuery(String.format("insert into song (id, name, genre, duration, year, rate, lyrics, description, path) VALUES ('%s' , '%s', '%s' ,%.2f ,  %d ,  %.3f ,'%s', '%s', '%s');",podcast.getId(),podcast.getName(),podcast.getGenre(),podcast.getDuration(),podcast.getYear(),podcast.getRate(),podcast.getLyrics(),podcast.getDescription(),podcast.getPath()));
         PodcasterPerform.addPodcast(podcaster,podcast.getId());
     }
     public static void createUser(User user)
     {
-        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",UUID.randomUUID(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
+        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",user.getUsername(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
     }
 
     public static void removeUser(UUID user)
@@ -285,7 +288,7 @@ public class MelodyHub {
     public static void createArtist(Artist artist)
     {
 
-        MelodyHub.sendQuery(String.format("insert into artist (id, username, pass, email, phone, image, verify, bio, listeners, rate) VALUES ('%s','%s','%s','%s','%s','%s',%b,'%s',%d,%.2f);",UUID.randomUUID(),artist.getUsername(),hashPassword(artist.getPassword()),artist.getEmail(),artist.getPhoneNumber(),artist.getImage(),artist.isVerify(),artist.getBio(),artist.getListeners(),artist.getRate()));
+        MelodyHub.sendQuery(String.format("insert into artist (id, username, pass, email, phone, image, verify, bio, listeners, rate) VALUES ('%s','%s','%s','%s','%s','%s',%b,'%s',%d,%.2f);",artist.getId(),artist.getUsername(),hashPassword(artist.getPassword()),artist.getEmail(),artist.getPhoneNumber(),artist.getImage(),artist.isVerify(),artist.getBio(),artist.getListeners(),artist.getRate()));
     }
 
     public static void removeArtist(UUID artist)
@@ -304,7 +307,7 @@ public class MelodyHub {
 
     public static void createPodcaster(Podcaster podcaster)
     {
-        MelodyHub.sendQuery(String.format("insert into podcaster (id, username, pass, email, phone, image, verify, bio, rate) values ('%s', '%s','%s','%s','%s','%s',%b ,'%s',%.2f);",UUID.randomUUID(),podcaster.getUsername(),hashPassword(podcaster.getPassword()),podcaster.getEmail(),podcaster.getPhoneNumber(),podcaster.getImage(),podcaster.isVerify(),podcaster.getBio(),podcaster.getRate()));
+        MelodyHub.sendQuery(String.format("insert into podcaster (id, username, pass, email, phone, image, verify, bio, rate) values ('%s', '%s','%s','%s','%s','%s',%b ,'%s',%.2f);",podcaster.getId(),podcaster.getUsername(),hashPassword(podcaster.getPassword()),podcaster.getEmail(),podcaster.getPhoneNumber(),podcaster.getImage(),podcaster.isVerify(),podcaster.getBio(),podcaster.getRate()));
     }
 
     public static void removePodcaster(UUID podcaster)
@@ -320,6 +323,11 @@ public class MelodyHub {
             if(!Objects.equals(column, "id") && !Objects.equals(column, "pass"))
                 MelodyHub.sendQuery(String.format("update podcaster set %s = %s where id = '%s';",column ,command.get(column),podcaster));
         }
+    }
+
+    public static void addLog(JSONObject jsonObject)
+    {
+        MelodyHub.sendQuery("insert into log (command) values ('"+jsonObject.toString()+"');");
     }
     public static void uploadImage(Socket socket,String path)
     {
@@ -414,41 +422,41 @@ public class MelodyHub {
             System.err.println("Error sending file: " + e.getMessage());
         }
     }
-    public static ArrayList<ArrayList<UUID>> search(String searched)
-    {
-        ArrayList<ArrayList<UUID>> ret= new ArrayList<>();
-        ArrayList<UUID> song = new ArrayList<>();
-        ResultSet res=MelodyHub.sendQuery(String.format("SELECT id\n" +
+    public static ArrayList<String> search(String searched) {
+        ArrayList<String> song = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery(String.format("SELECT id\n" +
                 "FROM Song\n" +
                 "WHERE name LIKE '%s'\n" +
                 "   OR lyrics LIKE '%s'\n" +
                 "    OR genre LIKE '%s'\n" +
-                "    OR description LIKE '%s'",searched));
+                "    OR description LIKE '%s'", searched));
         while (true) {
             try {
                 if (!res.next()) break;
-                song.add(UUID.fromString(res.getString("id")));
+                song.add((res.getString("id")));
             } catch (SQLException e) {
                 break;
             }
         }
-        ret.add(song);
-        ArrayList<UUID> artists = new ArrayList<>();
-        res = MelodyHub.sendQuery(String.format("SELECT id\n" +
-                "FROM artist\n" +
-                "WHERE username like '%s'\n" +
-                "OR genre like '%s';\n",searched));
-        while (true) {
-            try {
-                if (!res.next()) break;
-                artists.add(UUID.fromString(res.getString("id")));
-            } catch (SQLException e) {
-                break;
-            }
-        }
-        ret.add(artists);
-        return ret;
+        return song;
     }
+    public static ArrayList<UUID> searchArtist(String searched)
+        {
+            ArrayList<UUID> artists = new ArrayList<>();
+            ResultSet res = MelodyHub.sendQuery(String.format("SELECT id\n" +
+                    "FROM artist\n" +
+                    "WHERE username like '%s'\n" +
+                    "OR genre like '%s';\n", searched));
+            while (true) {
+                try {
+                    if (!res.next()) break;
+                    artists.add(UUID.fromString(res.getString("id")));
+                } catch (SQLException e) {
+                    break;
+                }
+            }
+            return artists;
+        }
     public static ArrayList<UUID> getGenreArtist(String genre)
     {
         ArrayList<UUID> ret = new ArrayList<>();
@@ -462,5 +470,24 @@ public class MelodyHub {
             }
         }
         return ret;
+    }
+    public static void extractCover(String id) throws IOException, InvalidDataException, UnsupportedTagException {
+        File mp3File = new File("src/main/resources/com/example/melodyhub/musics/"+id+".mp3");
+        Mp3File mp3 = new Mp3File(mp3File);
+
+        if (mp3.hasId3v2Tag()) {
+            ID3v2 id3v2Tag = mp3.getId3v2Tag();
+            byte[] imageData = id3v2Tag.getAlbumImage();
+
+            if (imageData != null) {
+                File coverFile = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".png");
+                FileUtils.writeByteArrayToFile(coverFile, imageData);
+                System.out.println("Cover image saved to " + coverFile.getAbsolutePath());
+            } else {
+                System.out.println("No cover image found in the MP3 file.");
+            }
+        } else {
+            System.out.println("No ID3v2 tag found in the MP3 file.");
+        }
     }
 }

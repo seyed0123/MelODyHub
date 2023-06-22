@@ -16,63 +16,63 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
    <children>
-      <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+      <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
             <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="1080.0" spacing="15.0" style="-fx-background-color: #16071C;">
                <children>
                   <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
                      <children>
-                        <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                        <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
                               <Font name="Arial Nova" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="artist_name_label" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                        <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                            <font>
                               <Font name="Arial Nova Light" size="11.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fx:id="previous_track" fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/next-button (1).png" />
+                        <Image url="@../../images/next-button%20(1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="play_button" fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/play.png" />
+                        <Image url="@../../images/play.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="pause_button" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/pause-button.png" />
+                        <Image url="@../../images/pause-button.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="next_track" fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/next-button.png" />
+                        <Image url="@../../images/next-button.png" />
                      </image>
                   </ImageView>
-                  <Slider fx:id="play_progress_bar" onMouseDragged="#set_play_time" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                  <Slider prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@../../css/styles.css" />
                   <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/heart.png" />
+                        <Image url="@../../images/heart.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/comment.png" />
+                        <Image url="@../../images/comment.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/lyrics.png" />
+                        <Image url="@../../images/lyrics.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/playlist.png" />
+                        <Image url="@../../images/playlist.png" />
                      </image>
                   </ImageView>
                </children>
@@ -83,7 +83,7 @@
          <bottom>
             <VBox fx:id="recommended" prefHeight="400.0" prefWidth="740.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER" />
+                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@../../css/styles.css" vbarPolicy="NEVER" />
                </children>
                <BorderPane.margin>
                   <Insets left="10.0" />
@@ -93,7 +93,7 @@
          <top>
             <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/logo.jpg" />
+                  <Image url="@../../images/logo.jpg" />
                </image>
             </ImageView>
          </top>
@@ -105,9 +105,9 @@
                   <Insets left="20.0" />
                </padding>
                <children>
-                  <ImageView fx:id="home_button" fitHeight="39.0" fitWidth="42.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/back-icon.png" />
+                        <Image url="@../../images/back-icon.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="43.0" prefWidth="58.0" text="Home">

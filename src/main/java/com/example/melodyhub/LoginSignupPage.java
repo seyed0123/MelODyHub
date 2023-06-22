@@ -1,5 +1,6 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +13,13 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URL;
+import java.nio.file.Files;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -21,6 +27,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
+
+
 
 public class LoginSignupPage extends Application {
 
@@ -34,6 +42,7 @@ public class LoginSignupPage extends Application {
     public static Cipher cipherEncrypt;
     public static Cipher cipherDecrypt;
     public static Gson gson;
+    public static ObjectMapper objectMapper;
     public static void sendMessage(String message)
     {
         try {
@@ -104,6 +113,7 @@ public class LoginSignupPage extends Application {
         objOut = new ObjectOutputStream(socket.getOutputStream());
         objIn = new ObjectInputStream(socket.getInputStream());
         gson = new Gson();
+        objectMapper = new ObjectMapper();
         startCom();
     }
     @Override
@@ -116,7 +126,87 @@ public class LoginSignupPage extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        //setSocket();
+        setSocket();
         launch(args);
+    }
+    public static void uploadImage(Socket socket,String path)
+    {
+        try {
+            // Load the image from a file
+            File file = new File(path);
+            BufferedImage image = ImageIO.read(file);
+
+            // Convert the image to a byte array
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            baos.flush();
+            byte[] imageBytes = baos.toByteArray();
+            baos.close();
+
+            // Send the byte array over the socket
+            OutputStream out = socket.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(out);
+            dos.writeInt(imageBytes.length);
+            dos.write(imageBytes);
+            dos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void downloadImage(Socket socket,String path)
+    {
+        try {
+            InputStream in = socket.getInputStream();
+            DataInputStream dis = new DataInputStream(in);
+            int length = dis.readInt();
+            byte[] receivedBytes = new byte[length];
+            dis.readFully(receivedBytes);
+
+            // Convert the byte array back to an image
+            BufferedImage receivedImage = ImageIO.read(new ByteArrayInputStream(receivedBytes));
+            // Save the image to a file
+            File file = new File(path);
+            ImageIO.write(receivedImage, "png", file);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void downloadSong(Socket socket,String path)
+    {
+        try{
+            byte[] buffer = new byte[4096];
+            InputStream inputStream = socket.getInputStream();
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
+
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, bytesRead);
+            }
+
+            fileOutputStream.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void uploadSong(Socket socket,String path)
+    {
+        try{
+            // Load the MP3 file from a file
+            File file = new File(path);
+            byte[] fileBytes = Files.readAllBytes(file.toPath());
+
+            // Send the byte array over the socket
+            OutputStream out = socket.getOutputStream();
+            DataOutputStream dos = new DataOutputStream(out);
+            dos.writeInt(fileBytes.length);
+            dos.write(fileBytes);
+            dos.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

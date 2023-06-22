@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
@@ -25,6 +24,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.DatePicker?>
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" style="-fx-background-color: #EBECF0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.LoginSignupController">
     <children>
         <Pane fx:id="pane_signup" layoutX="509.0" layoutY="33.0" prefHeight="543.0" prefWidth="555.0">
@@ -48,7 +48,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="s_username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <TextField fx:id="s_username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <font>
                                                 <Font name="Pristina" size="24.0" />
                                             </font>
@@ -72,7 +72,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="email_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="email" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <TextField fx:id="email_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="email" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <font>
                                                 <Font name="Pristina" size="24.0" />
                                             </font>
@@ -96,7 +96,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="phone_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="phone number" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <TextField fx:id="phone_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="phone number" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <font>
                                                 <Font name="Pristina" size="24.0" />
                                             </font>
@@ -120,7 +120,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="s_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <TextField fx:id="s_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <font>
                                                 <Font name="Pristina" size="24.0" />
                                             </font>
@@ -147,7 +147,7 @@
                                                 <Insets />
                                             </VBox.margin>
                                         </Label>
-                                        <TextField fx:id="c_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="confirm password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <TextField fx:id="c_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="confirm password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <font>
                                                 <Font name="Pristina" size="24.0" />
                                             </font>
@@ -178,7 +178,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox fx:id="q_combobox" prefHeight="37.0" prefWidth="230.0" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css" visibleRowCount="5">
+                                        <ComboBox fx:id="q_combobox" prefHeight="37.0" prefWidth="230.0" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css" visibleRowCount="5">
                                             <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0">
                                                     <color>
@@ -202,7 +202,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="answer_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="security answer" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <TextField fx:id="answer_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="security answer" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <font>
                                                 <Font name="Pristina" size="24.0" />
                                             </font>
@@ -226,7 +226,7 @@
                                                 <Font name="Pristina" size="20.0" />
                                             </font>
                                         </Label>
-                                        <DatePicker fx:id="birthDate" prefHeight="39.0" prefWidth="225.0" styleClass="light-mode" stylesheets="@css/styles.css">
+                                        <DatePicker fx:id="birthDate" prefHeight="39.0" prefWidth="225.0" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                             <effect>
                                                 <InnerShadow offsetX="2.0" offsetY="2.0">
                                                     <color>
@@ -252,7 +252,7 @@
                                         </Label>
                                         <HBox spacing="25.0">
                                             <children>
-                                                <RadioButton fx:id="male_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Female">
+                                                <RadioButton fx:id="male_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Female">
                                                     <toggleGroup>
                                                         <ToggleGroup fx:id="gender" />
                                                     </toggleGroup>
@@ -260,7 +260,7 @@
                                                         <Font name="Pristina" size="20.0" />
                                                     </font>
                                                 </RadioButton>
-                                                <RadioButton fx:id="female_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Male" toggleGroup="$gender">
+                                                <RadioButton fx:id="female_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Male" toggleGroup="$gender">
                                                     <font>
                                                         <Font name="Pristina" size="20.0" />
                                                     </font>
@@ -274,7 +274,7 @@
                                         </Label>
                                         <HBox spacing="5.0">
                                             <children>
-                                                <RadioButton fx:id="listener_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Listener">
+                                                <RadioButton fx:id="listener_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Listener">
                                                     <font>
                                                         <Font name="Pristina" size="16.0" />
                                                     </font>
@@ -282,12 +282,12 @@
                                                         <ToggleGroup fx:id="accType" />
                                                     </toggleGroup>
                                                 </RadioButton>
-                                                <RadioButton fx:id="podcaster_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Podcaster" toggleGroup="$accType">
+                                                <RadioButton fx:id="podcaster_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Podcaster" toggleGroup="$accType">
                                                     <font>
                                                         <Font name="Pristina" size="16.0" />
                                                     </font>
                                                 </RadioButton>
-                                                <RadioButton fx:id="artist_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Artist" toggleGroup="$accType">
+                                                <RadioButton fx:id="artist_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Artist" toggleGroup="$accType">
                                                     <font>
                                                         <Font name="Pristina" size="16.0" />
                                                     </font>
@@ -298,7 +298,7 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <Button fx:id="signup_btn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupClicked" prefHeight="47.0" prefWidth="163.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css" text="S U B M I T" textAlignment="CENTER" textFill="#8b45dbc7">
+                        <Button fx:id="signup_btn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupClicked" prefHeight="47.0" prefWidth="163.0" style="-fx-background-radius: 32;" stylesheets="@../../css/styles.css" text="S U B M I T" textAlignment="CENTER" textFill="#8b45dbc7">
                             <font>
                                 <Font name="Pristina" size="20.0" />
                             </font>
@@ -336,7 +336,7 @@
                                 <Font name="Pristina" size="20.0" />
                             </font>
                         </Label>
-                        <Label alignment="CENTER" onMouseClicked="#goLogin" prefHeight="25.0" prefWidth="41.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Login" textAlignment="CENTER" textFill="#8b45dbc7">
+                        <Label alignment="CENTER" onMouseClicked="#goLogin" prefHeight="25.0" prefWidth="41.0" styleClass="txt-hover" stylesheets="@../../css/styles.css" text="Login" textAlignment="CENTER" textFill="#8b45dbc7">
                             <font>
                                 <Font name="Pristina" size="20.0" />
                             </font>
@@ -357,7 +357,7 @@
                                 <Font name="Pristina" size="20.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                        <TextField fx:id="username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                             <font>
                                 <Font name="Pristina" size="24.0" />
                             </font>
@@ -383,7 +383,7 @@
                   </Label>
                   <HBox spacing="25.0">
                      <children>
-                        <RadioButton fx:id="u_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="User">
+                        <RadioButton fx:id="u_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="User">
                            <toggleGroup>
                               <ToggleGroup fx:id="gender1" />
                            </toggleGroup>
@@ -391,12 +391,12 @@
                               <Font name="Pristina" size="20.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="a_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Artist" toggleGroup="$gender1">
+                        <RadioButton fx:id="a_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Artist" toggleGroup="$gender1">
                            <font>
                               <Font name="Pristina" size="20.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="p_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Podcaster">
+                        <RadioButton fx:id="p_radio" mnemonicParsing="false" stylesheets="@../../css/styles.css" text="Podcaster">
                            <toggleGroup>
                               <ToggleGroup fx:id="gender11" />
                            </toggleGroup>
@@ -413,7 +413,7 @@
                         </Label>
                         <StackPane fx:id="pass_stack">
                             <children>
-                                <TextField fx:id="v_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                <TextField fx:id="v_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                     <font>
                                         <Font name="Lato-Light" size="18.0" />
                                     </font>
@@ -432,7 +432,7 @@
                                         </InnerShadow>
                                     </effect>
                                 </TextField>
-                                <PasswordField fx:id="password_field" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                <PasswordField fx:id="password_field" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@../../css/styles.css">
                                     <font>
                                         <Font name="Pristina" size="24.0" />
                                     </font>
@@ -460,7 +460,7 @@
                                         <Font name="Pristina" size="20.0" />
                                     </font>
                                 </CheckBox>
-                                <Label onMouseClicked="#forgetPassClicked" prefHeight="20.0" prefWidth="159.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Forget password" textFill="#8b45dbe0">
+                                <Label onMouseClicked="#forgetPassClicked" prefHeight="20.0" prefWidth="159.0" styleClass="txt-hover" stylesheets="@../../css/styles.css" text="Forget password" textFill="#8b45dbe0">
                                     <font>
                                         <Font name="Pristina" size="20.0" />
                                     </font>
@@ -476,7 +476,7 @@
                   <Group />
                     </children>
                 </VBox>
-                  <Button fx:id="login_btn" layoutX="82.0" layoutY="378.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginClicked" prefHeight="48.0" prefWidth="164.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css" text="L O G I N" textAlignment="CENTER" textFill="#8b45dbc7">
+                  <Button fx:id="login_btn" layoutX="82.0" layoutY="378.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginClicked" prefHeight="48.0" prefWidth="164.0" style="-fx-background-radius: 32;" stylesheets="@../../css/styles.css" text="L O G I N" textAlignment="CENTER" textFill="#8b45dbc7">
                       <font>
                           <Font name="Pristina" size="20.0" />
                       </font>
@@ -504,7 +504,7 @@
                   </Button>
             </children>
         </Pane>
-        <Pane fx:id="mode_btn" layoutX="438.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css">
+        <Pane fx:id="mode_btn" layoutX="438.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@../../css/styles.css">
             <effect>
                 <DropShadow offsetX="-5.0" offsetY="-5.0">
                     <color>
@@ -526,7 +526,7 @@
             <children>
                 <ImageView fx:id="dark_mode" fitHeight="40.0" fitWidth="40.0" layoutX="5.0" layoutY="6.0" onMouseClicked="#changeMode" pickOnBounds="true" preserveRatio="true" styleClass="night-mode">
                     <image>
-                        <Image url="@images/dark-mode.png" />
+                        <Image url="@../../images/dark-mode.png" />
                     </image>
                     <cursor>
                         <Cursor fx:constant="HAND" />
@@ -534,7 +534,7 @@
                 </ImageView>
             </children>
         </Pane>
-        <Pane fx:id="back_btn" layoutX="25.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css" visible="false">
+        <Pane fx:id="back_btn" layoutX="25.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@../../css/styles.css">
             <effect>
                 <DropShadow offsetX="-5.0" offsetY="-5.0">
                     <color>
@@ -556,7 +556,7 @@
             <children>
                 <ImageView fitHeight="42.0" fitWidth="35.0" layoutX="6.0" layoutY="10.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                     <image>
-                        <Image url="@images/back-icon.png" />
+                        <Image url="@../../images/back-icon.png" />
                     </image>
                     <cursor>
                         <Cursor fx:constant="HAND" />
@@ -564,12 +564,12 @@
                 </ImageView>
             </children>
         </Pane>
-        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" visible="false" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
-                <Image url="@images/logo.jpg" />
+                <Image url="@../../images/logo.jpg" />
             </image>
         </ImageView>
-            <Label fx:id="login_logo" alignment="CENTER" layoutX="164.0" layoutY="33.0" prefHeight="48.0" prefWidth="167.0" text="Login" textAlignment="CENTER" textFill="#8b45dbe0">
+            <Label alignment="CENTER" layoutX="164.0" layoutY="33.0" prefHeight="48.0" prefWidth="167.0" text="Login" textAlignment="CENTER" textFill="#8b45dbe0">
                 <font>
                     <Font name="Pristina" size="50.0" />
                 </font>
@@ -579,7 +579,7 @@
                   <Font name="Pristina" size="20.0" />
               </font>
           </Label>
-          <Label fx:id="signup_txt_btn" layoutX="255.0" layoutY="552.0" onMouseClicked="#goSignup" prefHeight="20.0" prefWidth="54.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Sign Up" textFill="#8b45dbe0">
+          <Label layoutX="255.0" layoutY="552.0" onMouseClicked="#goSignup" prefHeight="20.0" prefWidth="54.0" styleClass="txt-hover" stylesheets="@../../css/styles.css" text="Sign Up" textFill="#8b45dbe0">
               <font>
                   <Font name="Pristina" size="18.0" />
               </font>
@@ -587,10 +587,5 @@
                   <Cursor fx:constant="HAND" />
               </cursor>
           </Label>
-        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <image>
-                <Image url="@images/logo.jpg" />
-            </image>
-        </ImageView>
     </children>
 </AnchorPane>

@@ -31,7 +31,7 @@ public class FirstWindow extends Application {
         FirstWindowController.loginAccount = account;
         ((FirstWindowController) fxmlLoader.getController()).setPage(page);
         ((FirstWindowController) fxmlLoader.getController()).page = page;
-        ((FirstWindowController) fxmlLoader.getController()).setQues_combo();
+        //((FirstWindowController) fxmlLoader.getController()).setQues_combo();
         stage.show();
     }
 
