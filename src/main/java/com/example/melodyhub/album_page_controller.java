@@ -1,3 +1,4 @@
+
 package com.example.melodyhub;
 
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
-public class PlayList_controller implements Initializable {
+public class album_page_controller implements Initializable {
 
 
     @FXML

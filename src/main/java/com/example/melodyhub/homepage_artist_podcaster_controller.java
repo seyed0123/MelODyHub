@@ -76,7 +76,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
     private ImageView play_button;
 
     @FXML
-    private Slider play_progress_bar;
+    private  Slider play_progress_bar;
 
     @FXML
     private ImageView previous_track;
@@ -91,28 +91,31 @@ public class homepage_artist_podcaster_controller implements Initializable {
     private VBox side_bar;
 
     @FXML
-    private Label song_name_label;
+    private  Label song_name_label;
 
     @FXML
     private BorderPane songsPane;
 
+
     // media player attributes ----------------------------------------
 
-    private Media media;
-    private MediaPlayer mediaPlayer;
+    public static Media media;
+    public static MediaPlayer mediaPlayer;
 
-    private File directory;
-    private File[] files;
+    public static File directory;
+    public static File[] files;
 
-    private ArrayList<File> songs;
+    public static  ArrayList<File> songs;
 
-    private int songNumber;
-    private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
+    public static  int songNumber;
+    public static int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
 
-    private Timer timer;
-    private TimerTask task;
+    public static  Timer timer;
+    public static  TimerTask task;
 
-    private boolean running;
+    public static  boolean running;
+
+    public static double current_play_time;
 
     // pop ups---------------------------------------
 
@@ -149,25 +152,36 @@ public class homepage_artist_podcaster_controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
-        songs = new ArrayList<File>();
+        if(songs==null) {
+            songs = new ArrayList<File>();
 
-        directory = new File("src/main/resources/com/example/melodyhub/musics");
+            directory = new File("src/main/resources/com/example/melodyhub/musics");
 
-        files = directory.listFiles();
+            files = directory.listFiles();
 
-        if(files != null) {
+            if (files != null) {
 
-            for(File file : files) {
+                for (File file : files) {
 
-                songs.add(file);
+                    songs.add(file);
+                }
             }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+            song_name_label.setWrapText(true);
+        }else {
+            song_name_label.setText(songs.get(songNumber).getName());
+            song_name_label.setWrapText(true);
+            continueTimer();
+
         }
 
-        media = new Media(songs.get(songNumber).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+        // setting other classes media objects
 
-        song_name_label.setText(songs.get(songNumber).getName());
-        song_name_label.setWrapText(true);
+
 
 //        for(int i = 0; i < speeds.length; i++) {
 //
@@ -189,7 +203,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
 
     }
 
-    public void playMedia() {
+    public   void playMedia() {
 
         beginTimer();
 //        changeSpeed(null);
@@ -197,19 +211,19 @@ public class homepage_artist_podcaster_controller implements Initializable {
         mediaPlayer.play();
     }
 
-    public void pauseMedia() {
+    public  void pauseMedia() {
 
         cancelTimer();
         mediaPlayer.pause();
     }
 
-    public void resetMedia() {
+    public   void resetMedia() {
 
         play_progress_bar.setValue(0);
         mediaPlayer.seek(Duration.seconds(0));
     }
 
-    public void previousMedia() {
+    public   void previousMedia() {
 
         if(songNumber > 0) {
 
@@ -249,7 +263,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
         }
     }
 
-    public void nextMedia() {
+    public  void nextMedia() {
 
         if(songNumber < songs.size() - 1) {
 
@@ -297,7 +311,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
 //        }
 //    }
 
-    public void beginTimer() {
+    public   void beginTimer() {
 
         timer = new Timer();
 
@@ -306,16 +320,16 @@ public class homepage_artist_podcaster_controller implements Initializable {
             public void run() {
 
                 running = true;
-                double current = mediaPlayer.getCurrentTime().toSeconds();
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
                 double end = media.getDuration().toSeconds();
 
                 play_progress_bar.setMin(0);  // Minimum value
                 play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
 
 
-                play_progress_bar.setValue(current);
+                play_progress_bar.setValue(current_play_time);
 
-                if(current == end) {
+                if(current_play_time == end) {
 
                     cancelTimer();
                 }
@@ -325,19 +339,54 @@ public class homepage_artist_podcaster_controller implements Initializable {
         timer.scheduleAtFixedRate(task, 0, 1000);
     }
 
-    public void cancelTimer() {
+    // for setting the progress bar after comming from another page
+    public void continueTimer() {
+
+        timer = new Timer();
+
+        task = new TimerTask() {
+
+            public void run() {
+
+                running = true;
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                play_progress_bar.setMin(0);  // Minimum value
+                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
+
+
+                play_progress_bar.setValue(current_play_time);
+
+                if(current_play_time == end) {
+
+                    cancelTimer();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+
+    public  void cancelTimer() {
 
         running = false;
         timer.cancel();
     }
 
-    public void set_play_time(){
+    public   void set_play_time(){
 
         double playbackPosition = play_progress_bar.getValue();
         mediaPlayer.seek(Duration.seconds(playbackPosition));
         playMedia();
 
     }
+
+//    public void get_play_time(){
+//        current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+//
+//    }
 
     // pop ups----------------------------------------------
 

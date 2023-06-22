@@ -44,7 +44,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 public class SearchPageController implements Initializable {
 
     @FXML
@@ -116,25 +116,7 @@ public class SearchPageController implements Initializable {
     @FXML
     private BorderPane songsPane;
 
-    // media player attributes
-
-    private Media media;
-    private MediaPlayer mediaPlayer;
-
-    private File directory;
-    private File[] files;
-
-    private ArrayList<File> songs;
-
-    private int songNumber;
-    private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
-
-    private Timer timer;
-    private TimerTask task;
-
-    private boolean running;
-
-    // pop up attribute -------------------------
+    // pop up attribute --------------------------------------------------------
 
     @FXML
     private ImageView home_button;
@@ -246,43 +228,33 @@ public class SearchPageController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
-        songs = new ArrayList<File>();
+        if(songs == null) {
+            songs = new ArrayList<File>();
 
-        directory = new File("src/main/resources/com/example/melodyhub/musics");
+            directory = new File("src/main/resources/com/example/melodyhub/musics");
 
-        files = directory.listFiles();
+            files = directory.listFiles();
 
-        if(files != null) {
+            if (files != null) {
 
-            for(File file : files) {
+                for (File file : files) {
 
-                songs.add(file);
+                    songs.add(file);
+                }
             }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+            song_name_label.setWrapText(true);
+        }
+        else{
+            song_name_label.setText(songs.get(songNumber).getName());
+            song_name_label.setWrapText(true);
+            continueTimer();
         }
 
-        media = new Media(songs.get(songNumber).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-
-        song_name_label.setText(songs.get(songNumber).getName());
-        song_name_label.setWrapText(true);
-
-//        for(int i = 0; i < speeds.length; i++) {
-//
-//            speedBox.getItems().add(Integer.toString(speeds[i])+"%");
-//        }
-//
-//        speedBox.setOnAction(this::changeSpeed);
-
-//        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-
-//            @Override
-//            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-//
-//                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-//            }
-//        });
-
-//         songProgressBar.setStyle("-fx-accent: #00FF00;");
 
     }
 
@@ -421,6 +393,36 @@ public class SearchPageController implements Initializable {
 
         timer.scheduleAtFixedRate(task, 0, 1000);
     }
+
+
+    public void continueTimer() {
+
+        timer = new Timer();
+
+        task = new TimerTask() {
+
+            public void run() {
+
+                running = true;
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                play_progress_bar.setMin(0);  // Minimum value
+                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
+
+
+                play_progress_bar.setValue(current_play_time);
+
+                if(current_play_time == end) {
+
+                    cancelTimer();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
 
     public void cancelTimer() {
 
