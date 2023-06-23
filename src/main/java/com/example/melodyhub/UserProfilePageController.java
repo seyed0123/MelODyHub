@@ -3,32 +3,36 @@ package com.example.melodyhub;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.JSONObject;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
-import java.net.Socket;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.net.URL;
+import java.util.*;
 
-public class UserProfilePageController {
+import static com.example.melodyhub.LoginSignupPage.*;
+import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
+
+public class UserProfilePageController implements Initializable {
 
     @FXML
     private Label acctype_label;
@@ -52,7 +56,7 @@ public class UserProfilePageController {
     private Label phone_label;
 
     @FXML
-    private ListView<PlayList> playlists_listview;
+    private ListView<HBox> playlists_listview;
 
     @FXML
     private ImageView profile_img;
@@ -61,150 +65,62 @@ public class UserProfilePageController {
     private Label username_label;
 
     @FXML
-    private ListView<User> followings_listview;
+    private ListView<Label> followings_listview;
 
     @FXML
-    private ListView<User> followers_listview;
+    private ListView<Label> followers_listview;
 
-    User user;
+    private static User user;
+    @FXML
+    private Label song_name_label;
 
-    // socket ---------------------------------------------
-    private static Socket socket;
-    public static PrintWriter output;
-    public static BufferedReader input;
-    private static ObjectOutputStream objOut;
-    private static ObjectInputStream objIn;
-    private static final String HOST = "localhost";
-    private static final int PORT = 8085;
-    public static Cipher cipherEncrypt;
-    public static Cipher cipherDecrypt;
-    public static Gson gson;
+    @FXML
+    private Slider play_progress_bar;
 
-    public static void sendMessage(String message) {
-        try {
-            byte[] encrypt = cipherEncrypt.doFinal(message.getBytes());
-            String base64Data = Base64.getEncoder().encodeToString(encrypt);
-            output.println(gson.toJson(base64Data));
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
+    @FXML
+    private ImageView home_button;
+
+    public static void setUser(User user) {
+        UserProfilePageController.user = user;
     }
 
-    public static String getMessage() {
-        try {
-            String base64 = gson.fromJson(input.readLine(), String.class);
-            byte[] decodedData = Base64.getDecoder().decode(base64);
-            byte[] decrypted = cipherDecrypt.doFinal(decodedData);
-            return new String(decrypted);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void startCom() {
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-            Cipher decryptCipher = Cipher.getInstance("RSA");
-            decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-            //ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
-            objOut.writeObject(publicKey);
-            objOut.flush();
-            //objOut.close();
-
-            String base64 = gson.fromJson(input.readLine(), String.class);
-            byte[] encryptedMessage = Base64.getDecoder().decode(base64);
-            byte[] decryptedMessage = decryptCipher.doFinal(encryptedMessage);
-
-            cipherDecrypt = Cipher.getInstance("AES");
-            cipherDecrypt.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptedMessage, "AES"));
-            cipherEncrypt = Cipher.getInstance("AES");
-            cipherEncrypt.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(decryptedMessage, "AES"));
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setSocket() throws IOException {
-        socket = new Socket(HOST, PORT);
-        input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        output = new PrintWriter(socket.getOutputStream(), true);
-        objOut = new ObjectOutputStream(socket.getOutputStream());
-        objIn = new ObjectInputStream(socket.getInputStream());
-        gson = new Gson();
-        startCom();
-    }
-    // ------------------------------------------------------
-
-    public void setProfileInfo() throws IOException {
-        profile_img.setImage(new Image(user.getImage()));
-        username_label.setText(user.getUsername());
-        acctype_label.setText(user.isPremium() ? "Premium" : "Normal");
-        age_label.setText(String.valueOf(user.getAge()));
-        phone_label.setText(user.getPhoneNumber());
-        email_label.setText(user.getEmail());
-        gender_label.setText(user.getGender());
-
-        followers_label.setText(String.valueOf(getFollowers().size()));
-        followings_label.setText(String.valueOf(getFollowings().size()));
-    }
-
-    public void fillLists() throws IOException {
-        playlists_listview.getItems().addAll(getPlaylists());
-        followings_listview.getItems().addAll(getFollowings());
-        followers_listview.getItems().addAll(getFollowers());
-    }
-
-    private List<User> getFollowings() throws IOException {
-        setSocket();
+    private List<Label> getFollowings() throws IOException {
         sendMessage("get followings");
-        ObjectMapper objectMapper = new ObjectMapper();
         String json = getMessage();
         ArrayList<UUID> uuidList = objectMapper.readValue(json, new TypeReference<>() {
         });
 
-        List<User> followings = new ArrayList<>();
+        List<Label> followings = new ArrayList<>();
         for (UUID uuid : uuidList) {
             sendMessage("get user");
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", uuid);
             sendMessage(jsonObject.toString());
 
-            objectMapper = new ObjectMapper();
             json = getMessage();
             User user = objectMapper.readValue(json, User.class);
-            followings.add(user);
+            Label label = new Label();
+            label.setText(user.getUsername());
+            label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("following");
+                }
+            });
+            followings.add(label);
         }
 
         return followings;
     }
 
-    private List<User> getFollowers() throws IOException {
-        setSocket();
+    private List<Label> getFollowers() throws IOException {
         sendMessage("get followers");
         ObjectMapper objectMapper = new ObjectMapper();
         String json = getMessage();
         ArrayList<UUID> uuidList = objectMapper.readValue(json, new TypeReference<>() {
         });
 
-        List<User> followers = new ArrayList<>();
+        List<Label> followers = new ArrayList<>();
         for (UUID uuid : uuidList) {
             sendMessage("get user");
             JSONObject jsonObject = new JSONObject();
@@ -214,21 +130,27 @@ public class UserProfilePageController {
             objectMapper = new ObjectMapper();
             json = getMessage();
             User user = objectMapper.readValue(json, User.class);
-            followers.add(user);
+            Label label = new Label();
+            label.setText(user.getUsername());
+            label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("followers ");
+                }
+            });
+            followers.add(label);
         }
 
         return followers;
     }
 
-    private List<PlayList> getPlaylists() throws IOException {
-        setSocket();
+    private List<HBox> getPlaylists() throws IOException {
         sendMessage("get playlists");
-        ObjectMapper objectMapper = new ObjectMapper();
         String json = getMessage();
         ArrayList<UUID> uuidList = objectMapper.readValue(json, new TypeReference<>() {
         });
 
-        List<PlayList> playLists = new ArrayList<>();
+        List<HBox> playLists = new ArrayList<>();
         for (UUID uuid : uuidList) {
             sendMessage("get playlist");
             JSONObject jsonObject = new JSONObject();
@@ -237,9 +159,266 @@ public class UserProfilePageController {
 
             objectMapper = new ObjectMapper();
             json = getMessage();
-            PlayList playList = objectMapper.readValue(json, PlayList.class);
-            playLists.add(playList);
+            PlayList playlist = objectMapper.readValue(json, PlayList.class);
+            Image image = new Image(Account.class.getResource("images/default_playlist.png").toExternalForm());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(100.0);
+            imageView.setFitWidth(100.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+            imageView.setImage(image);
+            // Create the VBox
+            HBox Hbox = new HBox();
+            Hbox.setAlignment(Pos.CENTER_LEFT);
+            Hbox.setSpacing(10);
+            Hbox.setPadding(new Insets(10));
+            Hbox.getChildren().add(imageView);
+
+            // Add the labels to the VBox
+            Label playlistLabel = new Label(playlist.getName());
+            Label durationLabel = new Label(playlist.getDuration()+"");
+            Label personalLabel = new Label(playlist.isPersonal()+"");
+            Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+            playLists.add(Hbox);
         }
         return playLists;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        UUID id = user.getId();
+        File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
+        try {
+            if (!file.exists()) {
+                sendMessage("upload image");
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",id);
+                sendMessage(jsonObject.toString());
+                String response = getMessage();
+                if(response.equals("sending cover"))
+                {
+                    Thread thread =new Thread(() -> downloadImage(socket,user.getId().toString()));
+                    thread.start();
+                    thread.join();
+                }else
+                {
+                    throw new Exception();
+                }
+            }
+            Image image = new Image(Account.class.getResource("images/covers/profile/"+id+".png").toExternalForm());
+            profile_img.setImage(image);
+        }catch (Exception e) {
+            try{
+                Image image = new Image(Account.class.getResource("images/profile_default.png").toExternalForm());
+                profile_img.setImage(image);
+            }catch (Exception ep)
+            {
+                ep.printStackTrace();
+            }
+        }
+        username_label.setText(user.getUsername());
+        acctype_label.setText(user.isPremium() ? "Premium" : "Normal");
+        age_label.setText(String.valueOf(user.getAge()));
+        phone_label.setText(user.getPhoneNumber());
+        email_label.setText(user.getEmail());
+        gender_label.setText(user.getGender());
+
+        try {
+            List<Label> following = getFollowings();
+            List<Label> follower = getFollowers();
+            followers_label.setText(follower.size()+"");
+            followings_label.setText(following.size()+"");
+            playlists_listview.getItems().addAll(getPlaylists());
+            followings_listview.getItems().addAll(following);
+            followers_listview.getItems().addAll(follower);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        song_name_label.setText(songs.get(songNumber).getName());
+        song_name_label.setWrapText(true);
+        continueTimer();
+    }
+    @FXML
+    public void upload_profile(ActionEvent event) {
+
+    }
+    @FXML
+    void open_home(MouseEvent event) throws IOException {
+        FXMLLoader loader=null;
+            loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+        Parent root = loader.load();
+
+        // Create a new Scene based on the loaded FXML file
+        Scene newScene = new Scene(root);
+
+        // Get the current Stage from any component in the existing scene
+        Stage currentStage = (Stage) home_button.getScene().getWindow();
+
+        // Set the new Scene on the Stage
+        currentStage.setScene(newScene);
+
+    }
+    public void playMedia() {
+
+        beginTimer();
+        mediaPlayer.play();
+    }
+
+    public  void pauseMedia() {
+
+        cancelTimer();
+        mediaPlayer.pause();
+    }
+
+    public void resetMedia() {
+
+        play_progress_bar.setValue(0);
+        mediaPlayer.seek(Duration.seconds(0));
+    }
+
+    public void previousMedia() {
+
+        if(songNumber > 0) {
+
+            songNumber--;
+
+            mediaPlayer.stop();
+
+            if(running) {
+
+                cancelTimer();
+            }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+        else {
+
+            songNumber = songs.size() - 1;
+
+            mediaPlayer.stop();
+
+            if(running) {
+
+                cancelTimer();
+            }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+    }
+
+    public  void nextMedia() {
+
+        if(songNumber < songs.size() - 1) {
+
+            songNumber++;
+
+            mediaPlayer.stop();
+
+            if(running) {
+
+                cancelTimer();
+            }
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+        else {
+
+            songNumber = 0;
+
+            mediaPlayer.stop();
+
+            media = new Media(songs.get(songNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+
+            song_name_label.setText(songs.get(songNumber).getName());
+
+            playMedia();
+        }
+    }
+    public   void beginTimer() {
+
+        timer = new Timer();
+
+        task = new TimerTask() {
+
+            public void run() {
+
+                running = true;
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                play_progress_bar.setMin(0);  // Minimum value
+                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
+
+
+                play_progress_bar.setValue(current_play_time);
+
+                if(current_play_time == end) {
+
+                    cancelTimer();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+    // for setting the progress bar after comming from another page
+    public void continueTimer() {
+
+        timer = new Timer();
+
+        task = new TimerTask() {
+
+            public void run() {
+
+                running = true;
+                current_play_time = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                play_progress_bar.setMin(0);  // Minimum value
+                play_progress_bar.setMax(end);  // Maximum value, where `totalDuration` is the duration of the song in seconds
+
+
+                play_progress_bar.setValue(current_play_time);
+
+                if(current_play_time == end) {
+
+                    cancelTimer();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+
+    public  void cancelTimer() {
+
+        running = false;
+        timer.cancel();
+    }
+
+    public   void set_play_time(){
+
+        double playbackPosition = play_progress_bar.getValue();
+        mediaPlayer.seek(Duration.seconds(playbackPosition));
+        playMedia();
+
     }
 }

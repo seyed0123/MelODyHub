@@ -21,9 +21,7 @@ public class UserProfilePage extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("User Profile");
         stage.setScene(scene);
-        ((UserProfilePageController)fxmlLoader.getController()).user = user;
-        ((UserProfilePageController)fxmlLoader.getController()).setProfileInfo();
-        ((UserProfilePageController)fxmlLoader.getController()).fillLists();
+        ((UserProfilePageController)fxmlLoader.getController()).setUser(user);
         stage.show();
     }
 
