@@ -170,14 +170,17 @@ public class homepage_artist_podcaster_controller implements Initializable {
 
                     songs.add(file);
                 }
+
+                media = new Media(songs.get(songNumber).toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+
+                song_name_label.setText(songs.get(songNumber).getName());
+                song_name_label.setWrapText(true);
             }
 
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
 
-            song_name_label.setText(songs.get(songNumber).getName());
-            song_name_label.setWrapText(true);
         }else {
+
             song_name_label.setText(songs.get(songNumber).getName());
             song_name_label.setWrapText(true);
             continueTimer();

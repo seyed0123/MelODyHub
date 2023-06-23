@@ -96,10 +96,20 @@ public class PlayList_controller implements Initializable {
     private Label song_name_label;
 
     @FXML
+    private ImageView play_all_button;
+
+    @FXML
     private BorderPane songsPane;
     private static PlayList playlist;
     private static ArrayList<Song> playlistSong;
     private static User user;
+
+    private static String song_id;
+
+    private ArrayList<String> playlistSongs;
+
+    // for playing the playlist
+
 
     public static void setPlayList(PlayList playList,User user) {
         PlayList_controller.playlist = playList;
@@ -122,8 +132,8 @@ public class PlayList_controller implements Initializable {
         jsonObject.put("playlist",playlist.getId());
         sendMessage(jsonObject.toString());
         try {
-            ArrayList<String> songs = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
-            for(String uuid :songs)
+            playlistSongs = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
+            for(String uuid :playlistSongs)
             {
                 sendMessage("get song");
                 JSONObject jsonObject1 = new JSONObject();
@@ -140,6 +150,8 @@ public class PlayList_controller implements Initializable {
                 Label singerNameLabel = new Label(song.getGenre());
                 singerNameLabel.setTextFill(Color.DARKMAGENTA);
                 singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
+
+
 
                 hBox.getChildren().addAll( songNameLabel, singerNameLabel);
                 hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -196,7 +208,6 @@ public class PlayList_controller implements Initializable {
     // media playing functions ------------------------------------------------------
 
     public void playMedia() {
-
         beginTimer();
         mediaPlayer.play();
     }
@@ -378,7 +389,38 @@ public class PlayList_controller implements Initializable {
         currentStage.setScene(newScene);
 
     }
+    @FXML
+    void download_songs()
+    {
+        songs = new ArrayList<File>();
+        for(String song :playlistSongs)
+        {
+            File file = new File("src/main/resources/com/example/melodyhub/musics/"+song+".mp3");
+            if(!file.exists())
+            {
+                sendMessage("upload song");
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",song);
+                sendMessage(jsonObject.toString());
+                String res = getMessage();
+                    System.out.println("done");
+                    downloadSong(socket,"src/main/resources/com/example/melodyhub/musics/"+song+".mp3");
+            }
+            songs.add(file);
+        }
+        songNumber=0;
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
 
+        song_name_label.setText(songs.get(songNumber).getName());
+        song_name_label.setWrapText(true);
+    }
+
+    @FXML
+    void play_all(){
+
+        download_songs();
+    }
 
 
 }
