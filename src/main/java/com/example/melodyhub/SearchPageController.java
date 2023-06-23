@@ -9,23 +9,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.layout.VBox;
@@ -64,20 +59,6 @@ public class SearchPageController implements Initializable {
     @FXML
     private TextField search_field;
 
-    // socket----------------------------------------------
-    private static Socket socket;
-    public static PrintWriter output;
-    public static BufferedReader input;
-    private static ObjectOutputStream objOut;
-    private static ObjectInputStream objIn;
-    private static final String HOST = "localhost";
-    private static final int PORT = 8085;
-    public static Cipher cipherEncrypt;
-    public static Cipher cipherDecrypt;
-    public static Gson gson;
-
-    // media playing attributes
-
     @FXML
     private Slider play_progress_bar;
 
@@ -87,22 +68,12 @@ public class SearchPageController implements Initializable {
     @FXML
     private ImageView home_button;
 
-    public static void sendMessage(String message) {
-        try {
-            byte[] encrypt = cipherEncrypt.doFinal(message.getBytes());
-            String base64Data = Base64.getEncoder().encodeToString(encrypt);
-            output.println(gson.toJson(base64Data));
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
 
+    private static boolean type;
+
+    public static void setType(boolean type) {
+        SearchPageController.type = type;
     }
-
-    // media playing functions ------------------------------------------------------
-
-
 
     // pop up --------------------------------
 
@@ -110,7 +81,7 @@ public class SearchPageController implements Initializable {
     void open_home(MouseEvent event) throws IOException {
 
         // Load the FXML file for the new page
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage_artist&podcater.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
         Parent root = loader.load();
 
         // Create a new Scene based on the loaded FXML file
@@ -130,28 +101,31 @@ public class SearchPageController implements Initializable {
     public void searchClicked() throws IOException {
         sendMessage("search");
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("list", search_field.getText());
+        String p = search_field.getText();
+        jsonObject.put("searched", p);
         sendMessage(jsonObject.toString());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = getMessage();
-        ArrayList<ArrayList<UUID>> list = objectMapper.readValue(json, new TypeReference<>() {
+        ArrayList<String> listSong = objectMapper.readValue(getMessage(), new TypeReference<>() {
+        });
+        ArrayList<UUID> listArtist = objectMapper.readValue(getMessage(), new TypeReference<>() {
         });
 
-        List<Song> result1 = getSongsById(list.get(0));
-        List<Song> result2 = getSongsById(list.get(1));
-        List<Song> allResult = new ArrayList<>(result1);
-        allResult.addAll(result2);
-        System.out.println(allResult);
+        List<Song> result1 = getSongsById(listSong);
+        List<Artist> result2 = getArtistById(listArtist);
 
-        ((Stage) search_field.getScene().getWindow()).close();
-        new SongsListPage(allResult).start(new Stage());
+        Stage stage= ((Stage) search_field.getScene().getWindow());
+        SongsListController.setSongList(result1,result2);
+        FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("SongsListPage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Songs List");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    private List<Song> getSongsById(List<UUID> uuidList) throws IOException {
-        setSocket();
+    private List<Song> getSongsById(List<String> uuidList) throws IOException {
         List<Song> songList = new ArrayList<>();
-        for (UUID uuid : uuidList) {
+        for (String uuid : uuidList) {
             sendMessage("get song");
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", uuid);
@@ -160,6 +134,22 @@ public class SearchPageController implements Initializable {
             ObjectMapper objectMapper = new ObjectMapper();
             String json = getMessage();
             Song song = objectMapper.readValue(json, Song.class);
+            songList.add(song);
+        }
+        return songList;
+    }
+
+    private List<Artist> getArtistById(List<UUID> uuidList) throws IOException {
+        List<Artist> songList = new ArrayList<>();
+        for (UUID uuid : uuidList) {
+            sendMessage("get artist");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", uuid);
+            sendMessage(jsonObject.toString());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = getMessage();
+            Artist song = objectMapper.readValue(json, Artist.class);
             songList.add(song);
         }
         return songList;
@@ -431,18 +421,27 @@ public class SearchPageController implements Initializable {
             default -> id;
         };
 
-//        setSocket();
         sendMessage("find song genre");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", genre);
         sendMessage(jsonObject.toString());
         ObjectMapper objectMapper = new ObjectMapper();
         String json = getMessage();
-        ArrayList<UUID> uuidList = objectMapper.readValue(json, new TypeReference<>() {
+        ArrayList<String> uuidList = objectMapper.readValue(json, new TypeReference<>() {
         });
         List<Song> songList = getSongsById(uuidList);
-
-        ((Stage) search_field.getScene().getWindow()).close();
-        new SongsListPage(songList).start(new Stage());
+        Stage stage= ((Stage) search_field.getScene().getWindow());
+        SongsListController.setSongList(songList);
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("SongsListPage.fxml"));
+        Scene scene = null;
+        SearchPageController.setType(true);
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.setTitle("Login / Signup");
+        stage.setScene(scene);
+        stage.show();
     }
 }

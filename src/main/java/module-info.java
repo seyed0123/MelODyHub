@@ -18,6 +18,7 @@ module com.example.melodyhub {
     requires org.apache.commons.io;
     requires javafx.graphics;
     requires javafx.media;
+    requires javafx.web;
     opens com.example.melodyhub to javafx.fxml;
     exports com.example.melodyhub ;
 

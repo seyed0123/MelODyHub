@@ -432,7 +432,9 @@ public class MelodyHub {
                 "WHERE name LIKE '%s'\n" +
                 "   OR lyrics LIKE '%s'\n" +
                 "    OR genre LIKE '%s'\n" +
-                "    OR description LIKE '%s'", searched));
+                "    OR description LIKE '%s'", searched,searched,searched,searched,searched));
+        if(res==null)
+            return song;
         while (true) {
             try {
                 if (!res.next()) break;
@@ -449,11 +451,13 @@ public class MelodyHub {
             ResultSet res = MelodyHub.sendQuery(String.format("SELECT id\n" +
                     "FROM artist\n" +
                     "WHERE username like '%s'\n" +
-                    "OR genre like '%s';\n", searched));
+                    "OR genre like '%s';\n", searched,searched));
+            if(res==null)
+                return artists;
             while (true) {
                 try {
-                    if (!res.next()) break;
                     artists.add(UUID.fromString(res.getString("id")));
+                    if (!res.next()) break;
                 } catch (SQLException e) {
                     break;
                 }
@@ -466,8 +470,8 @@ public class MelodyHub {
         ResultSet res=MelodyHub.sendQuery(String.format("select id from artist where genre='%s';",genre));
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add(UUID.fromString(res.getString("id")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

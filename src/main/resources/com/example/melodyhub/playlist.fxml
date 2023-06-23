@@ -95,11 +95,7 @@
                <children>
                   <HBox prefHeight="201.0" prefWidth="505.0">
                      <children>
-                        <ImageView fx:id="current_song_image" fitHeight="200.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/default.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="current_song_image" fitHeight="200.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true" />
                         <HBox prefHeight="202.0" prefWidth="24.0" />
                         <VBox prefHeight="202.0" prefWidth="273.0">
                            <children>

@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.JSONObject;
+import javafx.scene.web.WebView;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
 public class HomeController implements Initializable {
-    private static User user;
+    public static User user;
     @FXML
     private ImageView banner;
 
@@ -310,11 +311,10 @@ public class HomeController implements Initializable {
 
                 }
                 explore.setOnMouseClicked(event -> {
-                    System.out.println("Explore clicked");
                     Stage stage = (Stage) likeImage.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("SearchPage.fxml"));
                     Scene scene = null;
-                    history_page_controller.setType(true);
+                    SearchPageController.setType(true);
                     try {
                         scene = new Scene(fxmlLoader.load());
                     } catch (IOException e) {
@@ -627,5 +627,17 @@ public class HomeController implements Initializable {
         mediaPlayer.seek(Duration.seconds(playbackPosition));
         playMedia();
 
+    }
+    @FXML
+    public void chat()
+    {
+        WebView webView = new WebView();
+        webView.getEngine().load("https://web.eitaa.com/");
+        StackPane root = new StackPane();
+        root.getChildren().add(webView);
+        Scene scene = new Scene(root, 800, 600);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }

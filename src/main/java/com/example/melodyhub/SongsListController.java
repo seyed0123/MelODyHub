@@ -1,44 +1,154 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
-public class SongsListController {
+import static com.example.melodyhub.HomeController.user;
+import static com.example.melodyhub.LoginSignupPage.getMessage;
+import static com.example.melodyhub.LoginSignupPage.sendMessage;
+
+public class SongsListController implements Initializable {
 
     @FXML
-    private TableView<Song> songs_table;
+    private ListView<HBox> songs_table;
+
+    private static List<Song> songList;
+
+    private static List<Artist> artistList;
 
     @FXML
-    public void fillList(List<Song> songList) {
+    private TextField search_field;
 
-        TableColumn<Song, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setPrefWidth(340);
+    public static void setSongList(List<Song> songList,List<Artist> artist) {
+        SongsListController.songList = songList;
+        artistList=artist;
+    }
 
-        TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
-        genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
-        genreColumn.setPrefWidth(200);
+    public static void setSongList(List<Song> songList) {
+        SongsListController.songList = songList;
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        for(Song song :songList) {
+            HBox hBox = new HBox();
 
-        TableColumn<Song, Double> durationColumn = new TableColumn<>("Duration");
-        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        durationColumn.setPrefWidth(100);
+            Label songNameLabel = new Label(song.getName());
+            songNameLabel.setTextFill(Color.PEACHPUFF);
+            songNameLabel.setFont(new Font("Arial Nova", 16.0));
 
-        TableColumn<Song, Integer> yearColumn = new TableColumn<>("Year");
-        yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
-        yearColumn.setPrefWidth(100);
+            Label singerNameLabel = new Label(song.getGenre());
+            singerNameLabel.setTextFill(Color.PEACHPUFF);
+            singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
+            hBox.getChildren().addAll( songNameLabel, singerNameLabel);
+            hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("AddToPlaylist.fxml"));
+                    Scene scene = null;
+                    AddToPlaylistController.setAccount(song,user);
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
+            songs_table.getItems().add(hBox);
+        }
+        for (Artist artist :artistList){
+            HBox hBox = new HBox();
 
-        TableColumn<Song, Double> rateColumn = new TableColumn<>("Rate");
-        rateColumn.setCellValueFactory(new PropertyValueFactory<>("rate"));
-        rateColumn.setPrefWidth(100);
+            Label songNameLabel = new Label(artist.getUsername());
+            songNameLabel.setTextFill(Color.PEACHPUFF);
+            songNameLabel.setFont(new Font("Arial Nova", 16.0));
 
-        songs_table.getColumns().addAll(nameColumn, genreColumn, durationColumn, yearColumn, rateColumn);
-        ObservableList<Song> list = FXCollections.observableList(songList);
-        songs_table.setItems(list);
+            Label singerNameLabel = new Label(artist.getBio());
+            singerNameLabel.setTextFill(Color.PEACHPUFF);
+            singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
+            hBox.getChildren().addAll( songNameLabel, singerNameLabel);
+            songs_table.getItems().add(hBox);
+        }
+    }
+    @FXML
+    public void searchClicked() throws IOException {
+        sendMessage("search");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("list", search_field.getText());
+        sendMessage(jsonObject.toString());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayList<String> listSong = objectMapper.readValue(getMessage(), new TypeReference<>() {
+        });
+        ArrayList<UUID> listArtist = objectMapper.readValue(getMessage(), new TypeReference<>() {
+        });
+
+        List<Song> result1 = getSongsById(listSong);
+        List<Artist> result2 = getArtistById(listArtist);
+
+        Stage stage= ((Stage) search_field.getScene().getWindow());
+        SongsListController.setSongList(result1,result2);
+        FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("SongsListPage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Songs List");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private List<Song> getSongsById(List<String> uuidList) throws IOException {
+        List<Song> songList = new ArrayList<>();
+        for (String uuid : uuidList) {
+            sendMessage("get song");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", uuid);
+            sendMessage(jsonObject.toString());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = getMessage();
+            Song song = objectMapper.readValue(json, Song.class);
+            songList.add(song);
+        }
+        return songList;
+    }
+
+    private List<Artist> getArtistById(List<UUID> uuidList) throws IOException {
+        List<Artist> songList = new ArrayList<>();
+        for (UUID uuid : uuidList) {
+            sendMessage("get song");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", uuid);
+            sendMessage(jsonObject.toString());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = getMessage();
+            Artist song = objectMapper.readValue(json, Artist.class);
+            songList.add(song);
+        }
+        return songList;
     }
 }

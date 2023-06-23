@@ -22,7 +22,6 @@ public class SongsListPage extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Songs List");
         stage.setScene(scene);
-        ((SongsListController) fxmlLoader.getController()).fillList(songList);
         stage.show();
     }
 
