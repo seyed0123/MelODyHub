@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayList_controller">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayList_controller">
    <children>
       <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
@@ -72,17 +79,7 @@
             </HBox>
          </children>
       </Pane>
-      <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #301934;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <bottom>
-            <VBox fx:id="recommended" prefHeight="400.0" prefWidth="740.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER" />
-               </children>
-               <BorderPane.margin>
-                  <Insets left="10.0" />
-               </BorderPane.margin>
-            </VBox>
-         </bottom>
+      <BorderPane fx:id="songsPane" layoutX="150.0" layoutY="-6.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #301934;" styleClass="body-back" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
          <top>
             <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
@@ -90,6 +87,72 @@
                </image>
             </ImageView>
          </top>
+         <left>
+            <ListView fx:id="listSong" prefHeight="408.0" prefWidth="425.0" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <VBox prefHeight="358.0" prefWidth="505.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="201.0" prefWidth="505.0">
+                     <children>
+                        <ImageView fx:id="current_song_image" fitHeight="200.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/default.png" />
+                           </image>
+                        </ImageView>
+                        <HBox prefHeight="202.0" prefWidth="24.0" />
+                        <VBox prefHeight="202.0" prefWidth="273.0">
+                           <children>
+                              <HBox prefHeight="74.0" prefWidth="302.0">
+                                 <children>
+                                    <Label prefHeight="66.0" prefWidth="66.0" text="name :" textFill="WHITE" />
+                                    <Label fx:id="current_song_label" prefHeight="70.0" prefWidth="139.0" text="name of the song" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="81.0" prefWidth="302.0">
+                                 <children>
+                                    <Label prefHeight="74.0" prefWidth="64.0" text="genre :" textFill="WHITE" />
+                                    <Label fx:id="current_song_genre" prefHeight="78.0" prefWidth="144.0" text="genre " textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="70.0" prefWidth="302.0">
+                                 <children>
+                                    <Label prefHeight="62.0" prefWidth="65.0" text="year : " textFill="WHITE" />
+                                    <Label fx:id="current_song_year" prefHeight="72.0" prefWidth="142.0" text="year of release" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox prefHeight="70.0" prefWidth="505.0">
+                           <children>
+                              <VBox prefHeight="66.0" prefWidth="12.0" />
+                              <Label prefHeight="66.0" prefWidth="50.0" text="name :" textFill="WHITE" />
+                              <Label fx:id="playlist_name" prefHeight="66.0" prefWidth="331.0" text="name of the playlist" textFill="WHITE" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="73.0" prefWidth="505.0">
+                           <children>
+                              <VBox prefHeight="70.0" prefWidth="12.0" />
+                              <Label prefHeight="70.0" prefWidth="66.0" text="publicity : " textFill="WHITE" />
+                              <Label fx:id="playlist_publicity" prefHeight="70.0" prefWidth="314.0" text="personal or public " textFill="WHITE" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="69.0" prefWidth="505.0">
+                           <children>
+                              <VBox prefHeight="66.0" prefWidth="14.0" />
+                              <Label prefHeight="66.0" prefWidth="63.0" text="duration :" textFill="WHITE" />
+                              <Label fx:id="playlist_duration" prefHeight="66.0" prefWidth="332.0" text="some duration" textFill="WHITE" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </center>
       </BorderPane>
       <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
          <children>

@@ -179,6 +179,23 @@ public class UserProfilePageController implements Initializable {
             Label durationLabel = new Label(playlist.getDuration()+"");
             Label personalLabel = new Label(playlist.isPersonal()+"");
             Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+            Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = (Stage) song_name_label.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("playlist.fxml"));
+                    PlayList_controller.setPlayList(playlist,user);
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
             playLists.add(Hbox);
         }
         return playLists;

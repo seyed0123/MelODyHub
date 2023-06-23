@@ -94,7 +94,7 @@ public class LoXdy {
             msg.setSentDate(new Date());
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            Transport.send(msg);
+            //Transport.send(msg);
             System.out.println("email was sent successfully to "+toEmail);
         }
         catch (Exception e) {
