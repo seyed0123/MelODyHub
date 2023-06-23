@@ -656,8 +656,8 @@ public class Session implements Runnable{
                     String id = (jsonObject.getString("id"));
                     File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".mp3");
                     if(file.exists()) {
-                        sendMessage("sending cover");
-                        MelodyHub.uploadSong(socket,id.toString());
+                        sendMessage("sending song");
+                        MelodyHub.uploadSong(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".mp3");
                     }else
                         sendMessage("failed");
                 }
@@ -693,7 +693,7 @@ public class Session implements Runnable{
                         MelodyHub.extractCover(id);
                         sendMessage("sending cover");
                         MelodyHub.uploadImage(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".png");
-                    }catch (IOException | InvalidDataException | UnsupportedTagException e)
+                    }catch (Exception e)
                     {
                         sendMessage("no cover");
                     }

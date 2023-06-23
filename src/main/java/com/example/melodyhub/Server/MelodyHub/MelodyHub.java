@@ -474,7 +474,7 @@ public class MelodyHub {
         }
         return ret;
     }
-    public static void extractCover(String id) throws IOException, InvalidDataException, UnsupportedTagException {
+    public static void extractCover(String id) throws Exception {
         File mp3File = new File("src/main/resources/com/example/melodyhub/musics/"+id+".mp3");
         Mp3File mp3 = new Mp3File(mp3File);
 
@@ -488,9 +488,11 @@ public class MelodyHub {
                 System.out.println("Cover image saved to " + coverFile.getAbsolutePath());
             } else {
                 System.out.println("No cover image found in the MP3 file.");
+                throw new Exception();
             }
         } else {
             System.out.println("No ID3v2 tag found in the MP3 file.");
+            throw new Exception();
         }
     }
 }
