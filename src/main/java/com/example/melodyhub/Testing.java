@@ -126,6 +126,8 @@ public class Testing {
         jsonObject.put("email","seyed@gmail.com");
         jsonObject.put("gender","male");
         jsonObject.put("date","2000-09-12");
+        jsonObject.put("quesId",1);
+        jsonObject.put("answer","melody");
         sendMessage(jsonObject.toString());
         assertEquals("done",getMessage());
         sendMessage("create user");

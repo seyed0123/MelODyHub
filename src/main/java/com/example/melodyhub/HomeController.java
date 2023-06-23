@@ -262,6 +262,9 @@ public class HomeController implements Initializable {
 
                     vbox.getChildren().addAll(imageView, songNameLabel, singerNameLabel);
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                        System.out.println("what the fuck");
+//                        System.out.println("Favs clicked");
+
                         @Override
                         public void handle(MouseEvent event) {
                             Stage stage = new Stage();
@@ -308,6 +311,18 @@ public class HomeController implements Initializable {
                 }
                 explore.setOnMouseClicked(event -> {
                     System.out.println("Explore clicked");
+                    Stage stage = (Stage) likeImage.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("SearchPage.fxml"));
+                    Scene scene = null;
+                    history_page_controller.setType(true);
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 favs.setOnMouseClicked(event -> {
@@ -416,23 +431,26 @@ public class HomeController implements Initializable {
 
 
                 share.setOnMouseClicked(event -> {
-                    // Load the FXML file for the new page
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("share.fxml"));
-                    Parent root = null;
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("share.fxml"));
+                    Scene scene = null;
                     try {
-                        root = loader.load();
+                        scene = new Scene(fxmlLoader.load());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
-                    // Create a new Scene based on the loaded FXML file
-                    Scene newScene = new Scene(root);
-
-                    // Get the current Stage from any component in the existing scene
-                    Stage currentStage = (Stage) signOut.getScene().getWindow();
-
-                    // Set the new Scene on the Stage
-                    currentStage.setScene(newScene);
+//                    stage.setOnHiding(new EventHandler<WindowEvent>() {
+//                        @Override
+//                        public void handle(WindowEvent windowEvent) {
+//                            user.setPremium(true);
+//                            sendMessage("update user");
+//                            HashMap<String,String> command = new HashMap<>();
+//                            command.put("premium","false");
+//                        }
+//                    });
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 signOut.setOnMouseClicked(event -> {

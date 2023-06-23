@@ -591,8 +591,8 @@ public class Session implements Runnable{
                 } else if (job.equals("share playlist")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
-                    UUID user = UUID.fromString(jsonObject.getString("user"));
-                    if(!(PlaylistPerform.firstOwner(playlist)==account.getId()))
+                    UUID user = (MelodyHub.findUserUsername(jsonObject.getString("user")));
+                    if((PlaylistPerform.firstOwner(playlist)==account.getId()))
                     {
                         sendMessage("don't have permission");
                     }else {
