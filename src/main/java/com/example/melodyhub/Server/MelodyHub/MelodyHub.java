@@ -206,7 +206,7 @@ public class MelodyHub {
         if(res==null)
             return null;
         try {
-            return new PlayList(res.getString("id"), res.getString("name"), res.getBoolean("is_public"),res.getDouble("rate"),res.getDouble("duration"),UUID.fromString(res.getString("artist")),res.getString("first_owner"));
+            return new PlayList(res.getString("id"), res.getString("name"), res.getBoolean("is_public"),res.getDouble("rate"),res.getDouble("duration"),(res.getString("artist")),res.getString("first_owner"));
         } catch (SQLException e) {
             return null;
         }
@@ -264,7 +264,7 @@ public class MelodyHub {
     }
     public static void createUser(User user)
     {
-        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",user.getUsername(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
+        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",user.getId(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
     }
 
     public static void removeUser(UUID user)

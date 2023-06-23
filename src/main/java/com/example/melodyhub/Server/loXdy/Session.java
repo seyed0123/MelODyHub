@@ -33,6 +33,8 @@ public class Session implements Runnable{
             while (true)
             {
                 job=input.readLine();
+                if(job==null)
+                    socket.close();
                 System.out.println(job);
                 if(Objects.equals(job, "TOTP"))
                 {

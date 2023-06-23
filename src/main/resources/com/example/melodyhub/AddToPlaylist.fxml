@@ -96,6 +96,7 @@
                                         </Label>
                                     </children>
                                 </HBox>
+                        <Button fx:id="shareSong" mnemonicParsing="false" onAction="#shareSong" text="share song" />
                             </children>
                         </VBox>
                         <VBox prefHeight="539.0" prefWidth="438.0">

@@ -18,16 +18,21 @@ public class PlayList implements Serializable {
     private UUID artist;
 
     private UUID firstOwner;
-    private ArrayList<UUID> songs;
+    private ArrayList<String> songs;
 
-    public PlayList(String id,String name, boolean personal, double rate,double duration,UUID artist,String firstOwner) {
+    public PlayList(String id,String name, boolean personal, double rate,double duration,String artist,String firstOwner) {
         this.id=id;
         this.name=name;
         this.personal = personal;
         this.rate = rate;
         this.duration=duration;
-        if(artist!=null)
-            this.artist=artist;
+        try{
+            if (artist != null)
+                this.artist = UUID.fromString(artist);
+        }catch (Exception e)
+        {
+            artist=null;
+        }
         this.firstOwner=UUID.fromString(firstOwner);
         songs=new ArrayList<>();
     }
@@ -37,12 +42,16 @@ public class PlayList implements Serializable {
                                           @JsonProperty("duration") double duration,
                                           @JsonProperty("personal") boolean personal,
                                           @JsonProperty("rate") double rate,
-                                          @JsonProperty("artist") UUID artist,
+                                          @JsonProperty("artist") String artist,
                                           @JsonProperty("firstOwner") String firstOwner,
-                                          @JsonProperty("songs") ArrayList<UUID> songs) {
+                                          @JsonProperty("songs") ArrayList<String> songs) {
         PlayList playList = new PlayList(id,name, personal, rate, duration, artist, firstOwner);
         playList.setSongs(songs);
         return playList;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -97,11 +106,11 @@ public class PlayList implements Serializable {
         this.firstOwner = firstOwner;
     }
 
-    public ArrayList<UUID> getSongs() {
+    public ArrayList<String> getSongs() {
         return songs;
     }
 
-    public void setSongs(ArrayList<UUID> songs) {
+    public void setSongs(ArrayList<String> songs) {
         this.songs = songs;
     }
 

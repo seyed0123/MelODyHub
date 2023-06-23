@@ -41,7 +41,7 @@ public class AddToPlaylistController implements Initializable {
     private Label genreLabel;
 
     @FXML
-    private ListView<VBox> playlists;
+    private ListView<HBox> playlists;
 
     @FXML
     private Label rateLabel;
@@ -57,6 +57,9 @@ public class AddToPlaylistController implements Initializable {
 
     @FXML
     private Label yearLabel;
+
+    @FXML
+    private Button shareSong;
     public static void setAccount(Song song,Account account)
     {
         AddToPlaylistController.song=song;
@@ -124,20 +127,24 @@ public class AddToPlaylistController implements Initializable {
                 // Load the image
                 Image image = new Image(Account.class.getResource("images/default_playlist.png").toExternalForm());
                 ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(100.0);
+                imageView.setFitWidth(100.0);
+                imageView.setPickOnBounds(true);
+                imageView.setPreserveRatio(true);
                 imageView.setImage(image);
                 // Create the VBox
-                VBox vbox = new VBox();
-                vbox.setAlignment(Pos.CENTER_LEFT);
-                vbox.setSpacing(10);
-                vbox.setPadding(new Insets(10));
-                vbox.getChildren().add(imageView);
+                HBox Hbox = new HBox();
+                Hbox.setAlignment(Pos.CENTER_LEFT);
+                Hbox.setSpacing(10);
+                Hbox.setPadding(new Insets(10));
+                Hbox.getChildren().add(imageView);
 
                 // Add the labels to the VBox
                 Label playlistLabel = new Label(playlist.getName());
                 Label durationLabel = new Label(playlist.getDuration()+"");
                 Label personalLabel = new Label(playlist.isPersonal()+"");
-                vbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
-                this.playlists.getItems().add(vbox);
+                Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+                this.playlists.getItems().add(Hbox);
             }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -145,7 +152,7 @@ public class AddToPlaylistController implements Initializable {
     }
     @FXML
     void create(ActionEvent even) {
-// Create the text fields
+    // Create the text fields
         TextField textField = new TextField();
 
         // Create the checkbox
@@ -173,6 +180,40 @@ public class AddToPlaylistController implements Initializable {
             jsonObject.put("personal",inputBoolean);
             jsonObject.put("artist","null");
             jsonObject.put("firstOwner",account.getUsername());
+            sendMessage(jsonObject.toString());
+            stage.close();
+        });
+
+        // Add the submit button to the VBox
+        vbox.getChildren().add(submitButton);
+
+        // Create the scene
+        Scene scene = new Scene(vbox);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    void shareSong(ActionEvent even) {
+        TextField textField = new TextField();
+
+        Stage stage = new Stage();
+        // Create the VBox
+        VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER_LEFT);
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
+        vbox.getChildren().addAll(
+                new Label("Enter a name:"),
+                textField);
+
+        // Create the submit button
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(event -> {
+            String inputString = textField.getText();
+            sendMessage("share song");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user",inputString);
+            jsonObject.put("song",song.getId());
             sendMessage(jsonObject.toString());
             stage.close();
         });
