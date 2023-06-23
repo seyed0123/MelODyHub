@@ -11,15 +11,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.Duration;
 import org.json.JSONObject;
 
@@ -31,12 +44,17 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.*;
+
+import static com.example.melodyhub.LoginSignupPage.*;
+import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 import java.util.*;
 
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
@@ -58,29 +76,13 @@ public class SearchPageController implements Initializable {
     public static Cipher cipherDecrypt;
     public static Gson gson;
 
-    // play bar -----------------------------------------
+    // media playing attributes
+
     @FXML
     private Slider play_progress_bar;
 
     @FXML
-    private ImageView previous_track;
-
-//    @FXML
-//    private ImageView queue;
-
-//    @FXML
-//    private VBox recommended;
-
-    @FXML
-    private VBox side_bar;
-
-    @FXML
     private Label song_name_label;
-
-    @FXML
-    private BorderPane songsPane;
-
-    // pop up attribute --------------------------------------------------------
 
     @FXML
     private ImageView home_button;
@@ -95,73 +97,37 @@ public class SearchPageController implements Initializable {
         } catch (BadPaddingException e) {
             throw new RuntimeException(e);
         }
+
     }
 
-    public static String getMessage() {
-        try {
-            String base64 = gson.fromJson(input.readLine(), String.class);
-            byte[] decodedData = Base64.getDecoder().decode(base64);
-            byte[] decrypted = cipherDecrypt.doFinal(decodedData);
-            return new String(decrypted);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
+    // media playing functions ------------------------------------------------------
+
+
+
+    // pop up --------------------------------
+
+    @FXML
+    void open_home(MouseEvent event) throws IOException {
+
+        // Load the FXML file for the new page
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage_artist&podcater.fxml"));
+        Parent root = loader.load();
+
+        // Create a new Scene based on the loaded FXML file
+        Scene newScene = new Scene(root);
+
+        // Get the current Stage from any component in the existing scene
+        Stage currentStage = (Stage) home_button.getScene().getWindow();
+
+        // Set the new Scene on the Stage
+        currentStage.setScene(newScene);
+
     }
 
-    public static void startCom() {
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-            Cipher decryptCipher = Cipher.getInstance("RSA");
-            decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
-            //ObjectOutputStream objOut = new ObjectOutputStream(socket.getOutputStream());
-            objOut.writeObject(publicKey);
-            objOut.flush();
-            //objOut.close();
-
-            String base64 = gson.fromJson(input.readLine(), String.class);
-            byte[] encryptedMessage = Base64.getDecoder().decode(base64);
-            byte[] decryptedMessage = decryptCipher.doFinal(encryptedMessage);
-
-            cipherDecrypt = Cipher.getInstance("AES");
-            cipherDecrypt.init(Cipher.DECRYPT_MODE, new SecretKeySpec(decryptedMessage, "AES"));
-            cipherEncrypt = Cipher.getInstance("AES");
-            cipherEncrypt.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(decryptedMessage, "AES"));
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setSocket() throws IOException {
-        socket = new Socket(HOST, PORT);
-        input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        output = new PrintWriter(socket.getOutputStream(), true);
-        objOut = new ObjectOutputStream(socket.getOutputStream());
-        objIn = new ObjectInputStream(socket.getInputStream());
-        gson = new Gson();
-        startCom();
-    }
-
-    //------------------------------------------------------
+    // ------------------------------------------------------------------------------------
 
     @FXML
     public void searchClicked() throws IOException {
-        setSocket();
         sendMessage("search");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("list", search_field.getText());
@@ -232,8 +198,11 @@ public class SearchPageController implements Initializable {
                 }
             }
 
-            media = new Media(songs.get(songNumber).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
+//            media = new Media(songs.get(songNumber).toURI().toString());
+//            mediaPlayer = new MediaPlayer(media);
+
+            media = homepage_artist_podcaster_controller.media;
+            mediaPlayer = homepage_artist_podcaster_controller.mediaPlayer;
 
             song_name_label.setText(songs.get(songNumber).getName());
             song_name_label.setWrapText(true);

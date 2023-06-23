@@ -4,8 +4,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="489.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayPageController">
+<AnchorPane prefHeight="489.0" prefWidth="811.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.share_page_controller">
     <children>
         <BorderPane layoutY="-5.0" prefHeight="496.0" prefWidth="811.0" styleClass="body-back" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
          <center>
@@ -14,7 +15,8 @@
                   <HBox prefHeight="496.0" prefWidth="231.0" />
                   <HBox prefHeight="496.0" prefWidth="506.0">
                      <children>
-                        <ListView prefHeight="496.0" prefWidth="460.0" />
+                        <VBox prefHeight="496.0" prefWidth="2.0" />
+                        <ListView fx:id="playlists" prefHeight="496.0" prefWidth="469.0" />
                      </children>
                   </HBox>
                   <HBox prefHeight="496.0" prefWidth="218.0" />

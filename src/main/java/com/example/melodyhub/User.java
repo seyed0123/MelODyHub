@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class User extends Account implements Serializable {
-    private ArrayList<UUID> queue;
+    private ArrayList<String> queue;
     private String imageStory;
     private String gender;
     private Date age;
@@ -19,7 +19,7 @@ public class User extends Account implements Serializable {
     private  ArrayList<String> oldNotification;
     private  ArrayList<String> notification;
 
-    public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<UUID> queue, String imageStory, String gender, Date age, Song currentPlay, boolean premium, ArrayList<String> oldNotification, ArrayList<String> notification) {
+    public User(String uuid, String username, String password, String email, String phoneNumber, String image, ArrayList<String> queue, String imageStory, String gender, Date age, Song currentPlay, boolean premium, ArrayList<String> oldNotification, ArrayList<String> notification) {
         super(uuid, username, password, email, phoneNumber, image);
         this.queue = queue;
         this.imageStory = imageStory;
@@ -37,7 +37,7 @@ public class User extends Account implements Serializable {
                                       @JsonProperty("email") String email,
                                       @JsonProperty("phoneNumber") String phoneNumber,
                                       @JsonProperty("image") String image,
-                                      @JsonProperty("queue") ArrayList<UUID> queue,
+                                      @JsonProperty("queue") ArrayList<String> queue,
                                       @JsonProperty("imageStory") String imageStory,
                                       @JsonProperty("gender") String gender,
                                       @JsonProperty("age") Date age,
@@ -67,16 +67,18 @@ public class User extends Account implements Serializable {
         this.premium = premium;
     }
 
-    public ArrayList<UUID> getQueue() {
+    public ArrayList<String> getQueue() {
         return queue;
     }
 
-    public void addQueue(UUID song)
+    public void addQueue(String song)
     {
+        if(queue==null)
+            queue = new ArrayList<>();
         queue.add(song);
     }
 
-    public void setQueue(ArrayList<UUID> queue) {
+    public void setQueue(ArrayList<String> queue) {
         this.queue = queue;
     }
 
@@ -119,6 +121,8 @@ public class User extends Account implements Serializable {
 
     public void addNotification(String notification)
     {
+        if(this.notification==null)
+           this.notification= new ArrayList<>();
         this.notification.add(notification);
     }
 
@@ -129,15 +133,11 @@ public class User extends Account implements Serializable {
     public ArrayList<String> getNotification() {
         return notification;
     }
-    public String seeNotification()
-    {
-        if(notification.size()==0)
-            return null;
-        String notif = notification.get(0);
-        oldNotification.add(notif);
-        notification.remove(0);
-        return notif;
 
+    public void removeNotif(String notif)
+    {
+        if(notification.contains(notif))
+            notification.remove(notif);
     }
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ import com.example.melodyhub.Server.MelodyHub.AccountPerform;
 import com.example.melodyhub.Server.MelodyHub.Session;
 import com.example.melodyhub.Server.loXdy.Main;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -235,7 +236,7 @@ public class Testing {
         assertEquals("failed",getMessage());
     }
     @Test
-    public void loginUser() throws IOException {
+    public User loginUser() throws IOException {
         setSocket();
         sendMessage("login user");
         sendMessage("seyed");
@@ -247,6 +248,7 @@ public class Testing {
         String json = getMessage();
         User user = objectMapper.readValue(json, User.class);
         assertEquals("seyed",user.getUsername());
+        return user;
     }
     @Test
     public void forgotPass() throws IOException {
@@ -373,5 +375,21 @@ public class Testing {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("searched","think");
         sendMessage(jsonObject.toString());
+    }
+    @Test
+    public void notif() throws IOException {
+        User user = loginUser();
+        user.addNotification("hello "+user.getUsername());
+        ArrayList<String> notif = user.getNotification();
+        sendMessage("save user notif");
+        ObjectMapper objectMapper = new ObjectMapper();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("notif",objectMapper.writeValueAsString(user.getNotification()));
+        jsonObject.put("oldNotif",objectMapper.writeValueAsString(user.getOldNotification()));
+        jsonObject.put("queue",objectMapper.writeValueAsString(user.getQueue()));
+        sendMessage(jsonObject.toString());
+        sendMessage("refresh notif");
+        ArrayList<String> given = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
+        assertEquals(notif,given);
     }
 }

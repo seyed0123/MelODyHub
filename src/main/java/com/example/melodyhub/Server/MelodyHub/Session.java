@@ -306,9 +306,14 @@ public class Session implements Runnable{
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String name = jsonObject.getString("name");
                     boolean personal = jsonObject.getBoolean("personal");
-                    UUID artist = MelodyHub.findArtistUsername(jsonObject.getString("artist"));
+                    UUID artist=null;
+                    if(!Objects.equals(jsonObject.getString("artist"), "null"))
+                        artist = (MelodyHub.findArtistUsername(jsonObject.getString("artist")));
+                    String artistName=null;
+                    if(artist!=null)
+                        artistName = artist.toString();
                     UUID firstOwner = MelodyHub.findUserUsername(jsonObject.getString("firstOwner"));
-                    MelodyHub.createPlaylist(firstOwner,new PlayList(UUID.randomUUID().toString(),name,personal,0,0,artist.toString(),firstOwner.toString()));
+                    MelodyHub.createPlaylist(firstOwner,new PlayList(UUID.randomUUID().toString(),name,personal,0,0,artistName,firstOwner.toString()));
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("create song")) {
@@ -367,6 +372,16 @@ public class Session implements Runnable{
                         jsonObject.put("job",job);
                         MelodyHub.addLog(jsonObject);
                     }
+                } else if (job.equals("update premium")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String column = jsonObject.getString("column");
+                    boolean per = jsonObject.getBoolean("premium");
+                    if(account instanceof User)
+                        MelodyHub.updatePremium("person",column,account.getId(),per);
+                    else if (account instanceof Artist) {
+                        MelodyHub.updatePremium("artist",column,account.getId(),per);
+                    }else
+                        MelodyHub.updatePremium("podcaster",column,account.getId(),per);
                 } else if (job.equals("update pass")) {
                     if(checkTOTP(account.getEmail()))
                     {
@@ -401,6 +416,18 @@ public class Session implements Runnable{
                         jsonObject.put("job",job);
                         MelodyHub.addLog(jsonObject);
                     }
+                } else if (job.equals("get user")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    sendMessage(objectMapper.writeValueAsString(MelodyHub.findUser(id)));
+                } else if (job.equals("get artist")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    sendMessage(objectMapper.writeValueAsString(MelodyHub.findArtist(id)));
+                } else if (job.equals("get podcaster")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    sendMessage(objectMapper.writeValueAsString(MelodyHub.findPodcaster(id)));
                 } else if (job.equals("get song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String id = (jsonObject.getString("id"));
@@ -545,13 +572,14 @@ public class Session implements Runnable{
                 } else if (job.equals("share song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String song = (jsonObject.getString("song"));
-                    UUID user = UUID.fromString(jsonObject.getString("user"));
+                    UUID user = (MelodyHub.findUserUsername(jsonObject.getString("user")));
                     if(account instanceof User)
                     {
                         JSONObject jsonObject1 = new JSONObject();
                         jsonObject1.put("email",MelodyHub.findUser(user).getEmail());
                         jsonObject1.put("subject","Hi there,check this song");
                         jsonObject1.put("body",UserPerform.shareSong(song));
+                        loXdyOutput.println("send email");
                         loXdyOutput.println(jsonObject1);
                     }
                 } else if (job.equals("set age")) {
@@ -563,8 +591,8 @@ public class Session implements Runnable{
                 } else if (job.equals("share playlist")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
-                    UUID user = UUID.fromString(jsonObject.getString("user"));
-                    if(!(PlaylistPerform.firstOwner(playlist)==account.getId()))
+                    UUID user = (MelodyHub.findUserUsername(jsonObject.getString("user")));
+                    if((PlaylistPerform.firstOwner(playlist)==account.getId()))
                     {
                         sendMessage("don't have permission");
                     }else {

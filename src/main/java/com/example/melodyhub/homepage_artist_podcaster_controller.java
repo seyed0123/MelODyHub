@@ -396,7 +396,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
     public void open_profile() throws IOException {
 
         // Load the FXML file for the new page
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("notifs.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profileruser.fxml"));
         Parent root = loader.load();
 
         // Create a new Scene based on the loaded FXML file

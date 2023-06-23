@@ -202,11 +202,11 @@ public class MelodyHub {
 
     public static PlayList findPlaylist(UUID playlist)
     {
-        ResultSet res = MelodyHub.sendQuery("select * from playlist where id ='"+playlist+"'");
+        ResultSet res = MelodyHub.sendQuery("select * from playlists where id ='"+playlist+"'");
         if(res==null)
             return null;
         try {
-            return new PlayList(res.getString("id"), res.getString("name"), res.getBoolean("is_public static"),res.getDouble("rate"),res.getDouble("duration"),res.getString("artist"),res.getString("first_owner"));
+            return new PlayList(res.getString("id"), res.getString("name"), res.getBoolean("is_public"),res.getDouble("rate"),res.getDouble("duration"),(res.getString("artist")),res.getString("first_owner"));
         } catch (SQLException e) {
             return null;
         }
@@ -264,7 +264,7 @@ public class MelodyHub {
     }
     public static void createUser(User user)
     {
-        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",user.getUsername(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
+        MelodyHub.sendQuery(String.format("insert into person (id, username, pass, email, phone, gender, age) VALUES ('%s','%s','%s','%s','%s','%s',CAST('"+user.getAge()+"' AS DATE));",user.getId(),user.getUsername(),hashPassword(user.getPassword()),user.getEmail(),user.getPhoneNumber(),user.getGender()));
     }
 
     public static void removeUser(UUID user)
@@ -277,14 +277,17 @@ public class MelodyHub {
         for(String column : command.keySet())
         {
             if(!Objects.equals(column, "id") && !Objects.equals(column, "pass"))
-                MelodyHub.sendQuery(String.format("update person set %s = %s where id = '%s';",column ,command.get(column),user));
+                MelodyHub.sendQuery(String.format("update person set %s = '%s' where id = '%s';",column ,command.get(column),user));
         }
     }
     public static void updatePass(String table,UUID account,String password)
     {
         MelodyHub.sendQuery(String.format("update %s set pass = '%s' where id = '%s';",table,hashPassword(password),account));
     }
-
+    public static void updatePremium(String table,String column,UUID account,boolean res)
+    {
+        MelodyHub.sendQuery(String.format("update %s set %s = %b where id = '%s';",table,column,res,account));
+    }
     public static void createArtist(Artist artist)
     {
 

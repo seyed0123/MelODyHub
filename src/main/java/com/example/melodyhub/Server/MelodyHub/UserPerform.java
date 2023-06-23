@@ -39,7 +39,7 @@ public class UserPerform extends AccountPerform {
         MelodyHub.sendQuery("update person set age = Cast('" + age + "' as date) where id = '" + user + "';");
     }
     public static void sharePlaylist(UUID playlist, UUID user) {
-        MelodyHub.sendQuery("Insert into playlist_owning (playlistid, ownerid) VALUES (playlistid = '" + playlist + "' , ownerid = '" + user + "');");
+        MelodyHub.sendQuery("Insert into playlist_owning (playlistid, ownerid) VALUES ('" + playlist + "' , '" + user + "');");
     }
 
     public static ArrayList<String> getRecommend(UUID Id) {
