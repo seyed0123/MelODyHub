@@ -411,7 +411,18 @@ public class HomeController implements Initializable {
                 });
 
                 profile.setOnMouseClicked(event -> {
-                    System.out.println("Profile clicked");
+                    Stage stage = (Stage) likeImage.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("profile_user.fxml"));
+                    UserProfilePageController.setUser(user);
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 queueImage.setOnMouseClicked(event -> {

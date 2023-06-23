@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -144,6 +147,31 @@ public class AddToPlaylistController implements Initializable {
                 Label durationLabel = new Label(playlist.getDuration()+"");
                 Label personalLabel = new Label(playlist.isPersonal()+"");
                 Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+                Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmation Dialog");
+                        alert.setHeaderText("Are you sure you want to add this song to this playlist?");
+                        alert.setContentText("Click OK to add or Cancel to abort.");
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == ButtonType.OK){
+                            sendMessage("add song playlist");
+                            JSONObject jsonObject2 = new JSONObject();
+                            jsonObject2.put("playlist",playlist.getId());
+                            jsonObject2.put("song",song.getId());
+                            sendMessage(jsonObject2.toString());
+                            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                            alert2.setTitle("Information Dialog");
+                            alert2.setHeaderText("this song added to this playlist");
+                            alert2.setContentText("This is a sample information message.");
+                            alert2.showAndWait();
+                        } else {
+                            // user clicked Cancel or closed the dialog
+                        }
+                    }
+                });
                 this.playlists.getItems().add(Hbox);
             }
         } catch (JsonProcessingException e) {

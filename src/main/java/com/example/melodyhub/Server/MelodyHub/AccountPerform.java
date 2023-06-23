@@ -10,10 +10,12 @@ public class AccountPerform {
     {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select user1id from follow where user2id='"+Id+"';");
+        if(res==null)
+            return ret;
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add(UUID.fromString(res.getString("user1id")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }
@@ -25,10 +27,12 @@ public class AccountPerform {
     {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select user2id from follow where user1id='"+Id+"';");
+        if(res==null)
+            return ret;
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add(UUID.fromString(res.getString("user2id")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.UserProfilePageController">
+<AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.UserProfilePageController">
     <children>
         <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="830.0" style="-fx-background-color: #301934;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
@@ -85,9 +86,13 @@
             <children>
                 <ImageView fx:id="profile_img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
                     <image>
-                        <Image url="@imageProfile/image.png" />
                     </image>
                 </ImageView>
+            <Button mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" text="upload profile">
+               <font>
+                  <Font name="Forte" size="13.0" />
+               </font>
+            </Button>
                 <Label fx:id="username_label" prefHeight="37.0" prefWidth="230.0" text="Username" textFill="#441147">
                     <font>
                         <Font size="18.0" />
@@ -232,7 +237,7 @@
                     <children>
                         <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
                             <children>
-                                <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                                     <font>
                                         <Font name="Arial Nova" size="16.0" />
                                     </font>
@@ -244,27 +249,27 @@
                                 </Label>
                             </children>
                         </VBox>
-                        <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                        <ImageView fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
                                 <Image url="@images/next-button (1).png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                        <ImageView fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
                                 <Image url="@images/play.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                        <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
                                 <Image url="@images/pause-button.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                        <ImageView fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
                                 <Image url="@images/next-button.png" />
                             </image>
                         </ImageView>
-                        <Slider prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                        <Slider fx:id="play_progress_bar" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
                         <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
                                 <Image url="@images/heart.png" />
@@ -289,5 +294,10 @@
                 </HBox>
             </children>
         </Pane>
+      <ImageView fx:id="home_button" fitHeight="50.0" fitWidth="47.0" layoutX="1.0" onMouseClicked="#open_home" pickOnBounds="true">
+         <image>
+            <Image url="@images/back-icon.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
