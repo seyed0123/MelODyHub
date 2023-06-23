@@ -1,6 +1,7 @@
 ### test file ####
 import pickle
 import numpy as np
+import os
 
 # user_dict = [['6kxHMpVt9OYDQOwXYJrQAb', 'listen', '4bKoCbveIKkAVdzj6h5jqX'], ['6kxHMpVt9OYDQOwXYJrQAb', 'listen', '2UFmTI7g4aLgpWmaCcTEvI'], ['6kxHMpVt9OYDQOwXYJrQAb', 'listen', '4M36kNFgfTRfssVd7EsAmA'], ['6kxHMpVt9OYDQOwXYJrQAb', 'listen', '4M36kNFgfTRfssVd7EsAmA'], ['6kxHMpVt9OYDQOwXYJrQAb', 'listen', '4M36kNFgfTRfssVd7EsAmA']]
 
@@ -65,6 +66,38 @@ import numpy as np
 with open(r'src\main\python\user_song_num.pickle', 'rb') as file:
     data = pickle.load(file)
     print(data)
+
+
+data[0]["song_num"] = 0
+
+
+with open(r'src\main\python\user_song_num.pickle', 'wb') as file:
+    pickle.dump(data , file)
+    print(data)
+
+# import soundfile as sf
+
+# folder_path = r"C:\python\MACHINE LEARNING\recommendation_system\AP_project\front\new2_melody_hub\MelodyHub\src\main\resources\com\example\melodyhub\musics"
+
+# def convert_to_wav():
+
+#     for file_path in os.listdir(folder_path):
+#         if file_path.endswith(".mp3"):
+
+#             music_path = os.path.join(folder_path , file_path)
+
+#             audio, sample_rate = sf.read(music_path)
+
+#             file_name, file_extension = os.path.splitext(music_path)
+#             wav_file = file_name + ".wav"
+
+            
+
+#             sf.write(wav_file, audio, sample_rate)
+
+
+# convert_to_wav()
+
 
 
 

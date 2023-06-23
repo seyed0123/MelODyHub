@@ -7,7 +7,7 @@ import psycopg2.extras
 import traceback
 import pickle
 # reading the csv file containing the clustered songs
-df = pd.read_csv("src\main\python\clustered_tracks.csv")
+df = pd.read_csv(r"C:\python\MACHINE LEARNING\recommendation_system\AP_project\recommender\clustered_tracks.csv")
 # print("read the track csv file")
 
 # this function takes the table of the users history and turns each users
@@ -161,7 +161,7 @@ def check_condition(user):
                 data[i]["song_num"] = len(listened_songs)
                 with open(r'src\main\python\user_song_num.pickle', 'wb') as file:
                     pickle.dump(data , file)
-                    
+
                 return True
             
             else :

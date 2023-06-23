@@ -3,6 +3,7 @@ import Receiver as receiver
 import Recommender as recommender
 import Database_Pusher as DP
 import time
+import genre_recognizer 
 
 
 if __name__ == '__main__':
@@ -18,9 +19,11 @@ if __name__ == '__main__':
 
             if condition :
                 user_id , recoms = recommender.recommend(user)
-                DP.push_to_database(user_id , recoms)
+                print(recoms)
+                genre_recognizer.get_list_genre(recoms)
+                # DP.push_to_database(user_id , recoms)
 
 
 
-        time.sleep(3)
-        break
+        time.sleep(30)
+        # break
