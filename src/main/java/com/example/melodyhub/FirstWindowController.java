@@ -30,6 +30,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -39,7 +40,6 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class FirstWindowController implements Initializable {
 
-    static Account loginAccount;
     String page;
 
     @FXML
@@ -85,19 +85,19 @@ public class FirstWindowController implements Initializable {
     public static String job;
     public static int code;
 
-    public static void setJob(String work)
-    {
-        job=work;
+    public static void setJob(String work) {
+        job = work;
     }
+
     public void confirmLoginAuthClicked() throws IOException {
-            try {
-                code = Integer.parseInt(authCode_field.getText());
-                edited=true;
-                back();
-            }catch (Exception exception) {
-                authCode_field.setText("pls enter number");
-                return;
-            }
+        try {
+            code = Integer.parseInt(authCode_field.getText());
+            edited = true;
+            back();
+        } catch (Exception exception) {
+            authCode_field.setText("pls enter number");
+            return;
+        }
     }
 
     public void confirmForgetPassTOTP() throws IOException {
@@ -176,7 +176,8 @@ public class FirstWindowController implements Initializable {
     }
 
     public void back() throws IOException {
-        ((Stage) this.password_field.getScene().getWindow()).close();
+        ((Stage) this.mainPane.getScene().getWindow()).close();
+        new LoginSignupPage().start(new Stage());
     }
 
     public void setPage(String pageId) {
@@ -186,11 +187,19 @@ public class FirstWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(Objects.equals(job, "authentication"))
-        {
+        if (Objects.equals(job, "authentication")) {
             authentication.setVisible(true);
             forgetPassword2.setVisible(false);
             forgetPassword1.setVisible(false);
         }
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Whats your favorite app?");
+        s.add("Who’s your favorite pet?");
+        s.add("If you could vacation anywhere in the world, where would it be?");
+        s.add("What is your favorite animal?");
+        s.add("Who’s your favorite person in the whole world?");
+        s.add("What is your favorite season?");
+        ques_combo.getItems().addAll(s);
+        ques_combo.getSelectionModel().selectFirst();
     }
 }

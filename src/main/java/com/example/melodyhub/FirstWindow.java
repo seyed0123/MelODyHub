@@ -10,15 +10,9 @@ import java.io.IOException;
 
 public class FirstWindow extends Application {
 
-    private final Account account;
     private String page;
-    private static final String HOST = "localhost";
-    private static final int PORT = 8085;
-    private static final String KEYSTORE = "src/main/java/com/example/melodyhub/client.keystore";
-    private static final String KEYSTORE_PASSWORD = "123456";
 
-    public FirstWindow(Account account, String page) {
-        this.account = account;
+    public FirstWindow(String page) {
         this.page = page;
     }
 
@@ -28,12 +22,12 @@ public class FirstWindow extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("welcome!");
         stage.setScene(scene);
-        FirstWindowController.loginAccount = account;
         ((FirstWindowController) fxmlLoader.getController()).setPage(page);
         ((FirstWindowController) fxmlLoader.getController()).page = page;
         //((FirstWindowController) fxmlLoader.getController()).setQues_combo();
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch(args);
