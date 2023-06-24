@@ -444,6 +444,7 @@ public class Session implements Runnable{
                     ArrayList<String> list= MelodyHub.search(jsonObject.getString("searched"));
                     sendMessage(objectMapper.writeValueAsString(list));
                     sendMessage(objectMapper.writeValueAsString(MelodyHub.searchArtist(jsonObject.getString("searched"))));
+                    sendMessage(objectMapper.writeValueAsString(MelodyHub.searchUser(jsonObject.getString("searched"))));
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("get genre artist")) {
@@ -656,10 +657,11 @@ public class Session implements Runnable{
                     String id = (jsonObject.getString("id"));
                     File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".mp3");
                     if(file.exists()) {
-                        sendMessage("sending song");
+                        //sendMessage("sending song");
                         MelodyHub.uploadSong(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".mp3");
                     }else
-                        sendMessage("failed");
+                        System.out.println();
+                        //sendMessage("failed");
                 }
                 else if (job.equals("download song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());

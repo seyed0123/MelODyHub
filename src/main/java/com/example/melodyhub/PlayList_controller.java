@@ -402,8 +402,6 @@ public class PlayList_controller implements Initializable {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("id",song);
                 sendMessage(jsonObject.toString());
-                String res = getMessage();
-                    System.out.println("done");
                     downloadSong(socket,"src/main/resources/com/example/melodyhub/musics/"+song+".mp3");
             }
             songs.add(file);

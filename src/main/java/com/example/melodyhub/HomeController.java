@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.json.JSONObject;
+import javafx.scene.web.WebView;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
 public class HomeController implements Initializable {
-    private static User user;
+    public static User user;
     @FXML
     private ImageView banner;
 
@@ -123,6 +124,8 @@ public class HomeController implements Initializable {
     public static String current_song_duration;
     public static String current_song_rate;
     public static String current_song_year;
+
+    public static String current_song_id;
     @FXML
     private BorderPane songsPane;
 
@@ -268,9 +271,6 @@ public class HomeController implements Initializable {
 
                     vbox.getChildren().addAll(imageView, songNameLabel, singerNameLabel);
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                        System.out.println("what the fuck");
-//                        System.out.println("Favs clicked");
-
                         @Override
                         public void handle(MouseEvent event) {
                             Stage stage = new Stage();
@@ -319,6 +319,7 @@ public class HomeController implements Initializable {
 
                         Song song = objectMapper.readValue(getMessage(), Song.class);
 
+                        current_song_id = fileName;
                         current_song_name = song.getName();
                         current_song_genre = song.getGenre();
                         current_song_duration = String.valueOf(song.getDuration());
@@ -344,6 +345,7 @@ public class HomeController implements Initializable {
 
                     Song song = objectMapper.readValue(getMessage(), Song.class);
 
+                    current_song_id = fileName;
                     current_song_name = song.getName();
                     current_song_genre = song.getGenre();
                     current_song_duration = String.valueOf(song.getDuration());
@@ -356,11 +358,10 @@ public class HomeController implements Initializable {
 
                 }
                 explore.setOnMouseClicked(event -> {
-                    System.out.println("Explore clicked");
                     Stage stage = (Stage) likeImage.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("SearchPage.fxml"));
                     Scene scene = null;
-                    history_page_controller.setType(true);
+                    SearchPageController.setType(true);
                     try {
                         scene = new Scene(fxmlLoader.load());
                     } catch (IOException e) {
@@ -534,6 +535,10 @@ public class HomeController implements Initializable {
     }
     public void playMedia() {
 
+        sendMessage("listen");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",current_song_id);
+        sendMessage(jsonObject.toString());
         beginTimer();
         mediaPlayer.play();
     }
@@ -806,5 +811,17 @@ public class HomeController implements Initializable {
 
 
 
+    }
+    @FXML
+    public void chat()
+    {
+        WebView webView = new WebView();
+        webView.getEngine().load("https://web.eitaa.com/");
+        StackPane root = new StackPane();
+        root.getChildren().add(webView);
+        Scene scene = new Scene(root, 800, 600);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -10,10 +10,12 @@ public class SongPerform {
     {
         ArrayList<String> ret = new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery("select id from song where genre='"+genre+"';");
+        if(res==null)
+            return ret;
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add((res.getString("id")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

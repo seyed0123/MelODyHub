@@ -409,8 +409,10 @@ public class MelodyHub {
             long fileSize = file.length();
             int numChunks = (int) Math.ceil((double) fileSize / CHUNK_SIZE);
 
+            ArrayList<Thread> threads = new ArrayList<>();
             for (int i = 0; i < numChunks; i++) {
-                int offset = i * CHUNK_SIZE;
+                int finalI = i;
+                int offset = finalI * CHUNK_SIZE;
                 int chunkSize = (int) Math.min(CHUNK_SIZE, fileSize - offset);
                 byte[] buffer = new byte[chunkSize];
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
@@ -432,7 +434,9 @@ public class MelodyHub {
                 "WHERE name LIKE '%s'\n" +
                 "   OR lyrics LIKE '%s'\n" +
                 "    OR genre LIKE '%s'\n" +
-                "    OR description LIKE '%s'", searched));
+                "    OR description LIKE '%s'", searched,searched,searched,searched,searched));
+        if(res==null)
+            return song;
         while (true) {
             try {
                 if (!res.next()) break;
@@ -449,25 +453,46 @@ public class MelodyHub {
             ResultSet res = MelodyHub.sendQuery(String.format("SELECT id\n" +
                     "FROM artist\n" +
                     "WHERE username like '%s'\n" +
-                    "OR genre like '%s';\n", searched));
+                    "OR genre like '%s';\n", searched,searched));
+            if(res==null)
+                return artists;
             while (true) {
                 try {
-                    if (!res.next()) break;
                     artists.add(UUID.fromString(res.getString("id")));
+                    if (!res.next()) break;
                 } catch (SQLException e) {
                     break;
                 }
             }
             return artists;
         }
+    public static ArrayList<UUID> searchUser(String searched)
+    {
+        ArrayList<UUID> artists = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery(String.format("SELECT id\n" +
+                "FROM person\n" +
+                "WHERE username like '%s'\n" +
+                ";\n", searched));
+        if(res==null)
+            return artists;
+        while (true) {
+            try {
+                artists.add(UUID.fromString(res.getString("id")));
+                if (!res.next()) break;
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return artists;
+    }
     public static ArrayList<UUID> getGenreArtist(String genre)
     {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery(String.format("select id from artist where genre='%s';",genre));
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add(UUID.fromString(res.getString("id")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

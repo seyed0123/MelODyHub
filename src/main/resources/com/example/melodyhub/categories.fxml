@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -66,7 +67,7 @@
                <children>
                   <Group>
                      <children>
-                        <TextField fx:id="search_field" editable="false" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to in your fav category?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
+                        <TextField fx:id="search_field" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to in your fav category?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
                            <padding>
                               <Insets left="10.0" />
                            </padding>
@@ -93,6 +94,9 @@
                </padding>
             </HBox>
          </top>
+         <center>
+            <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
       <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
          <children>

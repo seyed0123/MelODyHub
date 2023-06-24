@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SearchPageController">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SearchPageController">
     <children>
         <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
             <children>
@@ -78,7 +89,7 @@
                <children>
                         <Group>
                             <children>
-                                <TextField fx:id="search_field" editable="false" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
+                                <TextField fx:id="search_field" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
                                     <padding>
                                         <Insets left="10.0" />
                                     </padding>
