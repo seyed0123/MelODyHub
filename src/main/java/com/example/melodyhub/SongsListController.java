@@ -37,17 +37,20 @@ public class SongsListController implements Initializable {
     private static List<Song> songList;
 
     private static List<Artist> artistList;
-
+    private static List<User> userList;
     @FXML
     private TextField search_field;
 
-    public static void setSongList(List<Song> songList,List<Artist> artist) {
+    public static void setSongList(List<Song> songList,List<Artist> artist,List<User> users) {
         SongsListController.songList = songList;
         artistList=artist;
+        userList=users;
     }
 
     public static void setSongList(List<Song> songList) {
         SongsListController.songList = songList;
+        artistList=new ArrayList<>();
+        userList =new ArrayList<>();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -94,6 +97,20 @@ public class SongsListController implements Initializable {
             hBox.getChildren().addAll( songNameLabel, singerNameLabel);
             songs_table.getItems().add(hBox);
         }
+        for(User user :userList)
+        {
+            HBox hBox = new HBox();
+
+            Label songNameLabel = new Label(user.getUsername());
+            songNameLabel.setTextFill(Color.PEACHPUFF);
+            songNameLabel.setFont(new Font("Arial Nova", 16.0));
+
+            Label singerNameLabel = new Label(user.getAge()+"");
+            singerNameLabel.setTextFill(Color.PEACHPUFF);
+            singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
+            hBox.getChildren().addAll( songNameLabel, singerNameLabel);
+            songs_table.getItems().add(hBox);
+        }
     }
     @FXML
     public void searchClicked() throws IOException {
@@ -107,12 +124,15 @@ public class SongsListController implements Initializable {
         });
         ArrayList<UUID> listArtist = objectMapper.readValue(getMessage(), new TypeReference<>() {
         });
+        ArrayList<UUID> listUsers = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<UUID>>() {
+        });
 
         List<Song> result1 = getSongsById(listSong);
         List<Artist> result2 = getArtistById(listArtist);
+        List<User> result3 = getUsersById(listUsers);
 
         Stage stage= ((Stage) search_field.getScene().getWindow());
-        SongsListController.setSongList(result1,result2);
+        SongsListController.setSongList(result1,result2,result3);
         FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("SongsListPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Songs List");
@@ -135,11 +155,25 @@ public class SongsListController implements Initializable {
         }
         return songList;
     }
+    private List<User> getUsersById(List<UUID> uuidList) throws IOException {
+        List<User> songList = new ArrayList<>();
+        for (UUID uuid : uuidList) {
+            sendMessage("get song");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", uuid);
+            sendMessage(jsonObject.toString());
 
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = getMessage();
+            User song = objectMapper.readValue(json, User.class);
+            songList.add(song);
+        }
+        return songList;
+    }
     private List<Artist> getArtistById(List<UUID> uuidList) throws IOException {
         List<Artist> songList = new ArrayList<>();
         for (UUID uuid : uuidList) {
-            sendMessage("get song");
+            sendMessage("get user");
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", uuid);
             sendMessage(jsonObject.toString());

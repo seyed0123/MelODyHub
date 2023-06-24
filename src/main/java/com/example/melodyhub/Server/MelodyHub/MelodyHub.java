@@ -464,6 +464,25 @@ public class MelodyHub {
             }
             return artists;
         }
+    public static ArrayList<UUID> searchUser(String searched)
+    {
+        ArrayList<UUID> artists = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery(String.format("SELECT id\n" +
+                "FROM person\n" +
+                "WHERE username like '%s'\n" +
+                ";\n", searched));
+        if(res==null)
+            return artists;
+        while (true) {
+            try {
+                artists.add(UUID.fromString(res.getString("id")));
+                if (!res.next()) break;
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return artists;
+    }
     public static ArrayList<UUID> getGenreArtist(String genre)
     {
         ArrayList<UUID> ret = new ArrayList<>();

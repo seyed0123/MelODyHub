@@ -444,6 +444,7 @@ public class Session implements Runnable{
                     ArrayList<String> list= MelodyHub.search(jsonObject.getString("searched"));
                     sendMessage(objectMapper.writeValueAsString(list));
                     sendMessage(objectMapper.writeValueAsString(MelodyHub.searchArtist(jsonObject.getString("searched"))));
+                    sendMessage(objectMapper.writeValueAsString(MelodyHub.searchUser(jsonObject.getString("searched"))));
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("get genre artist")) {

@@ -111,11 +111,15 @@ public class SearchPageController implements Initializable {
         ArrayList<UUID> listArtist = objectMapper.readValue(getMessage(), new TypeReference<>() {
         });
 
+        ArrayList<UUID> listUsers = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<UUID>>() {
+        });
+
         List<Song> result1 = getSongsById(listSong);
         List<Artist> result2 = getArtistById(listArtist);
+        List<User> result3 = getUsersById(listUsers);
 
         Stage stage= ((Stage) search_field.getScene().getWindow());
-        SongsListController.setSongList(result1,result2);
+        SongsListController.setSongList(result1,result2,result3);
         FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("SongsListPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Songs List");
@@ -139,6 +143,21 @@ public class SearchPageController implements Initializable {
         return songList;
     }
 
+    private List<User> getUsersById(List<UUID> uuidList) throws IOException {
+        List<User> songList = new ArrayList<>();
+        for (UUID uuid : uuidList) {
+            sendMessage("get user");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", uuid);
+            sendMessage(jsonObject.toString());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = getMessage();
+            User song = objectMapper.readValue(json, User.class);
+            songList.add(song);
+        }
+        return songList;
+    }
     private List<Artist> getArtistById(List<UUID> uuidList) throws IOException {
         List<Artist> songList = new ArrayList<>();
         for (UUID uuid : uuidList) {
