@@ -42,16 +42,16 @@ public class PlayList_controller implements Initializable {
     private ImageView banner;
 
     @FXML
-    private Label current_song_genre;
+    private static Label current_song_genre;
 
     @FXML
     private ImageView current_song_image;
 
     @FXML
-    private Label current_song_label;
+    private static Label current_song_label;
 
     @FXML
-    private Label current_song_year;
+    private static Label current_song_year;
 
     @FXML
     private ImageView home_button;

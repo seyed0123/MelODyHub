@@ -112,11 +112,17 @@ public class HomeController implements Initializable {
     private HBox signOut;
 
     @FXML
-    private Label singerNameLabel;
+    public Label singerNameLabel;
 
     @FXML
-    private Label song_name_label;
+    public Label song_name_label;
 
+    public static String current_song_name ;
+    public static String current_song_artist;
+    public static String current_song_genre;
+    public static String current_song_duration;
+    public static String current_song_rate;
+    public static String current_song_year;
     @FXML
     private BorderPane songsPane;
 
@@ -299,14 +305,53 @@ public class HomeController implements Initializable {
                         media = new Media(songs.get(songNumber).toURI().toString());
                         mediaPlayer = new MediaPlayer(media);
 
-                        song_name_label.setText(songs.get(songNumber).getName());
+                        // setting the current palying song variables
+
+                        File song_file = songs.get(songNumber);
+                        sendMessage("get song");
+                        JSONObject jsonObject = new JSONObject();
+                        String song_name = song_file.getName();
+                        int lastBackslashIndex = song_name.lastIndexOf("\\");
+                        int lastDotIndex = song_name.lastIndexOf(".");
+                        String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                        jsonObject.put("id", fileName);
+                        sendMessage(jsonObject.toString());
+
+                        Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                        current_song_name = song.getName();
+                        current_song_genre = song.getGenre();
+                        current_song_duration = String.valueOf(song.getDuration());
+                        current_song_year = String.valueOf(song.getYear());
+                        current_song_rate = String.valueOf(song.getRate());
                         song_name_label.setWrapText(true);
+                        song_name_label.setText(current_song_name);
                     }
 
 
                 }else {
-                    song_name_label.setText(songs.get(songNumber).getName());
+
+
+                    File song_file = songs.get(songNumber);
+                    sendMessage("get song");
+                    JSONObject jsonObject = new JSONObject();
+                    String song_name = song_file.getName();
+                    int lastBackslashIndex = song_name.lastIndexOf("\\");
+                    int lastDotIndex = song_name.lastIndexOf(".");
+                    String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                    jsonObject.put("id", fileName);
+                    sendMessage(jsonObject.toString());
+
+                    Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                    current_song_name = song.getName();
+                    current_song_genre = song.getGenre();
+                    current_song_duration = String.valueOf(song.getDuration());
+                    current_song_year = String.valueOf(song.getYear());
+                    current_song_rate = String.valueOf(song.getRate());
+                    song_name_label.setText(current_song_name);
                     song_name_label.setWrapText(true);
+
                     continueTimer();
 
                 }
@@ -428,6 +473,27 @@ public class HomeController implements Initializable {
 
                 queueImage.setOnMouseClicked(event -> {
                     System.out.println("Queue image clicked");
+
+                    FXMLLoader loader=null;
+
+                    loader = new FXMLLoader(getClass().getResource("PlayPage.fxml"));
+
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // Create a new Scene based on the loaded FXML file
+                    Scene newScene = new Scene(root);
+
+                    // Get the current Stage from any component in the existing scene
+                    Stage currentStage = (Stage) queueImage.getScene().getWindow();
+
+                    // Set the new Scene on the Stage
+                    currentStage.setScene(newScene);
+
                 });
 
 
@@ -500,10 +566,39 @@ public class HomeController implements Initializable {
             media = new Media(songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
 
-            song_name_label.setText(songs.get(songNumber).getName());
+//            current_song_name = songs.get(songNumber).getName();
 
-            playMedia();
+            try {
+                File song_file = songs.get(songNumber);
+                sendMessage("get song");
+                JSONObject jsonObject = new JSONObject();
+                String song_name = song_file.getName();
+                int lastBackslashIndex = song_name.lastIndexOf("\\");
+                int lastDotIndex = song_name.lastIndexOf(".");
+                String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                jsonObject.put("id", fileName);
+                sendMessage(jsonObject.toString());
+
+                Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                current_song_name = song.getName();
+                current_song_genre = song.getGenre();
+                current_song_duration = String.valueOf(song.getDuration());
+                current_song_year = String.valueOf(song.getYear());
+                current_song_rate = String.valueOf(song.getRate());
+                song_name_label.setWrapText(true);
+
+                song_name_label.setText(current_song_name);
+
+
+                playMedia();
+
+            }catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
         }
+
         else {
 
             songNumber = songs.size() - 1;
@@ -518,9 +613,35 @@ public class HomeController implements Initializable {
             media = new Media(songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
 
-            song_name_label.setText(songs.get(songNumber).getName());
+            try {
+                File song_file = songs.get(songNumber);
+                sendMessage("get song");
+                JSONObject jsonObject = new JSONObject();
+                String song_name = song_file.getName();
+                int lastBackslashIndex = song_name.lastIndexOf("\\");
+                int lastDotIndex = song_name.lastIndexOf(".");
+                String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                jsonObject.put("id", fileName);
+                sendMessage(jsonObject.toString());
 
-            playMedia();
+                Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                current_song_name = song.getName();
+                current_song_genre = song.getGenre();
+                current_song_duration = String.valueOf(song.getDuration());
+                current_song_year = String.valueOf(song.getYear());
+                current_song_rate = String.valueOf(song.getRate());
+                song_name_label.setWrapText(true);
+
+                song_name_label.setText(current_song_name);
+
+
+                playMedia();
+
+            }catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
@@ -540,9 +661,35 @@ public class HomeController implements Initializable {
             media = new Media(songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
 
-            song_name_label.setText(songs.get(songNumber).getName());
+            try {
+                File song_file = songs.get(songNumber);
+                sendMessage("get song");
+                JSONObject jsonObject = new JSONObject();
+                String song_name = song_file.getName();
+                int lastBackslashIndex = song_name.lastIndexOf("\\");
+                int lastDotIndex = song_name.lastIndexOf(".");
+                String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                jsonObject.put("id", fileName);
+                sendMessage(jsonObject.toString());
 
-            playMedia();
+                Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                current_song_name = song.getName();
+                current_song_genre = song.getGenre();
+                current_song_duration = String.valueOf(song.getDuration());
+                current_song_year = String.valueOf(song.getYear());
+                current_song_rate = String.valueOf(song.getRate());
+                song_name_label.setWrapText(true);
+
+                song_name_label.setText(current_song_name);
+
+
+                playMedia();
+
+            }catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         else {
 
@@ -553,9 +700,34 @@ public class HomeController implements Initializable {
             media = new Media(songs.get(songNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
 
-            song_name_label.setText(songs.get(songNumber).getName());
+            try {
+                File song_file = songs.get(songNumber);
+                sendMessage("get song");
+                JSONObject jsonObject = new JSONObject();
+                String song_name = song_file.getName();
+                int lastBackslashIndex = song_name.lastIndexOf("\\");
+                int lastDotIndex = song_name.lastIndexOf(".");
+                String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                jsonObject.put("id", fileName);
+                sendMessage(jsonObject.toString());
 
-            playMedia();
+                Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                current_song_name = song.getName();
+                current_song_genre = song.getGenre();
+                current_song_duration = String.valueOf(song.getDuration());
+                current_song_year = String.valueOf(song.getYear());
+                current_song_rate = String.valueOf(song.getRate());
+                song_name_label.setWrapText(true);
+
+                song_name_label.setText(current_song_name);
+
+
+                playMedia();
+
+            }catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public   void beginTimer() {
@@ -627,6 +799,12 @@ public class HomeController implements Initializable {
         double playbackPosition = play_progress_bar.getValue();
         mediaPlayer.seek(Duration.seconds(playbackPosition));
         playMedia();
+
+    }
+
+    public void open_queue() throws IOException {
+
+
 
     }
 }

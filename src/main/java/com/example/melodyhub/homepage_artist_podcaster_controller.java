@@ -46,7 +46,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
 
 
     @FXML
-    private Label artist_name_label;
+    public static Label artist_name_label;
 
     @FXML
     private ImageView banner;
@@ -91,7 +91,7 @@ public class homepage_artist_podcaster_controller implements Initializable {
     private VBox side_bar;
 
     @FXML
-    private  Label song_name_label;
+    public Label song_name_label;
 
     @FXML
     private BorderPane songsPane;
