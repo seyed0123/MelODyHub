@@ -80,7 +80,7 @@ public class AddToPlaylistController implements Initializable {
             songNameLabel1.setText(song.getName());
             rateLabel.setText(song.getRate()+"");
             String id = song.getId();
-            File file = new File("src/main/resources/com/example/melodyhub/images/covers/"+id+".png");
+            File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
             try {
                 if (!file.exists()) {
                     sendMessage("download music cover");
@@ -88,7 +88,7 @@ public class AddToPlaylistController implements Initializable {
                     String response = getMessage();
                     if(response.equals("sending cover"))
                     {
-                        Thread thread =new Thread(() -> downloadImage(socket,song.getId()));
+                        Thread thread =new Thread(() -> downloadImage(socket,"src/main/resources/com/example/melodyhub/images/profile/"+song.getId()+".png"));
                         thread.start();
                         thread.join();
                     }else
@@ -96,7 +96,7 @@ public class AddToPlaylistController implements Initializable {
                         throw new Exception();
                     }
                 }
-                Image image = new Image(Account.class.getResource("images/covers/"+id+".png").toExternalForm());
+                Image image = new Image(Account.class.getResource("images/profile/"+id+".png").toExternalForm());
                 songImage.setImage(image);
             }catch (Exception e) {
                 try{

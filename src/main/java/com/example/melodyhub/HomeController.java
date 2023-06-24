@@ -11,8 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -126,6 +125,8 @@ public class HomeController implements Initializable {
     public static String current_song_year;
 
     public static String current_song_id;
+
+    public static String current_song_lyrics;
     @FXML
     private BorderPane songsPane;
 
@@ -230,7 +231,7 @@ public class HomeController implements Initializable {
                     imageView.setFitWidth(100.0);
                     imageView.setPickOnBounds(true);
                     imageView.setPreserveRatio(true);
-                    File file = new File("src/main/resources/com/example/melodyhub/images/covers/"+id+".png");
+                    File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
                     try {
                         if (!file.exists()) {
                             sendMessage("download music cover");
@@ -238,7 +239,7 @@ public class HomeController implements Initializable {
                             String response = getMessage();
                             if(response.equals("sending cover"))
                             {
-                                Thread thread =new Thread(() -> downloadImage(socket,song.getId()));
+                                Thread thread =new Thread(() -> downloadImage(socket,"src/main/resources/com/example/melodyhub/images/profile/"+song.getId()+".png"));
                                 thread.start();
                                 thread.join();
                             }else
@@ -246,7 +247,7 @@ public class HomeController implements Initializable {
                                 throw new Exception();
                             }
                         }
-                        Image image = new Image(Account.class.getResource("images/covers/"+id+".png").toExternalForm());
+                        Image image = new Image(Account.class.getResource("images/profile/"+id+".png").toExternalForm());
                         imageView.setImage(image);
                     }catch (Exception e) {
                         try{
@@ -325,6 +326,7 @@ public class HomeController implements Initializable {
                         current_song_duration = String.valueOf(song.getDuration());
                         current_song_year = String.valueOf(song.getYear());
                         current_song_rate = String.valueOf(song.getRate());
+                        current_song_lyrics = song.getLyrics();
                         song_name_label.setWrapText(true);
                         song_name_label.setText(current_song_name);
                     }
@@ -351,6 +353,7 @@ public class HomeController implements Initializable {
                     current_song_duration = String.valueOf(song.getDuration());
                     current_song_year = String.valueOf(song.getYear());
                     current_song_rate = String.valueOf(song.getRate());
+                    current_song_lyrics = song.getLyrics();
                     song_name_label.setText(current_song_name);
                     song_name_label.setWrapText(true);
 
@@ -392,11 +395,34 @@ public class HomeController implements Initializable {
                 });
 
                 likeImage.setOnMouseClicked(event -> {
-                    System.out.println("Like image clicked");
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText("Are you sure you want to like this song?");
+                    alert.setContentText("This action cannot be undone.");
+
+                    // Show the alert and wait for the user's response
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    // Check the user's response
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        sendMessage("like song");
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("song","");
+                        sendMessage(jsonObject.toString());
+                    } else {
+                        // The user clicked "Cancel" or closed the dialog
+                        // Do nothing or handle the cancelation here
+                    }
                 });
 
                 lyricsImage.setOnMouseClicked(event -> {
-                    System.out.println("Lyrics image clicked");
+                    TextArea textArea = new TextArea();
+                    textArea.setText(current_song_lyrics);
+                    VBox root = new VBox(textArea);
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
                 });
 
                 notif.setOnMouseClicked(event -> {

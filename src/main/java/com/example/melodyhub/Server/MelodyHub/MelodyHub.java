@@ -337,7 +337,7 @@ public class MelodyHub {
         try
         {
             // Load the image from a file
-            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".png");
+            File file = new File(path);
             BufferedImage image = ImageIO.read(file);
 
             // Convert the image to a byte array
