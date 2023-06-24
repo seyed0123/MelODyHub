@@ -424,7 +424,7 @@ public class HomeController implements Initializable {
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         sendMessage("like song");
                         JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("song","");
+                        jsonObject.put("song",current_song_id);
                         sendMessage(jsonObject.toString());
                     } else {
                         // The user clicked "Cancel" or closed the dialog

@@ -63,6 +63,9 @@ public class favorite_page_controller implements Initializable {
     @FXML
     private ListView<HBox> fav_playlist_list_view;
 
+    @FXML
+    private ListView<HBox> fav_song_list_view;
+
     private ArrayList<UUID> playlistSongs;
 
     @Override
@@ -172,10 +175,10 @@ public class favorite_page_controller implements Initializable {
 //         get the favorite songs
 //
 //        try {
-//            sendMessage("get favorite playlist");
-//            ArrayList<UUID> playlists = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<UUID>>() {
+//            sendMessage("get liked songs");
+//            ArrayList<String> song_list = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
 //            });
-//            for (UUID uuid : playlists) {
+//            for (String song : song_list) {
 //                sendMessage("get playlist");
 //                JSONObject jsonObject1 = new JSONObject();
 //                jsonObject1.put("id", uuid);
@@ -197,9 +200,9 @@ public class favorite_page_controller implements Initializable {
 //                Hbox.getChildren().add(imageView);
 //
 //                // Add the labels to the VBox
-//                Label playlistLabel = new Label(playlist.getName());
-//                Label durationLabel = new Label(playlist.getDuration() + "");
-//                Label personalLabel = new Label(playlist.isPersonal() + "");
+////                Label playlistLabel = new Label(playlist.getName());
+////                Label durationLabel = new Label(playlist.getDuration() + "");
+////                Label personalLabel = new Label(playlist.isPersonal() + "");
 //                Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
 //                    @Override
 //                    public void handle(MouseEvent mouseEvent) {
@@ -224,7 +227,7 @@ public class favorite_page_controller implements Initializable {
 //                            sendMessage("share playlist");
 //                            JSONObject jsonObject = new JSONObject();
 //                            jsonObject.put("user",inputString);
-//                            jsonObject.put("playlist",playlist.getId());
+////                            jsonObject.put("playlist",song.getId());
 //                            sendMessage(jsonObject.toString());
 //                            if(getMessage()=="done")
 //                            {
@@ -264,12 +267,87 @@ public class favorite_page_controller implements Initializable {
 //
 //                    }
 //                });
-//                Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+////                Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
 //                this.fav_playlist_list_view.getItems().add(Hbox);
 //            }
 //        } catch (JsonProcessingException e) {
 //            throw new RuntimeException(e);
 //        }
+        try {
+            sendMessage("get liked songs");
+            ArrayList<String> song_list = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
+            });
+
+            for (File file : songs) {
+                try {
+                    sendMessage("get song");
+                    JSONObject jsonObject = new JSONObject();
+                    String song_name = file.getName();
+                    int lastBackslashIndex = song_name.lastIndexOf("\\");
+                    int lastDotIndex = song_name.lastIndexOf(".");
+                    String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                    jsonObject.put("id", fileName);
+                    sendMessage(jsonObject.toString());
+
+                    Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                    Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(100.0);
+                    imageView.setFitWidth(100.0);
+                    imageView.setPickOnBounds(true);
+                    imageView.setPreserveRatio(true);
+                    imageView.setImage(image);
+                    // Create the VBox
+                    HBox Hbox = new HBox();
+                    Hbox.setAlignment(Pos.CENTER_LEFT);
+                    Hbox.setSpacing(10);
+                    Hbox.setPadding(new Insets(10));
+                    Hbox.getChildren().add(imageView);
+
+                    // downloading cover
+
+                    try {
+                        if (!file.exists()) {
+                            sendMessage("download music cover");
+                            sendMessage(jsonObject.toString());
+                            String response = getMessage();
+                            if (response.equals("sending cover")) {
+                                Thread thread = new Thread(() -> downloadImage(socket, file.getName().substring(file.getName().length() - 4, file.getName().length() - 1)));
+                                thread.start();
+                                thread.join();
+                            } else {
+                                throw new Exception();
+                            }
+                        }
+                        Image cover_image = new Image(Account.class.getResource("images/covers/" + fileName + ".png").toExternalForm());
+                        imageView.setImage(image);
+                    } catch (Exception e) {
+                        try {
+                            Image cover_image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                            imageView.setImage(image);
+                        } catch (Exception ep) {
+                            ep.printStackTrace();
+                        }
+                    }
+
+                    // Add the labels to the VBox
+                    Label playlistLabel = new Label(song.getName());
+
+//                    Label durationLabel = new Label(playlist.getDuration() + "");
+//                    Label personalLabel = new Label(playlist.isPersonal() + "");
+
+                    Hbox.getChildren().addAll(playlistLabel);
+                    this.fav_song_list_view.getItems().add(Hbox);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
 
         // media playing functionality
 

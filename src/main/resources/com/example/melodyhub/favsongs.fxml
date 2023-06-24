@@ -84,7 +84,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <ListView fx:id="fav_playlist_list_view" prefHeight="354.0" prefWidth="462.0" />
-                  <ListView prefHeight="408.0" prefWidth="466.0" />
+                  <ListView fx:id="fav_song_list_view" prefHeight="408.0" prefWidth="466.0" />
                </children>
             </HBox>
          </center>
