@@ -373,7 +373,24 @@ public class HomeController implements Initializable {
                 });
 
                 favs.setOnMouseClicked(event -> {
-                    System.out.println("Favs clicked");
+
+                    // Load the FXML file for the new page
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("favsongs.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // Create a new Scene based on the loaded FXML file
+                    Scene newScene = new Scene(root);
+
+                    // Get the current Stage from any component in the existing scene
+                    Stage currentStage = (Stage) signOut.getScene().getWindow();
+
+                    // Set the new Scene on the Stage
+                    currentStage.setScene(newScene);
                 });
 
                 history.setOnMouseClicked(event -> {
