@@ -88,6 +88,8 @@ public class LoginSignupController implements Initializable {
     @FXML
     private Label l14;
     @FXML
+    private Label l20;
+    @FXML
     private DatePicker birthDate;
     @FXML
     private ComboBox<String> q_combobox;
@@ -132,6 +134,7 @@ public class LoginSignupController implements Initializable {
 
     private boolean isLogin = true;
     private boolean isNightMode = false;
+
     @FXML
     public void loginClicked() throws Exception {
 
@@ -149,21 +152,24 @@ public class LoginSignupController implements Initializable {
                 new Alert(Alert.AlertType.INFORMATION, "Login failed! please try again.").show();
                 return;
             } else {
+                ((Stage) banner.getScene().getWindow()).close();
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("FirstWindow.fxml"));
+
                 try {
                     Scene scene = new Scene(fxmlLoader.load());
                     stage.setScene(scene);
+                    ((FirstWindowController) fxmlLoader.getController()).setPage("authentication");
+                    ((FirstWindowController) fxmlLoader.getController()).page = "authentication";
+//
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         @Override
                         public void handle(WindowEvent event) {
-                            if(FirstWindowController.edited)
-                            {
+                            if (FirstWindowController.edited) {
                                 sendMessage(String.valueOf(FirstWindowController.code));
-                                if(getMessage().equals("login OK"))
-                                {
+                                if (getMessage().equals("login OK")) {
                                     try {
-                                        User user= objectMapper.readValue(getMessage(),User.class);
+                                        User user = objectMapper.readValue(getMessage(), User.class);
                                         HomeController.setUser(user);
                                         Stage stage = new Stage();
                                         FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage.fxml"));
@@ -177,7 +183,7 @@ public class LoginSignupController implements Initializable {
                                     } catch (IOException e) {
                                         throw new RuntimeException(e);
                                     }
-                                }else {
+                                } else {
                                     new Alert(Alert.AlertType.ERROR, "Your authentication code is wrong!").show();
                                 }
                             }
@@ -214,13 +220,11 @@ public class LoginSignupController implements Initializable {
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         @Override
                         public void handle(WindowEvent event) {
-                            if(FirstWindowController.edited)
-                            {
+                            if (FirstWindowController.edited) {
                                 sendMessage(String.valueOf(FirstWindowController.code));
-                                if(getMessage().equals("login OK"))
-                                {
+                                if (getMessage().equals("login OK")) {
                                     try {
-                                        Artist user= objectMapper.readValue(getMessage(),Artist.class);
+                                        Artist user = objectMapper.readValue(getMessage(), Artist.class);
                                         homepage_artist_podcaster_controller.setAccount(user);
                                         Stage stage = new Stage();
                                         FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage_artist&podcater.fxml"));
@@ -234,7 +238,7 @@ public class LoginSignupController implements Initializable {
                                     } catch (IOException e) {
                                         throw new RuntimeException(e);
                                     }
-                                }else {
+                                } else {
                                     new Alert(Alert.AlertType.ERROR, "Your authentication code is wrong!").show();
                                 }
                             }
@@ -271,13 +275,11 @@ public class LoginSignupController implements Initializable {
                     stage.setOnHiding(new EventHandler<WindowEvent>() {
                         @Override
                         public void handle(WindowEvent event) {
-                            if(FirstWindowController.edited)
-                            {
+                            if (FirstWindowController.edited) {
                                 sendMessage(String.valueOf(FirstWindowController.code));
-                                if(getMessage().equals("login OK"))
-                                {
+                                if (getMessage().equals("login OK")) {
                                     try {
-                                        Podcaster user= objectMapper.readValue(getMessage(),Podcaster.class);
+                                        Podcaster user = objectMapper.readValue(getMessage(), Podcaster.class);
                                         homepage_artist_podcaster_controller.setAccount(user);
                                         Stage stage = new Stage();
                                         FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage_artist&podcater.fxml"));
@@ -291,7 +293,7 @@ public class LoginSignupController implements Initializable {
                                     } catch (IOException e) {
                                         throw new RuntimeException(e);
                                     }
-                                }else {
+                                } else {
                                     new Alert(Alert.AlertType.ERROR, "Your authentication code is wrong!").show();
                                 }
                             }
@@ -332,21 +334,19 @@ public class LoginSignupController implements Initializable {
             String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
             Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
             Matcher matcher = EMAIL_PATTERN.matcher(email);
-            if(!matcher.matches())
-            {
+            if (!matcher.matches()) {
                 new Alert(Alert.AlertType.ERROR, "Please enter valid email.you must use it later.").show();
                 return;
             }
             String PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
             Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);
             Matcher phone_matcher = PHONE_PATTERN.matcher(phone);
-            if(!phone_matcher.matches())
-            {
+            if (!phone_matcher.matches()) {
                 new Alert(Alert.AlertType.ERROR, "Please enter valid phone number.you must use it later.").show();
                 return;
             }
             String date = birthDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() +1;
+            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() + 1;
             String ans = answer_field.getText();
             String gender;
             if (male_radio.isSelected()) gender = "male";
@@ -364,8 +364,8 @@ public class LoginSignupController implements Initializable {
             jsonObject.put("email", email);
             jsonObject.put("gender", gender);
             jsonObject.put("date", date);
-            jsonObject.put("quesId",selectedIndex);
-            jsonObject.put("answer",ans);
+            jsonObject.put("quesId", selectedIndex);
+            jsonObject.put("answer", ans);
             sendMessage(jsonObject.toString());
 
         } else if (podcaster_radio.isSelected()) {
@@ -374,10 +374,10 @@ public class LoginSignupController implements Initializable {
             jsonObject.put("password", pass);
             jsonObject.put("phone", phone);
             jsonObject.put("email", email);
-            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() +1;
+            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() + 1;
             String ans = answer_field.getText();
-            jsonObject.put("quesId",selectedIndex);
-            jsonObject.put("answer",ans);
+            jsonObject.put("quesId", selectedIndex);
+            jsonObject.put("answer", ans);
             sendMessage("create podcaster");
             sendMessage(jsonObject.toString());
 
@@ -388,10 +388,10 @@ public class LoginSignupController implements Initializable {
             jsonObject.put("password", pass);
             jsonObject.put("phone", phone);
             jsonObject.put("email", email);
-            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() +1;
+            int selectedIndex = q_combobox.getSelectionModel().getSelectedIndex() + 1;
             String ans = answer_field.getText();
-            jsonObject.put("quesId",selectedIndex);
-            jsonObject.put("answer",ans);
+            jsonObject.put("quesId", selectedIndex);
+            jsonObject.put("answer", ans);
             sendMessage(jsonObject.toString());
 
         } else {
@@ -468,7 +468,7 @@ public class LoginSignupController implements Initializable {
             //signup_txt_btn.setVisible(true);
             banner.setFitWidth(570);
 
-            mode_btn.setTranslateX(mode_btn.getTranslateX() - 480);
+            mode_btn.setTranslateX(mode_btn.getTranslateX() - 560);
             back_btn.setTranslateX(back_btn.getTranslateX() - 490);
 
             isLogin = true;
@@ -477,7 +477,8 @@ public class LoginSignupController implements Initializable {
 
     @FXML
     public void back() throws IOException {
-        new HomePage().start((Stage) banner.getScene().getWindow());
+        ((Stage) banner.getScene().getWindow()).close();
+        new HomePage_NoLogin().start(new Stage());
     }
 
     @FXML
@@ -557,6 +558,7 @@ public class LoginSignupController implements Initializable {
             l12.setStyle("-fx-text-fill: black;");
             l13.setStyle("-fx-text-fill: black;");
             l14.setStyle("-fx-text-fill: black;");
+            l20.setStyle("-fx-text-fill: black;");
             l31.setStyle("-fx-text-fill: black;");
             showPass.setStyle("-fx-text-fill: black;");
             male_radio.setStyle("-fx-text-fill: black;");
@@ -650,6 +652,7 @@ public class LoginSignupController implements Initializable {
             l12.setStyle("-fx-text-fill: white;");
             l13.setStyle("-fx-text-fill: white;");
             l14.setStyle("-fx-text-fill: white;");
+            l20.setStyle("-fx-text-fill: white;");
             l31.setStyle("-fx-text-fill: white;");
             showPass.setStyle("-fx-text-fill: white;");
             male_radio.setStyle("-fx-text-fill: white;");
@@ -683,7 +686,7 @@ public class LoginSignupController implements Initializable {
     @FXML
     public void forgetPassClicked() throws IOException {
         ((Stage) this.password_field.getScene().getWindow()).close();
-        new FirstWindow(null, "forgetPassword1").start(new Stage());
+        new FirstWindow("forgetPassword1").start(new Stage());
     }
 
     @Override
