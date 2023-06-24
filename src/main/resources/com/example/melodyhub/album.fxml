@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.album_page_controller">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.album_page_controller">
    <children>
       <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
@@ -17,29 +24,29 @@
                      <children>
                         <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova" size="16.0" />
+                              <Font name="Pristina" size="17.0" />
                            </font>
                         </Label>
                         <Label fx:id="artist_name_label" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova Light" size="11.0" />
+                              <Font name="Pristina" size="14.0" />
                            </font>
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fx:id="previous_track" fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="previous_track" fitHeight="22.0" fitWidth="21.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button (1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="play_button" fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="play_button" fitHeight="31.0" fitWidth="31.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/play.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="pause_button" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="pause_button" fitHeight="34.0" fitWidth="31.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/pause-button.png" />
+                        <Image url="@images/Pause.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="next_track" fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -48,12 +55,12 @@
                      </image>
                   </ImageView>
                   <Slider fx:id="play_progress_bar" onMouseDragged="#set_play_time" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
-                  <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="30.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/heart.png" />
+                        <Image url="@images/Like.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="31.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/comment.png" />
                      </image>
@@ -86,7 +93,7 @@
          <top>
             <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/logo.jpg" />
+                  <Image url="@images/header.jpg" />
                </image>
             </ImageView>
          </top>
@@ -98,9 +105,9 @@
                   <Insets left="20.0" />
                </padding>
                <children>
-                  <ImageView fx:id="home_button" fitHeight="39.0" fitWidth="42.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="home_button" fitHeight="40.0" fitWidth="35.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/back-icon.png" />
+                        <Image url="@images/Home.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="43.0" prefWidth="58.0" text="Home">

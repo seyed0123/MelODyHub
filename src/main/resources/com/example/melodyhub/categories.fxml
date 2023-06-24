@@ -26,7 +26,7 @@
                      <children>
                         <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova" size="16.0" />
+                              <Font name="Pristina" size="17.0" />
                            </font>
                         </Label>
                         <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
@@ -48,7 +48,7 @@
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/pause-button.png" />
+                        <Image url="@images/Pause.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -56,7 +56,27 @@
                         <Image url="@images/next-button.png" />
                      </image>
                   </ImageView>
-                  <Slider prefHeight="19.0" prefWidth="641.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                  <Slider prefHeight="19.0" prefWidth="540.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                  <ImageView fitHeight="30.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/Like.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="31.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/comment.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/lyrics.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/playlist.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </children>
@@ -67,7 +87,7 @@
                <children>
                   <Group>
                      <children>
-                        <TextField fx:id="search_field" prefHeight="42.0" prefWidth="877.0" promptText="What do you want to listen to in your fav category?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
+                        <TextField fx:id="search_field" prefHeight="47.0" prefWidth="898.0" promptText="What do you want to listen to in your fav category?" style="-fx-background-color: #51414F; -fx-background-radius: 20px;">
                            <padding>
                               <Insets left="10.0" />
                            </padding>
@@ -75,7 +95,7 @@
                               <Font name="Pristina" size="16.0" />
                            </font>
                         </TextField>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="834.0" layoutY="6.0" onMouseClicked="#searchClicked" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="43.0" fitWidth="42.0" layoutX="844.0" layoutY="2.0" onMouseClicked="#searchClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/search.png" />
                            </image>
@@ -95,7 +115,7 @@
             </HBox>
          </top>
          <center>
-            <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="list" prefHeight="497.0" prefWidth="902.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
       <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
@@ -110,7 +130,7 @@
                <children>
                   <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/back-icon.png" />
+                        <Image url="@images/icons8-search-50.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="43.0" prefWidth="58.0" text="Search">

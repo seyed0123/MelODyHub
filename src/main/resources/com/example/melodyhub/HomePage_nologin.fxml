@@ -24,12 +24,12 @@
                      <children>
                         <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova" size="16.0" />
+                              <Font name="Pristina" size="17.0" />
                            </font>
                         </Label>
                         <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova Light" size="11.0" />
+                              <Font name="Pristina" size="13.0" />
                            </font>
                         </Label>
                      </children>
@@ -46,7 +46,7 @@
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/pause-button.png" />
+                        <Image url="@images/Pause.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -490,7 +490,7 @@
          <top>
             <ImageView fx:id="banner" fitHeight="151.0" fitWidth="998.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/firstWindowBackground.jpg" />
+                  <Image url="@images/header.jpg" />
                </image>
             </ImageView>
          </top>
