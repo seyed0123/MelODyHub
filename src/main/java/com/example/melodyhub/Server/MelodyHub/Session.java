@@ -634,7 +634,7 @@ public class Session implements Runnable{
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("get liked songs")) {
-                    ArrayList<UUID> songs = UserPerform.getLikedSongs(account.getId());
+                    ArrayList<String> songs = UserPerform.getLikedSongs(account.getId());
                     sendMessage(objectMapper.writeValueAsString(songs));
                 } else if (job.equals("save user notif")) {
                     JSONObject inputs = new JSONObject(getMessage());

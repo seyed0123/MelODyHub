@@ -376,7 +376,24 @@ public class HomeController implements Initializable {
                 });
 
                 favs.setOnMouseClicked(event -> {
-                    System.out.println("Favs clicked");
+
+                    // Load the FXML file for the new page
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("favsongs.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // Create a new Scene based on the loaded FXML file
+                    Scene newScene = new Scene(root);
+
+                    // Get the current Stage from any component in the existing scene
+                    Stage currentStage = (Stage) signOut.getScene().getWindow();
+
+                    // Set the new Scene on the Stage
+                    currentStage.setScene(newScene);
                 });
 
                 history.setOnMouseClicked(event -> {
@@ -407,7 +424,7 @@ public class HomeController implements Initializable {
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         sendMessage("like song");
                         JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("song","");
+                        jsonObject.put("song",current_song_id);
                         sendMessage(jsonObject.toString());
                     } else {
                         // The user clicked "Cancel" or closed the dialog

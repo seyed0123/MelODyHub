@@ -1,30 +1,34 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+
+import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
 public class favorite_page_controller implements Initializable {
@@ -56,8 +60,296 @@ public class favorite_page_controller implements Initializable {
     @FXML
     private Slider play_progress_bar;
 
+    @FXML
+    private ListView<HBox> fav_playlist_list_view;
+
+    @FXML
+    private ListView<HBox> fav_song_list_view;
+
+    private ArrayList<UUID> playlistSongs;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
+        // get the favorite playlists
+        try {
+            sendMessage("get playlists");
+            ArrayList<UUID> playlists = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<UUID>>() {
+            });
+            for (UUID uuid : playlists) {
+                sendMessage("get playlist");
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("id", uuid);
+                sendMessage(jsonObject1.toString());
+                PlayList playlist = objectMapper.readValue(getMessage(), PlayList.class);
+                // Load the image
+                Image image = new Image(Account.class.getResource("images/default_playlist.png").toExternalForm());
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(100.0);
+                imageView.setFitWidth(100.0);
+                imageView.setPickOnBounds(true);
+                imageView.setPreserveRatio(true);
+                imageView.setImage(image);
+                // Create the VBox
+                HBox Hbox = new HBox();
+                Hbox.setAlignment(Pos.CENTER_LEFT);
+                Hbox.setSpacing(10);
+                Hbox.setPadding(new Insets(10));
+                Hbox.getChildren().add(imageView);
+
+                // Add the labels to the VBox
+                Label playlistLabel = new Label(playlist.getName());
+                Label durationLabel = new Label(playlist.getDuration() + "");
+                Label personalLabel = new Label(playlist.isPersonal() + "");
+                Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+
+                        // Create the text fields
+                        TextField textField = new TextField();
+
+                        Stage stage = new Stage();
+                        // Create the VBox
+                        VBox vbox = new VBox();
+                        vbox.setAlignment(Pos.CENTER_LEFT);
+                        vbox.setSpacing(10);
+                        vbox.setPadding(new Insets(10));
+                        vbox.getChildren().addAll(
+                                new Label("who do you want to share with ?"),
+                                textField);
+
+                        // Create the submit button
+                        Button submitButton = new Button("Submit");
+                        submitButton.setOnAction(event -> {
+                            String inputString = textField.getText();
+                            sendMessage("share playlist");
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("user",inputString);
+                            jsonObject.put("playlist",playlist.getId());
+                            sendMessage(jsonObject.toString());
+                            if(getMessage()=="done")
+                            {
+                                // Create a new alert
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+                                // Set the alert title and content text
+                                alert.setTitle("information");
+                                alert.setHeaderText(null);
+                                alert.setContentText("your playlist was sent");
+
+                                // Display the alert dialog
+                                alert.showAndWait();
+                            }
+                            else{
+                                // Create a new alert
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+
+                                // Set the alert title and content text
+                                alert.setTitle("Warning");
+                                alert.setHeaderText(null);
+                                alert.setContentText("you don't have permission to send this playlist");
+
+                                // Display the alert dialog
+                                alert.showAndWait();
+                            }
+                            stage.close();
+                        });
+
+                        // Add the submit button to the VBox
+                        vbox.getChildren().add(submitButton);
+
+                        // Create the scene
+                        Scene scene = new Scene(vbox);
+                        stage.setScene(scene);
+                        stage.show();
+
+                    }
+                });
+                Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+                this.fav_playlist_list_view.getItems().add(Hbox);
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+//         get the favorite songs
+//
+//        try {
+//            sendMessage("get liked songs");
+//            ArrayList<String> song_list = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
+//            });
+//            for (String song : song_list) {
+//                sendMessage("get playlist");
+//                JSONObject jsonObject1 = new JSONObject();
+//                jsonObject1.put("id", uuid);
+//                sendMessage(jsonObject1.toString());
+//                PlayList playlist = objectMapper.readValue(getMessage(), PlayList.class);
+//                // Load the image
+//                Image image = new Image(Account.class.getResource("images/default_playlist.png").toExternalForm());
+//                ImageView imageView = new ImageView(image);
+//                imageView.setFitHeight(100.0);
+//                imageView.setFitWidth(100.0);
+//                imageView.setPickOnBounds(true);
+//                imageView.setPreserveRatio(true);
+//                imageView.setImage(image);
+//                // Create the VBox
+//                HBox Hbox = new HBox();
+//                Hbox.setAlignment(Pos.CENTER_LEFT);
+//                Hbox.setSpacing(10);
+//                Hbox.setPadding(new Insets(10));
+//                Hbox.getChildren().add(imageView);
+//
+//                // Add the labels to the VBox
+////                Label playlistLabel = new Label(playlist.getName());
+////                Label durationLabel = new Label(playlist.getDuration() + "");
+////                Label personalLabel = new Label(playlist.isPersonal() + "");
+//                Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//                    @Override
+//                    public void handle(MouseEvent mouseEvent) {
+//
+//                        // Create the text fields
+//                        TextField textField = new TextField();
+//
+//                        Stage stage = new Stage();
+//                        // Create the VBox
+//                        VBox vbox = new VBox();
+//                        vbox.setAlignment(Pos.CENTER_LEFT);
+//                        vbox.setSpacing(10);
+//                        vbox.setPadding(new Insets(10));
+//                        vbox.getChildren().addAll(
+//                                new Label("who do you want to share with ?"),
+//                                textField);
+//
+//                        // Create the submit button
+//                        Button submitButton = new Button("Submit");
+//                        submitButton.setOnAction(event -> {
+//                            String inputString = textField.getText();
+//                            sendMessage("share playlist");
+//                            JSONObject jsonObject = new JSONObject();
+//                            jsonObject.put("user",inputString);
+////                            jsonObject.put("playlist",song.getId());
+//                            sendMessage(jsonObject.toString());
+//                            if(getMessage()=="done")
+//                            {
+//                                // Create a new alert
+//                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//
+//                                // Set the alert title and content text
+//                                alert.setTitle("information");
+//                                alert.setHeaderText(null);
+//                                alert.setContentText("your playlist was sent");
+//
+//                                // Display the alert dialog
+//                                alert.showAndWait();
+//                            }
+//                            else{
+//                                // Create a new alert
+//                                Alert alert = new Alert(Alert.AlertType.WARNING);
+//
+//                                // Set the alert title and content text
+//                                alert.setTitle("Warning");
+//                                alert.setHeaderText(null);
+//                                alert.setContentText("you don't have permission to send this playlist");
+//
+//                                // Display the alert dialog
+//                                alert.showAndWait();
+//                            }
+//                            stage.close();
+//                        });
+//
+//                        // Add the submit button to the VBox
+//                        vbox.getChildren().add(submitButton);
+//
+//                        // Create the scene
+//                        Scene scene = new Scene(vbox);
+//                        stage.setScene(scene);
+//                        stage.show();
+//
+//                    }
+//                });
+////                Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
+//                this.fav_playlist_list_view.getItems().add(Hbox);
+//            }
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+        try {
+            sendMessage("get liked songs");
+            ArrayList<String> song_list = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
+            });
+
+            for (File file : songs) {
+                try {
+                    sendMessage("get song");
+                    JSONObject jsonObject = new JSONObject();
+                    String song_name = file.getName();
+                    int lastBackslashIndex = song_name.lastIndexOf("\\");
+                    int lastDotIndex = song_name.lastIndexOf(".");
+                    String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+                    jsonObject.put("id", fileName);
+                    sendMessage(jsonObject.toString());
+
+                    Song song = objectMapper.readValue(getMessage(), Song.class);
+
+                    Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(100.0);
+                    imageView.setFitWidth(100.0);
+                    imageView.setPickOnBounds(true);
+                    imageView.setPreserveRatio(true);
+                    imageView.setImage(image);
+                    // Create the VBox
+                    HBox Hbox = new HBox();
+                    Hbox.setAlignment(Pos.CENTER_LEFT);
+                    Hbox.setSpacing(10);
+                    Hbox.setPadding(new Insets(10));
+                    Hbox.getChildren().add(imageView);
+
+                    // downloading cover
+
+                    try {
+                        if (!file.exists()) {
+                            sendMessage("download music cover");
+                            sendMessage(jsonObject.toString());
+                            String response = getMessage();
+                            if (response.equals("sending cover")) {
+                                Thread thread = new Thread(() -> downloadImage(socket, file.getName().substring(file.getName().length() - 4, file.getName().length() - 1)));
+                                thread.start();
+                                thread.join();
+                            } else {
+                                throw new Exception();
+                            }
+                        }
+                        Image cover_image = new Image(Account.class.getResource("images/covers/" + fileName + ".png").toExternalForm());
+                        imageView.setImage(image);
+                    } catch (Exception e) {
+                        try {
+                            Image cover_image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                            imageView.setImage(image);
+                        } catch (Exception ep) {
+                            ep.printStackTrace();
+                        }
+                    }
+
+                    // Add the labels to the VBox
+                    Label playlistLabel = new Label(song.getName());
+
+//                    Label durationLabel = new Label(playlist.getDuration() + "");
+//                    Label personalLabel = new Label(playlist.isPersonal() + "");
+
+                    Hbox.getChildren().addAll(playlistLabel);
+                    this.fav_song_list_view.getItems().add(Hbox);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        // media playing functionality
 
         if (songs == null) {
             songs = new ArrayList<File>();

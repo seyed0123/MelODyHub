@@ -86,23 +86,24 @@ public class UserPerform extends AccountPerform {
     }
 
     public static void likeSong(UUID Id, String  song) {
-        MelodyHub.sendQuery("INSERT INTO liked_songs (songid, userid) VALUES (songid ='" + song + "', userid='" + Id + "');");
+        MelodyHub.sendQuery("INSERT INTO liked_songs (songid, userid) VALUES ('" + song + "', '" + Id + "');");
     }
 
     public static void dislikeSong(UUID Id, String song) {
         MelodyHub.sendQuery("DELETE FROM liked_songs WHERE songid ='" + song + "' AND userid = '" + Id + "';");
     }
 
-    public static ArrayList<UUID> getLikedSongs(UUID id) {
-        ArrayList<UUID> ret = new ArrayList<>();
+    public static ArrayList<String> getLikedSongs(UUID id) {
+        ArrayList<String> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("select songid from liked_songs where userid= '" + id + "';");
         if (res == null) {
-            return null;
+            return ret;
         }
         while (true) {
             try {
+                ret.add((res.getString("songid")));
                 if (!res.next()) break;
-                ret.add(UUID.fromString(res.getString("songid")));
+
             } catch (SQLException e) {
                 break;
             }
