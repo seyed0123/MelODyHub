@@ -263,9 +263,6 @@ public class HomeController implements Initializable {
 
                     vbox.getChildren().addAll(imageView, songNameLabel, singerNameLabel);
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                        System.out.println("what the fuck");
-//                        System.out.println("Favs clicked");
-
                         @Override
                         public void handle(MouseEvent event) {
                             Stage stage = new Stage();

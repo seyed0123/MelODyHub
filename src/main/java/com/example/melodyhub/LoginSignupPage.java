@@ -174,62 +174,34 @@ public class LoginSignupPage extends Application {
     }
     public static void downloadSong(Socket socket,String path)
     {
-//        try{
-//            byte[] buffer = new byte[4096];
-//            InputStream inputStream = socket.getInputStream();
-//            FileOutputStream fileOutputStream = new FileOutputStream(path);
-//
-//            int bytesRead;
-//            while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                fileOutputStream.write(buffer, 0, bytesRead);
-//            }
-//
-//            fileOutputStream.close();
-//
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        Thread thread = new Thread(() ->{
+            FileOutputStream fileOutputStream =null;
+            try {
+                byte[] buffer = new byte[4096];
+                InputStream inputStream = socket.getInputStream();
+                fileOutputStream = new FileOutputStream(path);
 
-//        FileOutputStream fileOutputStream = null;
-//
-//        try {
-//            byte[] buffer = new byte[4096];
-//            InputStream inputStream = socket.getInputStream();
-//            fileOutputStream = new FileOutputStream(path);
-//
-//            int bytesRead;
-//            while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                fileOutputStream.write(buffer, 0, bytesRead);
-//            }
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            if (fileOutputStream != null) {
-//                try {
-//                    fileOutputStream.close();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }
-
-        try (InputStream inputStream = socket.getInputStream();
-             FileOutputStream fileOutputStream = new FileOutputStream(path)) {
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                fileOutputStream.write(buffer, 0, bytesRead);
+                while (!Thread.currentThread().isInterrupted()) {
+                    int bytesRead = inputStream.read(buffer);
+                    if (bytesRead == -1) {
+                        break; // End of stream reached, exit the loop
+                    }
+                    fileOutputStream.write(buffer, 0, bytesRead);
+                }
+                fileOutputStream.close();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
+        });
+        thread.start();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-
-
+        thread.interrupt();
 
     }
     public static void uploadSong(Socket socket,String path)

@@ -409,16 +409,37 @@ public class MelodyHub {
             long fileSize = file.length();
             int numChunks = (int) Math.ceil((double) fileSize / CHUNK_SIZE);
 
+            ArrayList<Thread> threads = new ArrayList<>();
             for (int i = 0; i < numChunks; i++) {
-                int offset = i * CHUNK_SIZE;
-                int chunkSize = (int) Math.min(CHUNK_SIZE, fileSize - offset);
-                byte[] buffer = new byte[chunkSize];
-                RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
-                randomAccessFile.seek(offset);
-                randomAccessFile.read(buffer);
-                randomAccessFile.close();
+                int finalI = i;
+                Thread thread = new Thread(() ->{
+                    try {
+                        int offset = finalI * CHUNK_SIZE;
+                        int chunkSize = (int) Math.min(CHUNK_SIZE, fileSize - offset);
+                        byte[] buffer = new byte[chunkSize];
+                        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+                        randomAccessFile.seek(offset);
+                        randomAccessFile.read(buffer);
+                        randomAccessFile.close();
 
-                outputStream.write(buffer);
+                        outputStream.write(buffer);
+                    }catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                thread.start();
+                threads.add(thread);
+            }
+            for (Thread thread : threads) {
+                if (thread.getState() != Thread.State.TERMINATED) {
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
             System.out.println("File sent successfully.");
         } catch (IOException e) {

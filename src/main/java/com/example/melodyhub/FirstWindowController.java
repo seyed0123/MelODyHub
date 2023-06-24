@@ -177,7 +177,6 @@ public class FirstWindowController implements Initializable {
 
     public void back() throws IOException {
         ((Stage) this.mainPane.getScene().getWindow()).close();
-        new LoginSignupPage().start(new Stage());
     }
 
     public void setPage(String pageId) {
