@@ -435,6 +435,7 @@ public class HomeController implements Initializable {
                 lyricsImage.setOnMouseClicked(event -> {
                     TextArea textArea = new TextArea();
                     textArea.setText(current_song_lyrics);
+                    textArea.setEditable(false);
                     VBox root = new VBox(textArea);
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
@@ -516,8 +517,6 @@ public class HomeController implements Initializable {
                 });
 
                 queueImage.setOnMouseClicked(event -> {
-                    System.out.println("Queue image clicked");
-
                     FXMLLoader loader=null;
 
                     loader = new FXMLLoader(getClass().getResource("PlayPage.fxml"));
@@ -550,15 +549,6 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-//                    stage.setOnHiding(new EventHandler<WindowEvent>() {
-//                        @Override
-//                        public void handle(WindowEvent windowEvent) {
-//                            user.setPremium(true);
-//                            sendMessage("update user");
-//                            HashMap<String,String> command = new HashMap<>();
-//                            command.put("premium","false");
-//                        }
-//                    });
                     stage.setTitle("Login / Signup");
                     stage.setScene(scene);
                     stage.show();
@@ -569,7 +559,18 @@ public class HomeController implements Initializable {
                 });
 
                 commentImage.setOnMouseClicked(event -> {
-                    System.out.println("Comment image clicked");
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("comments.fxml"));
+                    Scene scene = null;
+                    Comment.setSong(current_song_id);
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 });
             }
         catch (JsonProcessingException e) {

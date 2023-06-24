@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -95,6 +96,23 @@ public class SongsListController implements Initializable {
             singerNameLabel.setTextFill(Color.valueOf("#810541"));
             singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
             hBox.getChildren().addAll( songNameLabel, singerNameLabel);
+            hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = (Stage) songs_table.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("profile_user.fxml"));
+                    UserProfilePageController.setUser(user);
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
             songs_table.getItems().add(hBox);
         }
         for(User user :userList)
@@ -109,6 +127,23 @@ public class SongsListController implements Initializable {
             singerNameLabel.setTextFill(Color.valueOf("#810541"));
             singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
             hBox.getChildren().addAll( songNameLabel, singerNameLabel);
+            hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = (Stage) songs_table.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("profile_user.fxml"));
+                    UserProfilePageController.setUser(user);
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
             songs_table.getItems().add(hBox);
         }
     }
@@ -184,5 +219,20 @@ public class SongsListController implements Initializable {
             songList.add(song);
         }
         return songList;
+    }
+    @FXML
+    void back(MouseEvent event) throws IOException {
+        FXMLLoader loader=null;
+        loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+        Parent root = loader.load();
+
+        // Create a new Scene based on the loaded FXML file
+        Scene newScene = new Scene(root);
+
+        // Get the current Stage from any component in the existing scene
+        Stage currentStage = (Stage) songs_table.getScene().getWindow();
+
+        // Set the new Scene on the Stage
+        currentStage.setScene(newScene);
     }
 }

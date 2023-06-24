@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import static com.example.melodyhub.HomeController.user;
 import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
@@ -71,7 +72,6 @@ public class favorite_page_controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
-        // get the favorite playlists
         try {
             sendMessage("get playlists");
             ArrayList<UUID> playlists = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<UUID>>() {
@@ -171,122 +171,16 @@ public class favorite_page_controller implements Initializable {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
-//         get the favorite songs
-//
-//        try {
-//            sendMessage("get liked songs");
-//            ArrayList<String> song_list = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
-//            });
-//            for (String song : song_list) {
-//                sendMessage("get playlist");
-//                JSONObject jsonObject1 = new JSONObject();
-//                jsonObject1.put("id", uuid);
-//                sendMessage(jsonObject1.toString());
-//                PlayList playlist = objectMapper.readValue(getMessage(), PlayList.class);
-//                // Load the image
-//                Image image = new Image(Account.class.getResource("images/default_playlist.png").toExternalForm());
-//                ImageView imageView = new ImageView(image);
-//                imageView.setFitHeight(100.0);
-//                imageView.setFitWidth(100.0);
-//                imageView.setPickOnBounds(true);
-//                imageView.setPreserveRatio(true);
-//                imageView.setImage(image);
-//                // Create the VBox
-//                HBox Hbox = new HBox();
-//                Hbox.setAlignment(Pos.CENTER_LEFT);
-//                Hbox.setSpacing(10);
-//                Hbox.setPadding(new Insets(10));
-//                Hbox.getChildren().add(imageView);
-//
-//                // Add the labels to the VBox
-////                Label playlistLabel = new Label(playlist.getName());
-////                Label durationLabel = new Label(playlist.getDuration() + "");
-////                Label personalLabel = new Label(playlist.isPersonal() + "");
-//                Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//                    @Override
-//                    public void handle(MouseEvent mouseEvent) {
-//
-//                        // Create the text fields
-//                        TextField textField = new TextField();
-//
-//                        Stage stage = new Stage();
-//                        // Create the VBox
-//                        VBox vbox = new VBox();
-//                        vbox.setAlignment(Pos.CENTER_LEFT);
-//                        vbox.setSpacing(10);
-//                        vbox.setPadding(new Insets(10));
-//                        vbox.getChildren().addAll(
-//                                new Label("who do you want to share with ?"),
-//                                textField);
-//
-//                        // Create the submit button
-//                        Button submitButton = new Button("Submit");
-//                        submitButton.setOnAction(event -> {
-//                            String inputString = textField.getText();
-//                            sendMessage("share playlist");
-//                            JSONObject jsonObject = new JSONObject();
-//                            jsonObject.put("user",inputString);
-////                            jsonObject.put("playlist",song.getId());
-//                            sendMessage(jsonObject.toString());
-//                            if(getMessage()=="done")
-//                            {
-//                                // Create a new alert
-//                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//
-//                                // Set the alert title and content text
-//                                alert.setTitle("information");
-//                                alert.setHeaderText(null);
-//                                alert.setContentText("your playlist was sent");
-//
-//                                // Display the alert dialog
-//                                alert.showAndWait();
-//                            }
-//                            else{
-//                                // Create a new alert
-//                                Alert alert = new Alert(Alert.AlertType.WARNING);
-//
-//                                // Set the alert title and content text
-//                                alert.setTitle("Warning");
-//                                alert.setHeaderText(null);
-//                                alert.setContentText("you don't have permission to send this playlist");
-//
-//                                // Display the alert dialog
-//                                alert.showAndWait();
-//                            }
-//                            stage.close();
-//                        });
-//
-//                        // Add the submit button to the VBox
-//                        vbox.getChildren().add(submitButton);
-//
-//                        // Create the scene
-//                        Scene scene = new Scene(vbox);
-//                        stage.setScene(scene);
-//                        stage.show();
-//
-//                    }
-//                });
-////                Hbox.getChildren().addAll(playlistLabel, durationLabel, personalLabel);
-//                this.fav_playlist_list_view.getItems().add(Hbox);
-//            }
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
         try {
             sendMessage("get liked songs");
             ArrayList<String> song_list = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
             });
 
-            for (File file : songs) {
+            for (String id : song_list) {
                 try {
                     sendMessage("get song");
                     JSONObject jsonObject = new JSONObject();
-                    String song_name = file.getName();
-                    int lastBackslashIndex = song_name.lastIndexOf("\\");
-                    int lastDotIndex = song_name.lastIndexOf(".");
-                    String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
-                    jsonObject.put("id", fileName);
+                    jsonObject.put("id", id);
                     sendMessage(jsonObject.toString());
 
                     Song song = objectMapper.readValue(getMessage(), Song.class);
@@ -306,7 +200,7 @@ public class favorite_page_controller implements Initializable {
                     Hbox.getChildren().add(imageView);
 
                     // downloading cover
-
+                    File file = new File("src/main/resources/com/example/melodyhub/images/covers/"+id+".png");
                     try {
                         if (!file.exists()) {
                             sendMessage("download music cover");
@@ -320,12 +214,12 @@ public class favorite_page_controller implements Initializable {
                                 throw new Exception();
                             }
                         }
-                        Image cover_image = new Image(Account.class.getResource("images/covers/" + fileName + ".png").toExternalForm());
-                        imageView.setImage(image);
+                        Image cover_image = new Image(Account.class.getResource("images/covers/" + id + ".png").toExternalForm());
+                        imageView.setImage(cover_image);
                     } catch (Exception e) {
                         try {
                             Image cover_image = new Image(Account.class.getResource("images/default.png").toExternalForm());
-                            imageView.setImage(image);
+                            imageView.setImage(cover_image);
                         } catch (Exception ep) {
                             ep.printStackTrace();
                         }
@@ -338,6 +232,23 @@ public class favorite_page_controller implements Initializable {
 //                    Label personalLabel = new Label(playlist.isPersonal() + "");
 
                     Hbox.getChildren().addAll(playlistLabel);
+                    Hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            Stage stage = new Stage();
+                            FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("AddToPlaylist.fxml"));
+                            Scene scene = null;
+                            AddToPlaylistController.setAccount(song,user);
+                            try {
+                                scene = new Scene(fxmlLoader.load());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            stage.setTitle("Login / Signup");
+                            stage.setScene(scene);
+                            stage.show();
+                        }
+                    });
                     this.fav_song_list_view.getItems().add(Hbox);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
@@ -562,7 +473,7 @@ public class favorite_page_controller implements Initializable {
     void open_home(MouseEvent event) throws IOException {
 
         // Load the FXML file for the new page
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage_artist&podcater.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
         Parent root = loader.load();
 
         // Create a new Scene based on the loaded FXML file
