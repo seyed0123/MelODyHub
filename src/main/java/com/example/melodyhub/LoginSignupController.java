@@ -152,7 +152,7 @@ public class LoginSignupController implements Initializable {
                 new Alert(Alert.AlertType.INFORMATION, "Login failed! please try again.").show();
                 return;
             } else {
-                ((Stage) banner.getScene().getWindow()).close();
+                //((Stage) banner.getScene().getWindow()).close();
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("FirstWindow.fxml"));
 
@@ -176,8 +176,7 @@ public class LoginSignupController implements Initializable {
                                         Scene scene1 = new Scene(fxmlLoader.load());
                                         stage.setScene(scene1);
                                         stage.show();
-                                        Stage stage1 = (Stage) p_radio.getScene().getWindow();
-                                        stage1.close();
+                                        ((Stage) banner.getScene().getWindow()).close();
                                     } catch (JsonProcessingException e) {
                                         throw new RuntimeException(e);
                                     } catch (IOException e) {
@@ -231,8 +230,6 @@ public class LoginSignupController implements Initializable {
                                         Scene scene1 = new Scene(fxmlLoader.load());
                                         stage.setScene(scene1);
                                         stage.show();
-                                        Stage stage1 = (Stage) p_radio.getScene().getWindow();
-                                        stage1.close();
                                     } catch (JsonProcessingException e) {
                                         throw new RuntimeException(e);
                                     } catch (IOException e) {
@@ -286,8 +283,7 @@ public class LoginSignupController implements Initializable {
                                         Scene scene1 = new Scene(fxmlLoader.load());
                                         stage.setScene(scene1);
                                         stage.show();
-                                        Stage stage1 = (Stage) p_radio.getScene().getWindow();
-                                        stage1.close();
+
                                     } catch (JsonProcessingException e) {
                                         throw new RuntimeException(e);
                                     } catch (IOException e) {

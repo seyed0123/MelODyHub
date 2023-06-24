@@ -30,6 +30,7 @@ public class Main {
             serverSocket = new ServerSocket(PORT);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
+
                 Socket socket = new Socket(HOST, loXdyPORT);
                 System.out.println("Client connected." + socket.getLocalSocketAddress());
                 Session session = new Session(clientSocket, socket);

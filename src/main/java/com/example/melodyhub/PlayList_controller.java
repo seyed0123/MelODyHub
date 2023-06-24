@@ -42,16 +42,16 @@ public class PlayList_controller implements Initializable {
     private ImageView banner;
 
     @FXML
-    private Label current_song_genre;
+    private static Label current_song_genre;
 
     @FXML
     private ImageView current_song_image;
 
     @FXML
-    private Label current_song_label;
+    private static Label current_song_label;
 
     @FXML
-    private Label current_song_year;
+    private static Label current_song_year;
 
     @FXML
     private ImageView home_button;
@@ -163,17 +163,15 @@ public class PlayList_controller implements Initializable {
                         imageView.setFitWidth(100.0);
                         imageView.setPickOnBounds(true);
                         imageView.setPreserveRatio(true);
-                        File file = new File("src/main/resources/com/example/melodyhub/images/covers/"+id+".png");
+                        File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
                         try {
                             if (!file.exists()) {
                                 sendMessage("download music cover");
-                                JSONObject jsonObject2 = new JSONObject();
-                                jsonObject2.put("id",song.getId());
-                                sendMessage(jsonObject2.toString());
+                                sendMessage(jsonObject.toString());
                                 String response = getMessage();
                                 if(response.equals("sending cover"))
                                 {
-                                    Thread thread =new Thread(() -> downloadImage(socket,song.getId()));
+                                    Thread thread =new Thread(() -> downloadImage(socket,"src/main/resources/com/example/melodyhub/images/profile/"+song.getId()+".png"));
                                     thread.start();
                                     thread.join();
                                 }else
@@ -181,11 +179,11 @@ public class PlayList_controller implements Initializable {
                                     throw new Exception();
                                 }
                             }
-                            image = new Image(Account.class.getResource("images/covers/"+id+".png").toExternalForm());
+                             image = new Image(Account.class.getResource("images/profile/"+id+".png").toExternalForm());
                             imageView.setImage(image);
                         }catch (Exception e) {
                             try{
-                                image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                                 image = new Image(Account.class.getResource("images/default.png").toExternalForm());
                                 imageView.setImage(image);
                             }catch (Exception ep)
                             {
@@ -402,8 +400,6 @@ public class PlayList_controller implements Initializable {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("id",song);
                 sendMessage(jsonObject.toString());
-                String res = getMessage();
-                    System.out.println("done");
                     downloadSong(socket,"src/main/resources/com/example/melodyhub/musics/"+song+".mp3");
             }
             songs.add(file);

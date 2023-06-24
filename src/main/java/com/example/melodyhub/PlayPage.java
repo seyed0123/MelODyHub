@@ -23,7 +23,7 @@ public class PlayPage extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(PlayPage.class.getResource("PlayPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Play Song");
-        ((PlayPageController) fxmlLoader.getController()).setPageContent(playlist, song);
+//        ((PlayPageController) fxmlLoader.getController()).setPageContent(playlist, song);
         stage.setScene(scene);
         stage.show();
     }

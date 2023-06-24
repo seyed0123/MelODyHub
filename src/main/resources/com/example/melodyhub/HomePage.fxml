@@ -71,7 +71,7 @@
                         <Image url="@images/lyrics.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" onMouseClicked="#open_queue" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/playlist.png" />
                      </image>

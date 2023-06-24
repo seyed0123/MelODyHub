@@ -337,7 +337,7 @@ public class MelodyHub {
         try
         {
             // Load the image from a file
-            File file = new File("src/main/java/com/example/melodyhub/Server/download/"+path+".png");
+            File file = new File(path);
             BufferedImage image = ImageIO.read(file);
 
             // Convert the image to a byte array
@@ -409,8 +409,10 @@ public class MelodyHub {
             long fileSize = file.length();
             int numChunks = (int) Math.ceil((double) fileSize / CHUNK_SIZE);
 
+            ArrayList<Thread> threads = new ArrayList<>();
             for (int i = 0; i < numChunks; i++) {
-                int offset = i * CHUNK_SIZE;
+                int finalI = i;
+                int offset = finalI * CHUNK_SIZE;
                 int chunkSize = (int) Math.min(CHUNK_SIZE, fileSize - offset);
                 byte[] buffer = new byte[chunkSize];
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
