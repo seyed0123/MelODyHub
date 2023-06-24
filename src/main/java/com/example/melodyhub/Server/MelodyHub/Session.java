@@ -691,13 +691,19 @@ public class Session implements Runnable{
                 } else if (job.equals("download music cover")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String id = jsonObject.getString("id");
-                    try{
-                        MelodyHub.extractCover(id);
-                        sendMessage("sending cover");
-                        MelodyHub.uploadImage(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".png");
-                    }catch (Exception e)
+                    File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".png");
+                    if(!file.exists()) {
+                        try {
+                            MelodyHub.extractCover(id);
+                            sendMessage("sending cover");
+                            MelodyHub.uploadImage(socket, "src/main/java/com/example/melodyhub/Server/download/" + id + ".png");
+                        } catch (Exception e) {
+                            sendMessage("no cover");
+                        }
+                    }else
                     {
-                        sendMessage("no cover");
+                        sendMessage("sending cover");
+                        MelodyHub.uploadImage(socket, "src/main/java/com/example/melodyhub/Server/download/" + id + ".png");
                     }
                 } else if (job.equals("logout")) {
                     account=null;

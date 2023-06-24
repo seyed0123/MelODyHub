@@ -58,11 +58,11 @@ public class SongsListController implements Initializable {
             HBox hBox = new HBox();
 
             Label songNameLabel = new Label(song.getName());
-            songNameLabel.setTextFill(Color.PEACHPUFF);
+            songNameLabel.setTextFill(Color.valueOf("#810541"));
             songNameLabel.setFont(new Font("Arial Nova", 16.0));
 
             Label singerNameLabel = new Label(song.getGenre());
-            singerNameLabel.setTextFill(Color.PEACHPUFF);
+            singerNameLabel.setTextFill(Color.valueOf("#810541"));
             singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
             hBox.getChildren().addAll( songNameLabel, singerNameLabel);
             hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -88,11 +88,11 @@ public class SongsListController implements Initializable {
             HBox hBox = new HBox();
 
             Label songNameLabel = new Label(artist.getUsername());
-            songNameLabel.setTextFill(Color.PEACHPUFF);
+            songNameLabel.setTextFill(Color.valueOf("#810541"));
             songNameLabel.setFont(new Font("Arial Nova", 16.0));
 
             Label singerNameLabel = new Label(artist.getBio());
-            singerNameLabel.setTextFill(Color.PEACHPUFF);
+            singerNameLabel.setTextFill(Color.valueOf("#810541"));
             singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
             hBox.getChildren().addAll( songNameLabel, singerNameLabel);
             songs_table.getItems().add(hBox);
@@ -102,11 +102,11 @@ public class SongsListController implements Initializable {
             HBox hBox = new HBox();
 
             Label songNameLabel = new Label(user.getUsername());
-            songNameLabel.setTextFill(Color.PEACHPUFF);
+            songNameLabel.setTextFill(Color.valueOf("#810541"));
             songNameLabel.setFont(new Font("Arial Nova", 16.0));
 
             Label singerNameLabel = new Label(user.getAge()+"");
-            singerNameLabel.setTextFill(Color.PEACHPUFF);
+            singerNameLabel.setTextFill(Color.valueOf("#810541"));
             singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
             hBox.getChildren().addAll( songNameLabel, singerNameLabel);
             songs_table.getItems().add(hBox);

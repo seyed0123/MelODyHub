@@ -61,8 +61,8 @@ public class SongPerform {
             return ret;
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add((res.getString("id")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }
