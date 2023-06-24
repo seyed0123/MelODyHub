@@ -12,10 +12,12 @@ public class PlaylistPerform {
     public static ArrayList<String> getSongs(UUID id) {
         ArrayList<String> ret=new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery("select songid from song_playlist where playlistid='"+id+"' ORDER BY SongOrder ASC;");
+        if(res==null)
+            return ret;
         while (true) {
             try {
-                if (!res.next()) break;
                 ret.add((res.getString("songid")));
+                if (!res.next()) break;
             } catch (SQLException e) {
                 break;
             }

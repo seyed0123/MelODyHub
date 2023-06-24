@@ -95,7 +95,7 @@ public class notification_page_controller implements Initializable {
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("notif", objectMapper.writeValueAsString(user.getNotification()));
-                        jsonObject.put("oldNotif", objectMapper.writeValueAsString(null));
+                        jsonObject.put("oldNotif", objectMapper.writeValueAsString(new ArrayList<String>()));
                         jsonObject.put("queue", objectMapper.writeValueAsString(user.getQueue()));
                     }catch (Exception e)
                     {

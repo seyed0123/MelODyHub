@@ -24,6 +24,9 @@ public class SongPerform {
     {
         ArrayList<String> ret = new ArrayList<>();
         ResultSet res=MelodyHub.sendQuery(String.format("select artistid from song_artist where songid='%s';",id));
+        if (res == null){
+            return ret;
+        }
         while (true) {
             try {
                 if (!res.next()) break;

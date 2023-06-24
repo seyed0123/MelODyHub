@@ -1,49 +1,63 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
+import static com.example.melodyhub.LoginSignupPage.*;
 public class PlayList_controller implements Initializable {
 
 
     @FXML
-    private Label artist_name_label;
+    private Label artist_name_song;
 
     @FXML
     private ImageView banner;
 
     @FXML
-    private ImageView comment;
+    private Label current_song_genre;
 
     @FXML
-    private ImageView like;
+    private ImageView current_song_image;
 
     @FXML
-    private ImageView lyrics;
+    private Label current_song_label;
+
+    @FXML
+    private Label current_song_year;
+
+    @FXML
+    private ImageView home_button;
+
+    @FXML
+    private ListView<HBox> listSong;
 
     @FXML
     private AnchorPane mainPane;
@@ -64,13 +78,16 @@ public class PlayList_controller implements Initializable {
     private Slider play_progress_bar;
 
     @FXML
+    private Label playlist_duration;
+
+    @FXML
+    private Label playlist_name;
+
+    @FXML
+    private Label playlist_publicity;
+
+    @FXML
     private ImageView previous_track;
-
-    @FXML
-    private ImageView queue;
-
-    @FXML
-    private VBox recommended;
 
     @FXML
     private VBox side_bar;
@@ -79,59 +96,118 @@ public class PlayList_controller implements Initializable {
     private Label song_name_label;
 
     @FXML
-    private BorderPane songsPane;
-
-
-    // pop ups
+    private ImageView play_all_button;
 
     @FXML
-    private ImageView home_button;
+    private BorderPane songsPane;
+    private static PlayList playlist;
+    private static ArrayList<Song> playlistSong;
+    private static User user;
 
+    private static String song_id;
+
+    private ArrayList<String> playlistSongs;
+
+    // for playing the playlist
+
+
+    public static void setPlayList(PlayList playList,User user) {
+        PlayList_controller.playlist = playList;
+        PlayList_controller.user=user;
+    }
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
-        if (songs == null) {
-            songs = new ArrayList<File>();
-
-            directory = new File("src/main/resources/com/example/melodyhub/musics");
-
-            files = directory.listFiles();
-
-            if (files != null) {
-
-                for (File file : files) {
-
-                    songs.add(file);
-                }
-            }
-
-            //        media = new Media(songs.get(songNumber).toURI().toString());
-            //        mediaPlayer = new MediaPlayer(media);
-
-            media = homepage_artist_podcaster_controller.media;
-            mediaPlayer = homepage_artist_podcaster_controller.mediaPlayer;
-
+        {
             song_name_label.setText(songs.get(songNumber).getName());
             song_name_label.setWrapText(true);
-
-        } else {
-            song_name_label.setText(songs.get(songNumber).getName());
-            song_name_label.setWrapText(true);
-
-//            // updating the current playing time
             play_progress_bar.setValue(current_play_time);
             continueTimer();
-
-
         }
+        playlist_name.setText(playlist.getName());
+        playlist_duration.setText(playlist.getDuration()+"");
+        playlist_publicity.setText(playlist.isPersonal()+"");
+        sendMessage("get songs playlist");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("playlist",playlist.getId());
+        sendMessage(jsonObject.toString());
+        try {
+            playlistSongs = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
+            for(String uuid :playlistSongs)
+            {
+                sendMessage("get song");
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("id",uuid);
+                sendMessage(jsonObject1.toString());
+                UUID id = user.getId();
+                Song song = objectMapper.readValue(getMessage(),Song.class);
+                HBox hBox = new HBox();
 
+                Label songNameLabel = new Label(song.getName());
+                songNameLabel.setTextFill(Color.DARKMAGENTA);
+                songNameLabel.setFont(new Font("Arial Nova", 16.0));
+
+                Label singerNameLabel = new Label(song.getGenre());
+                singerNameLabel.setTextFill(Color.DARKMAGENTA);
+                singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
+
+
+
+                hBox.getChildren().addAll( songNameLabel, singerNameLabel);
+                hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Image image = null;
+                        ImageView imageView = new ImageView();
+                        imageView.setFitHeight(100.0);
+                        imageView.setFitWidth(100.0);
+                        imageView.setPickOnBounds(true);
+                        imageView.setPreserveRatio(true);
+                        File file = new File("src/main/resources/com/example/melodyhub/images/covers/"+id+".png");
+                        try {
+                            if (!file.exists()) {
+                                sendMessage("download music cover");
+                                JSONObject jsonObject2 = new JSONObject();
+                                jsonObject2.put("id",song.getId());
+                                sendMessage(jsonObject2.toString());
+                                String response = getMessage();
+                                if(response.equals("sending cover"))
+                                {
+                                    Thread thread =new Thread(() -> downloadImage(socket,song.getId()));
+                                    thread.start();
+                                    thread.join();
+                                }else
+                                {
+                                    throw new Exception();
+                                }
+                            }
+                            image = new Image(Account.class.getResource("images/covers/"+id+".png").toExternalForm());
+                            imageView.setImage(image);
+                        }catch (Exception e) {
+                            try{
+                                image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                                imageView.setImage(image);
+                            }catch (Exception ep)
+                            {
+                                ep.printStackTrace();
+                            }
+                        }
+                        current_song_genre.setText(song.getGenre());
+                        current_song_label.setText(song.getName());
+                        current_song_image.setImage(image);
+                        current_song_year.setText(song.getYear()+"");
+                    }
+                });
+                listSong.getItems().add(hBox);
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // media playing functions ------------------------------------------------------
 
     public void playMedia() {
-
         beginTimer();
         mediaPlayer.play();
     }
@@ -294,48 +370,13 @@ public class PlayList_controller implements Initializable {
 
     }
 
-
-//
-//    public void playMedia() {
-//        homepage_artist_podcaster_controller.playMedia();
-//    }
-//
-//    public void pauseMedia() {
-//        homepage_artist_podcaster_controller.pauseMedia();
-//    }
-//
-//    public void resetMedia() {
-//        homepage_artist_podcaster_controller.resetMedia();
-//    }
-//
-//    public void previousMedia() {
-//        homepage_artist_podcaster_controller.previousMedia();
-//    }
-//
-//    public void nextMedia() {
-//        homepage_artist_podcaster_controller.nextMedia();
-//    }
-//
-//    public void beginTimer() {
-//        homepage_artist_podcaster_controller.beginTimer();
-//    }
-//
-//    public void cancelTimer() {
-//        homepage_artist_podcaster_controller.cancelTimer();
-//    }
-//
-//    public void set_play_time() {
-//        homepage_artist_podcaster_controller.set_play_time();
-//    }
-
-
     // pop up --------------------------------
 
     @FXML
     void open_home(MouseEvent event) throws IOException {
 
         // Load the FXML file for the new page
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage_artist&podcater.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
         Parent root = loader.load();
 
         // Create a new Scene based on the loaded FXML file
@@ -348,7 +389,38 @@ public class PlayList_controller implements Initializable {
         currentStage.setScene(newScene);
 
     }
+    @FXML
+    void download_songs()
+    {
+        songs = new ArrayList<File>();
+        for(String song :playlistSongs)
+        {
+            File file = new File("src/main/resources/com/example/melodyhub/musics/"+song+".mp3");
+            if(!file.exists())
+            {
+                sendMessage("upload song");
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",song);
+                sendMessage(jsonObject.toString());
+                String res = getMessage();
+                    System.out.println("done");
+                    downloadSong(socket,"src/main/resources/com/example/melodyhub/musics/"+song+".mp3");
+            }
+            songs.add(file);
+        }
+        songNumber=0;
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
 
+        song_name_label.setText(songs.get(songNumber).getName());
+        song_name_label.setWrapText(true);
+    }
+
+    @FXML
+    void play_all(){
+
+        download_songs();
+    }
 
 
 }

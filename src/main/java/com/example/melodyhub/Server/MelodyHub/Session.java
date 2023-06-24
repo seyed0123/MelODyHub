@@ -453,7 +453,7 @@ public class Session implements Runnable{
                 } else if (job.equals("get followings")) {
                     ArrayList<UUID> followings = AccountPerform.getFollowings(account.getId());
                     sendMessage(objectMapper.writeValueAsString(followings));
-                } else if (job.equals("get followers")) { 
+                } else if (job.equals("get followers")) {
                     ArrayList<UUID> followers = AccountPerform.getFollowers(account.getId());
                     sendMessage(objectMapper.writeValueAsString(followers));
                 } else if (job.equals("follow")) {
@@ -591,8 +591,8 @@ public class Session implements Runnable{
                 } else if (job.equals("share playlist")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
-                    UUID user = UUID.fromString(jsonObject.getString("user"));
-                    if(!(PlaylistPerform.firstOwner(playlist)==account.getId()))
+                    UUID user = (MelodyHub.findUserUsername(jsonObject.getString("user")));
+                    if((PlaylistPerform.firstOwner(playlist)==account.getId()))
                     {
                         sendMessage("don't have permission");
                     }else {
@@ -654,22 +654,32 @@ public class Session implements Runnable{
                 } else if (job.equals("upload song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String id = (jsonObject.getString("id"));
-                    MelodyHub.uploadSong(socket,id.toString());
+                    File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".mp3");
+                    if(file.exists()) {
+                        sendMessage("sending song");
+                        MelodyHub.uploadSong(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".mp3");
+                    }else
+                        sendMessage("failed");
                 }
                 else if (job.equals("download song")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String id = (jsonObject.getString("id"));
-                    MelodyHub.downloadSong(socket,id.toString());
+                    MelodyHub.downloadSong(socket, id.toString());
                 }
                 else if (job.equals("upload image")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID id = UUID.fromString(jsonObject.getString("id"));
-                    MelodyHub.uploadImage(socket,id.toString());
+                    File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".png");
+                    if(file.exists()) {
+                        sendMessage("sending cover");
+                        MelodyHub.uploadImage(socket,id.toString());
+                    }else
+                        sendMessage("failed");
                 }
                 else if (job.equals("download image")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID id = UUID.fromString(jsonObject.getString("id"));
-                    MelodyHub.downloadImage(socket,id.toString());
+                    MelodyHub.downloadImage(socket, id.toString());
                 } else if (job.equals("listen")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String id = jsonObject.getString("id");
@@ -683,7 +693,7 @@ public class Session implements Runnable{
                         MelodyHub.extractCover(id);
                         sendMessage("sending cover");
                         MelodyHub.uploadImage(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".png");
-                    }catch (IOException | InvalidDataException | UnsupportedTagException e)
+                    }catch (Exception e)
                     {
                         sendMessage("no cover");
                     }
