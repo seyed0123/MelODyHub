@@ -184,7 +184,7 @@ public class HomeController implements Initializable {
                         Image image = new Image("@images/covers/"+id+".png");
                         imageView.setImage(image);
                     }catch (Exception e) {
-                        Image image = new Image("@images/covers/default.png");
+                        Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
                         imageView.setImage(image);
                     }
 
