@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayList_controller">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.PlayList_controller">
    <children>
       <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
          <children>
@@ -24,12 +24,12 @@
                      <children>
                         <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova" size="16.0" />
+                              <Font name="Pristina" size="18.0" />
                            </font>
                         </Label>
                         <Label fx:id="artist_name_song" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                            <font>
-                              <Font name="Arial Nova Light" size="11.0" />
+                              <Font name="Pristina" size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -46,7 +46,7 @@
                   </ImageView>
                   <ImageView fx:id="pause_button" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/pause-button.png" />
+                        <Image url="@images/Pause.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="next_track" fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -57,7 +57,7 @@
                   <Slider fx:id="play_progress_bar" onMouseDragged="#set_play_time" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
                   <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/heart.png" />
+                        <Image url="@images/Like.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -72,7 +72,7 @@
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/playlist.png" />
+                        <Image url="@images/Queue.png" />
                      </image>
                   </ImageView>
                </children>
@@ -83,12 +83,12 @@
          <top>
             <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/logo.jpg" />
+                  <Image url="@images/header.jpg" />
                </image>
             </ImageView>
          </top>
          <left>
-            <ListView fx:id="listSong" prefHeight="408.0" prefWidth="425.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="listSong" prefHeight="426.0" prefWidth="432.0" BorderPane.alignment="CENTER" />
          </left>
          <center>
             <VBox prefHeight="358.0" prefWidth="505.0" BorderPane.alignment="CENTER">
@@ -101,20 +101,38 @@
                            <children>
                               <HBox prefHeight="74.0" prefWidth="302.0">
                                  <children>
-                                    <Label prefHeight="66.0" prefWidth="66.0" text="name :" textFill="WHITE" />
-                                    <Label fx:id="current_song_label" prefHeight="70.0" prefWidth="139.0" text="name of the song" textFill="WHITE" />
+                                    <Label prefHeight="66.0" prefWidth="66.0" text="Name:" textFill="WHITE">
+                                       <font>
+                                          <Font name="Pristina" size="24.0" />
+                                       </font></Label>
+                                    <Label fx:id="current_song_label" prefHeight="66.0" prefWidth="200.0" text="name of the song" textFill="WHITE">
+                                       <font>
+                                          <Font name="Pristina" size="18.0" />
+                                       </font></Label>
                                  </children>
                               </HBox>
                               <HBox prefHeight="81.0" prefWidth="302.0">
                                  <children>
-                                    <Label prefHeight="74.0" prefWidth="64.0" text="genre :" textFill="WHITE" />
-                                    <Label fx:id="current_song_genre" prefHeight="78.0" prefWidth="144.0" text="genre " textFill="WHITE" />
+                                    <Label prefHeight="74.0" prefWidth="64.0" text="Genre:" textFill="WHITE">
+                                       <font>
+                                          <Font name="Pristina" size="24.0" />
+                                       </font></Label>
+                                    <Label fx:id="current_song_genre" prefHeight="78.0" prefWidth="144.0" text="genre " textFill="WHITE">
+                                       <font>
+                                          <Font name="Pristina" size="18.0" />
+                                       </font></Label>
                                  </children>
                               </HBox>
                               <HBox prefHeight="70.0" prefWidth="302.0">
                                  <children>
-                                    <Label prefHeight="62.0" prefWidth="65.0" text="year : " textFill="WHITE" />
-                                    <Label fx:id="current_song_year" prefHeight="72.0" prefWidth="142.0" text="year of release" textFill="WHITE" />
+                                    <Label prefHeight="62.0" prefWidth="65.0" text="Year:" textFill="WHITE">
+                                       <font>
+                                          <Font name="Pristina" size="24.0" />
+                                       </font></Label>
+                                    <Label fx:id="current_song_year" prefHeight="72.0" prefWidth="142.0" text="year of release" textFill="WHITE">
+                                       <font>
+                                          <Font name="Pristina" size="18.0" />
+                                       </font></Label>
                                  </children>
                               </HBox>
                            </children>
@@ -126,22 +144,40 @@
                         <HBox prefHeight="70.0" prefWidth="505.0">
                            <children>
                               <VBox prefHeight="66.0" prefWidth="12.0" />
-                              <Label prefHeight="66.0" prefWidth="50.0" text="name :" textFill="WHITE" />
-                              <Label fx:id="playlist_name" prefHeight="66.0" prefWidth="331.0" text="name of the playlist" textFill="WHITE" />
+                              <Label prefHeight="66.0" prefWidth="71.0" text="Name;" textFill="WHITE">
+                                 <font>
+                                    <Font name="Pristina" size="24.0" />
+                                 </font></Label>
+                              <Label fx:id="playlist_name" prefHeight="66.0" prefWidth="322.0" text="name of the playlist" textFill="WHITE">
+                                 <font>
+                                    <Font name="Pristina" size="18.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox prefHeight="73.0" prefWidth="505.0">
                            <children>
                               <VBox prefHeight="70.0" prefWidth="12.0" />
-                              <Label prefHeight="70.0" prefWidth="66.0" text="publicity : " textFill="WHITE" />
-                              <Label fx:id="playlist_publicity" prefHeight="70.0" prefWidth="314.0" text="personal or public " textFill="WHITE" />
+                              <Label prefHeight="70.0" prefWidth="98.0" text="Publicity : " textFill="WHITE">
+                                 <font>
+                                    <Font name="Pristina" size="24.0" />
+                                 </font></Label>
+                              <Label fx:id="playlist_publicity" prefHeight="70.0" prefWidth="314.0" text="personal or public " textFill="WHITE">
+                                 <font>
+                                    <Font name="Pristina" size="18.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox prefHeight="69.0" prefWidth="505.0">
                            <children>
                               <VBox prefHeight="66.0" prefWidth="14.0" />
-                              <Label prefHeight="66.0" prefWidth="63.0" text="duration :" textFill="WHITE" />
-                              <Label fx:id="playlist_duration" prefHeight="66.0" prefWidth="332.0" text="some duration" textFill="WHITE" />
+                              <Label prefHeight="66.0" prefWidth="108.0" text="Duration :" textFill="WHITE">
+                                 <font>
+                                    <Font name="Pristina" size="24.0" />
+                                 </font></Label>
+                              <Label fx:id="playlist_duration" prefHeight="66.0" prefWidth="332.0" text="some duration" textFill="WHITE">
+                                 <font>
+                                    <Font name="Pristina" size="18.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                      </children>
@@ -157,9 +193,9 @@
                   <Insets left="20.0" />
                </padding>
                <children>
-                  <ImageView fx:id="home_button" fitHeight="39.0" fitWidth="42.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="home_button" fitHeight="34.0" fitWidth="32.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/back-icon.png" />
+                        <Image url="@images/Home.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="43.0" prefWidth="58.0" text="Home">
@@ -175,12 +211,15 @@
             <VBox prefHeight="379.0" prefWidth="150.0" />
             <HBox prefHeight="52.0" prefWidth="150.0">
                <children>
-                  <ImageView fx:id="play_all_button" fitHeight="52.0" fitWidth="57.0" onMouseClicked="#play_all" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="play_all_button" fitHeight="48.0" fitWidth="55.0" onMouseClicked="#play_all" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-play-50.png" />
+                        <Image url="@images/play2.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="53.0" prefWidth="96.0" text="   play all" />
+                  <Label prefHeight="52.0" prefWidth="118.0" text="Play All">
+                     <font>
+                        <Font name="Pristina" size="25.0" />
+                     </font></Label>
                </children>
             </HBox>
          </children>

@@ -144,7 +144,6 @@ public class PlayPageController implements Initializable {
 
 //                    Label durationLabel = new Label(playlist.getDuration() + "");
 //                    Label personalLabel = new Label(playlist.isPersonal() + "");
-
                 Hbox.getChildren().addAll(playlistLabel);
                 this.song_list_view.getItems().add(Hbox);
             } catch (JsonProcessingException e) {
@@ -157,6 +156,7 @@ public class PlayPageController implements Initializable {
         durationLabel.setText(current_song_duration);
         yearLabel.setText(current_song_year);
         rateLabel.setText(current_song_rate);
+        lyricsText.setText(current_song_lyrics);
 
 
     }

@@ -1,0 +1,15 @@
+.hide {
+    -fx-background-display: none;
+}
+
+.hide:hover{
+    -fx-background-display: block;
+    -fx-background-color: red;
+    -fx-font-size: 50px;
+    visibility: visible;
+}
+.hide {
+    position: relative;
+    border-bottom: 1px dotted black;
+    visibility: hidden;
+}

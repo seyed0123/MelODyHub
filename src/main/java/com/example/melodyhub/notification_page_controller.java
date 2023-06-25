@@ -78,6 +78,7 @@ public class notification_page_controller implements Initializable {
         sendMessage("refresh notif");
         try {
             ArrayList<String> list = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
+            user.setNotification(list);
             for(String str :list)
             {
                 Button button = new Button();

@@ -12,15 +12,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.JSONObject;
@@ -33,7 +32,8 @@ import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
 public class UserProfilePageController implements Initializable {
-
+    @FXML
+    private Button uploadButton;
     @FXML
     private Label acctype_label;
 
@@ -71,6 +71,8 @@ public class UserProfilePageController implements Initializable {
     private ListView<Label> followers_listview;
 
     private static User user;
+
+    private static Account account;
     @FXML
     private Label song_name_label;
 
@@ -82,6 +84,12 @@ public class UserProfilePageController implements Initializable {
 
     public static void setUser(User user) {
         UserProfilePageController.user = user;
+    }
+
+    public static void setArtist(Account account)
+    {
+        UserProfilePageController.account = account;
+        UserProfilePageController.user = null;
     }
 
     private List<Label> getFollowings() throws IOException {
@@ -104,7 +112,18 @@ public class UserProfilePageController implements Initializable {
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("following");
+                    Stage stage = (Stage) phone_label.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("profile_user.fxml"));
+                    UserProfilePageController.setUser(user);
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 }
             });
             followings.add(label);
@@ -135,7 +154,18 @@ public class UserProfilePageController implements Initializable {
             label.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("followers ");
+                    Stage stage = (Stage) phone_label.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("profile_user.fxml"));
+                    UserProfilePageController.setUser(user);
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setTitle("Login / Signup");
+                    stage.setScene(scene);
+                    stage.show();
                 }
             });
             followers.add(label);
@@ -203,53 +233,87 @@ public class UserProfilePageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        UUID id = user.getId();
-        File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
-        try {
-            if (!file.exists()) {
-                sendMessage("upload image");
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",id);
-                sendMessage(jsonObject.toString());
-                String response = getMessage();
-                if(response.equals("sending cover"))
-                {
-                    Thread thread =new Thread(() -> downloadImage(socket,user.getId().toString()));
-                    thread.start();
-                    thread.join();
-                }else
-                {
-                    throw new Exception();
+        if(user!=null) {
+            UUID id = user.getId();
+            File file = new File("src/main/resources/com/example/melodyhub/images/profile/" + id + ".png");
+            try {
+                if (!file.exists()) {
+                    sendMessage("upload image");
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("id", id);
+                    sendMessage(jsonObject.toString());
+                    String response = getMessage();
+                    if (response.equals("sending cover")) {
+                        Thread thread = new Thread(() -> downloadImage(socket, "src/main/resources/com/example/melodyhub/images/profile/" + id + ".png"));
+                        thread.start();
+                        thread.join();
+                    } else {
+                        throw new Exception();
+                    }
+                }
+                Image image = new Image(Account.class.getResource("images/profile/" + id + ".png").toExternalForm());
+                profile_img.setImage(image);
+            } catch (Exception e) {
+                try {
+                    Image image = new Image(Account.class.getResource("images/profile_default.png").toExternalForm());
+                    profile_img.setImage(image);
+                } catch (Exception ep) {
+                    ep.printStackTrace();
                 }
             }
-            Image image = new Image(Account.class.getResource("images/covers/profile/"+id+".png").toExternalForm());
-            profile_img.setImage(image);
-        }catch (Exception e) {
-            try{
-                Image image = new Image(Account.class.getResource("images/profile_default.png").toExternalForm());
-                profile_img.setImage(image);
-            }catch (Exception ep)
-            {
-                ep.printStackTrace();
-            }
-        }
-        username_label.setText(user.getUsername());
-        acctype_label.setText(user.isPremium() ? "Premium" : "Normal");
-        age_label.setText(String.valueOf(user.getAge()));
-        phone_label.setText(user.getPhoneNumber());
-        email_label.setText(user.getEmail());
-        gender_label.setText(user.getGender());
+            username_label.setText(user.getUsername());
+            acctype_label.setText(user.isPremium() ? "Premium" : "Normal");
+            age_label.setText(String.valueOf(user.getAge()));
+            phone_label.setText(user.getPhoneNumber());
+            email_label.setText(user.getEmail());
+            gender_label.setText(user.getGender());
 
-        try {
-            List<Label> following = getFollowings();
-            List<Label> follower = getFollowers();
-            followers_label.setText(follower.size()+"");
-            followings_label.setText(following.size()+"");
-            playlists_listview.getItems().addAll(getPlaylists());
-            followings_listview.getItems().addAll(following);
-            followers_listview.getItems().addAll(follower);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            try {
+
+                if(user == HomeController.user) {
+                    List<Label> following = getFollowings();
+                    List<Label> follower = getFollowers();
+                    followers_label.setText(follower.size() + "");
+                    followings_label.setText(following.size() + "");
+                    followings_listview.getItems().addAll(following);
+                    followers_listview.getItems().addAll(follower);
+                    playlists_listview.getItems().addAll(getPlaylists());
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            UUID id = account.getId();
+            File file = new File("src/main/resources/com/example/melodyhub/images/profile/" + id + ".png");
+            try {
+                if (!file.exists()) {
+                    sendMessage("upload image");
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("id", id);
+                    sendMessage(jsonObject.toString());
+                    String response = getMessage();
+                    if (response.equals("sending cover")) {
+                        Thread thread = new Thread(() -> downloadImage(socket, "src/main/resources/com/example/melodyhub/images/profile/" + id + ".png"));
+                        thread.start();
+                        thread.join();
+                    } else {
+                        throw new Exception();
+                    }
+                }
+                Image image = new Image(Account.class.getResource("images/profile/" + id + ".png").toExternalForm());
+                profile_img.setImage(image);
+            } catch (Exception e) {
+                try {
+                    Image image = new Image(Account.class.getResource("images/profile_default.png").toExternalForm());
+                    profile_img.setImage(image);
+                } catch (Exception ep) {
+                    ep.printStackTrace();
+                }
+            }
+            username_label.setText(account.getUsername());
+            phone_label.setText(account.getPhoneNumber());
+            email_label.setText(account.getEmail());
         }
         song_name_label.setText(songs.get(songNumber).getName());
         song_name_label.setWrapText(true);
@@ -257,6 +321,38 @@ public class UserProfilePageController implements Initializable {
     }
     @FXML
     public void upload_profile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+
+        // Set initial directory
+        File initialDirectory = new File(System.getProperty("user.home"));
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Add file filters
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().addAll(imageFilter);
+
+        // Show open file dialog
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("martike khar mage man maskare to am");
+            alert.setContentText("Please be careful!");
+
+            alert.showAndWait();
+        }else
+        {
+            sendMessage("download image");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id",user.getId());
+            sendMessage(jsonObject.toString());
+            uploadImage(socket,selectedFile.getAbsolutePath());
+        }
+        try {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
     @FXML

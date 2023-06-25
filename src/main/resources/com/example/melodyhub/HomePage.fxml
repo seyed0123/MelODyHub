@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -47,7 +49,7 @@
                   </ImageView>
                   <ImageView fx:id="pauseButton" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/pause-button.png" />
+                        <Image url="@images/Pause.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="nextButton" fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -58,7 +60,7 @@
                   <Slider fx:id="play_progress_bar" onMouseDragged="#set_play_time" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
                   <ImageView fx:id="likeImage" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/heart.png" />
+                        <Image url="@images/Like.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="commentImage" fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -71,9 +73,9 @@
                         <Image url="@images/lyrics.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" onMouseClicked="#open_queue" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/playlist.png" />
+                        <Image url="@images/Queue.png" />
                      </image>
                   </ImageView>
                </children>
@@ -127,14 +129,14 @@
          <top>
             <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/melodyhubHoriz.jpg" />
+                  <Image url="@images/header.jpg" />
                </image>
             </ImageView>
          </top>
       </BorderPane>
-      <VBox fx:id="side_bar" layoutX="-2.0" layoutY="33.0" prefHeight="590.0" prefWidth="152.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="side_bar" layoutX="-2.0" layoutY="33.0" prefHeight="590.0" prefWidth="152.0" style="-fx-background-color: #C4A7E1;" stylesheets="@css/texthover.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox fx:id="profile" alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="profile" alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="152.0" spacing="10.0">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
@@ -157,11 +159,11 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="explore" alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="explore" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/search.png" />
+                        <Image url="@images/icons8-search-50.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="#101010">
@@ -177,11 +179,11 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="favs" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="favs" alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/likedSongs.png" />
+                        <Image url="@images/icons8-favorite-48(1).png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="40.0" prefWidth="93.0" text="Favs">
@@ -197,11 +199,11 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="history" alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="45.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="history" alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="51.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/parchment.png" />
+                        <Image url="@images/History.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="40.0" prefWidth="93.0" text="History">
@@ -217,12 +219,16 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="notif" alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="44.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="notif" alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="56.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/notifNO.png" />
+                        <Image url="@images/Notificstion.png" />
                      </image>
+                     <styleClass>
+                        <String fx:value="image-container" />
+                        <String fx:value="overlay" />
+                     </styleClass>
                   </ImageView>
                   <Label prefHeight="40.0" prefWidth="93.0" text="Notifs">
                      <font>
@@ -237,11 +243,11 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="premium" alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="premium" alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="53.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/premium (2).png" />
+                        <Image url="@images/premium.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="40.0" prefWidth="93.0" text="Premium">
@@ -257,7 +263,7 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="share" alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="share" alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="53.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -277,16 +283,16 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="playlist" alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="49.0" prefWidth="150.0" spacing="10.0">
+            <HBox fx:id="playlist" alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="50.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/music.png" />
+                        <Image url="@images/video.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="40.0" prefWidth="93.0" text="Playlist">
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Music Video">
                      <font>
-                        <Font name="Pristina" size="24.0" />
+                        <Font name="Pristina" size="20.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -297,11 +303,20 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox fx:id="signOut" alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="50.0" prefWidth="150.0" spacing="10.0">
+            <Button mnemonicParsing="false" onAction="#chat" prefHeight="50.0" prefWidth="152.0" styleClass="btn_hover" text="Chat">
+               <font>
+                  <Font name="Pristina" size="20.0" />
+               </font>
+               <stylesheets>
+                  <URL value="@css/buttomswithoutbackground.css" />
+                  <URL value="@css/styles.css" />
+               </stylesheets>
+            </Button>
+            <HBox fx:id="signOut" alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="41.0" prefWidth="152.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/sign-out.png" />
+                        <Image url="@images/Out.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="40.0" prefWidth="93.0" text="Sign Out">
@@ -317,7 +332,6 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#chat" prefHeight="25.0" prefWidth="151.0" text="chat" />
          </children>
       </VBox>
    </children>

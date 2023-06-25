@@ -88,7 +88,7 @@
                     <image>
                     </image>
                 </ImageView>
-            <Button mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" text="upload profile">
+            <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" text="upload profile">
                <font>
                   <Font name="Forte" size="13.0" />
                </font>
