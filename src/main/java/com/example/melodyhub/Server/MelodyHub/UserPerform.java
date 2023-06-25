@@ -166,4 +166,20 @@ public class UserPerform extends AccountPerform {
                 "VALUES ('"+song+"', '"+user+"', '"+text+"')\n" +
                 "ON CONFLICT (songid,userid)  DO UPDATE SET comment = 'new_value3';");
     }
+    public static ArrayList<String> seeComment(String song) {
+        ArrayList<String> ret = new ArrayList<>();
+        ResultSet res = MelodyHub.sendQuery("select comment.comment from comment where songid = '"+song+"';\n");
+        if (res == null) {
+            return ret;
+        }
+        while (true) {
+            try {
+                ret.add((res.getString(1)));
+                if (!res.next()) break;
+            } catch (SQLException e) {
+                break;
+            }
+        }
+        return ret;
+    }
 }

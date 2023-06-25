@@ -100,7 +100,7 @@
         </BorderPane>
         <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #282828;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                <HBox alignment="CENTER_LEFT" onMouseClicked="#back" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
                     <VBox.margin>
                         <Insets top="50.0" />
                     </VBox.margin>

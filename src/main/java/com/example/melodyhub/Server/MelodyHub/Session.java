@@ -633,7 +633,18 @@ public class Session implements Runnable{
                     UserPerform.dislikeSong(account.getId(),song);
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
-                } else if (job.equals("get liked songs")) {
+                } else if (job.equals("comment")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String song = (jsonObject.getString("song"));
+                    String comment = jsonObject.getString("comment");
+                    UserPerform.comment(song,account.getId(),comment);
+                }
+                else if (job.equals("get comments")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String song = (jsonObject.getString("song"));
+                    sendMessage(objectMapper.writeValueAsString(UserPerform.seeComment(song)));
+                }
+                else if (job.equals("get liked songs")) {
                     ArrayList<String> songs = UserPerform.getLikedSongs(account.getId());
                     sendMessage(objectMapper.writeValueAsString(songs));
                 } else if (job.equals("save user notif")) {
@@ -674,14 +685,14 @@ public class Session implements Runnable{
                     File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".png");
                     if(file.exists()) {
                         sendMessage("sending cover");
-                        MelodyHub.uploadImage(socket,id.toString());
+                        MelodyHub.uploadImage(socket,"src/main/java/com/example/melodyhub/Server/download/"+id+".png");
                     }else
                         sendMessage("failed");
                 }
                 else if (job.equals("download image")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
-                    UUID id = UUID.fromString(jsonObject.getString("id"));
-                    MelodyHub.downloadImage(socket, id.toString());
+                    String id = (jsonObject.getString("id"));
+                    MelodyHub.downloadImage(socket, id);
                 } else if (job.equals("listen")) {
                     JSONObject jsonObject = new JSONObject(getMessage());
                     String id = jsonObject.getString("id");

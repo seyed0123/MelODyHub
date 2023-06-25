@@ -6,12 +6,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="441.0" style="-fx-background-color: #8344DE;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.fxmlfiles.Comments">
+<AnchorPane prefHeight="400.0" prefWidth="441.0" style="-fx-background-color: #8344DE;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.Comment">
    <children>
-      <ListView layoutX="53.0" layoutY="24.0" prefHeight="299.0" prefWidth="327.0" />
-      <TextField layoutX="54.0" layoutY="340.0" prefHeight="26.0" prefWidth="266.0" styleClass="lightModeButton" />
-      <Button layoutX="330.0" layoutY="334.0" mnemonicParsing="false" text="Submit" />
+      <ListView fx:id="area" layoutX="53.0" layoutY="24.0" prefHeight="299.0" prefWidth="327.0" />
+      <TextField fx:id="bar" layoutX="54.0" layoutY="340.0" prefHeight="26.0" prefWidth="266.0" styleClass="lightModeButton" />
+      <Button layoutX="330.0" layoutY="334.0" mnemonicParsing="false" onAction="#submit" text="Submit" />
    </children>
    <stylesheets>
       <URL value="@css/design.css" />

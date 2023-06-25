@@ -118,7 +118,7 @@ public class LoginSignupPage extends Application {
     }
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("LoginSignupPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("LoginSignupPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Login / Signup");
         stage.setScene(scene);

@@ -42,16 +42,16 @@ public class PlayList_controller implements Initializable {
     private ImageView banner;
 
     @FXML
-    private static Label current_song_genre;
+    private  Label current_song_genre;
 
     @FXML
     private ImageView current_song_image;
 
     @FXML
-    private static Label current_song_label;
+    private  Label current_song_label;
 
     @FXML
-    private static Label current_song_year;
+    private  Label current_song_year;
 
     @FXML
     private ImageView home_button;
@@ -162,12 +162,15 @@ public class PlayList_controller implements Initializable {
                         imageView.setFitHeight(100.0);
                         imageView.setFitWidth(100.0);
                         imageView.setPickOnBounds(true);
+                        String id = song.getId();
                         imageView.setPreserveRatio(true);
                         File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
                         try {
                             if (!file.exists()) {
                                 sendMessage("download music cover");
-                                sendMessage(jsonObject.toString());
+                                JSONObject jsonObject2 = new JSONObject();
+                                jsonObject2.put("id",id);
+                                sendMessage(jsonObject2.toString());
                                 String response = getMessage();
                                 if(response.equals("sending cover"))
                                 {
@@ -180,11 +183,9 @@ public class PlayList_controller implements Initializable {
                                 }
                             }
                              image = new Image(Account.class.getResource("images/profile/"+id+".png").toExternalForm());
-                            imageView.setImage(image);
                         }catch (Exception e) {
                             try{
                                  image = new Image(Account.class.getResource("images/default.png").toExternalForm());
-                                imageView.setImage(image);
                             }catch (Exception ep)
                             {
                                 ep.printStackTrace();

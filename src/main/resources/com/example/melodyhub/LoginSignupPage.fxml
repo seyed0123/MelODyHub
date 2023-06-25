@@ -337,7 +337,7 @@
                     <children>
                         <Label fx:id="l3" prefHeight="23.0" prefWidth="304.0" text="Username" textFill="#363636">
                             <font>
-                                <Font name="Pristina" size="20.0" />
+                                <Font name="Bell MT" size="20.0" />
                             </font>
                         </Label>
                         <TextField fx:id="username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">

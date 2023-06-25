@@ -17,7 +17,7 @@ public class Main {
     private static int loXdyPORT=8090;
     private static final String url ="jdbc:postgresql://localhost:5432/test";
     private static final String username = "postgres";
-    private static final String password = "1234";
+    private static final String password = "Seyed5516";
     public static HashSet<Session> clients = new HashSet<>();
     public static void main(String[] args) throws IOException {
         try {
