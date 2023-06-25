@@ -150,18 +150,22 @@ public class PlayPageController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+        setCurrent();
+    }
 
+    private void setCurrent()
+    {
+        try {
+            songImage.setImage(new Image(Account.class.getResource("images/covers/" + current_song_id + ".png").toExternalForm()));
+        }catch (Exception e)
+        {songImage.setImage(new Image(Account.class.getResource("images/default.png").toExternalForm()));}
         songNameLabel1.setText(current_song_name);
         genreLabel.setText(current_song_genre);
         durationLabel.setText(current_song_duration);
         yearLabel.setText(current_song_year);
         rateLabel.setText(current_song_rate);
         lyricsText.setText(current_song_lyrics);
-
-
     }
-
-
 
 
     private List<Artist> getArtist(Song song) throws IOException {

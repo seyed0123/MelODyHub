@@ -150,11 +150,6 @@ public class HomeController implements Initializable {
     public static String current_song_lyrics;
     @FXML
     private BorderPane songsPane;
-
-    protected void onHelloButtonClick() {
-        java.awt.Label welcomeText = null;
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
     public static void setUser(User user)
     {
         HomeController.user=user;
@@ -576,7 +571,12 @@ public class HomeController implements Initializable {
                 });
 
                 signOut.setOnMouseClicked(event -> {
-                    System.out.println("Sign out clicked");
+                    ((Stage) banner.getScene().getWindow()).close();
+                    try {
+                        new HomePage_NoLogin().start(new Stage());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
 
                 commentImage.setOnMouseClicked(event -> {

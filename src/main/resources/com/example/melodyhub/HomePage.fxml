@@ -141,7 +141,7 @@
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="27.0" onMouseEntered="#enter2" onMouseExited="#exit2" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/user.png" />
                      </image>
@@ -161,7 +161,7 @@
             </HBox>
             <HBox fx:id="explore" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="152.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="32.0" fitWidth="33.0" onMouseEntered="#enter3" onMouseExited="#exit3" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icons8-search-50.png" />
                      </image>

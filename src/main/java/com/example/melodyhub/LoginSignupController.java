@@ -681,8 +681,13 @@ public class LoginSignupController implements Initializable {
 
     @FXML
     public void forgetPassClicked() throws IOException {
-        ((Stage) this.password_field.getScene().getWindow()).close();
-        new FirstWindow("forgetPassword1").start(new Stage());
+        ((Stage) back_btn.getScene().getWindow()).close();
+        Stage stage =  new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("FirstWindow.fxml"));
+        FirstWindowController.setJob("forget pass");
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

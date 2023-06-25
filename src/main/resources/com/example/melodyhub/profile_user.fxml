@@ -44,7 +44,7 @@
                            <children>
                               <Label text="Followings" textFill="WHITE">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Pristina" size="22.0" />
                                  </font>
                               </Label>
                               <ScrollPane hbarPolicy="NEVER" prefHeight="268.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css">
@@ -58,7 +58,7 @@
                            <children>
                               <Label text="Followers" textFill="WHITE">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Pristina" size="25.0" />
                                  </font>
                               </Label>
                               <ScrollPane hbarPolicy="NEVER" prefHeight="268.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css">
@@ -88,18 +88,23 @@
                     <image>
                     </image>
                 </ImageView>
-            <ImageView fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="storyImage" fitHeight="37.0" fitWidth="31.0" onMouseClicked="#uploadStory" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/story.png" />
                </image></ImageView>
-            <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="120.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="120.0" layoutY="144.0" onMouseClicked="#showStory" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/profilePage.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" prefHeight="23.0" prefWidth="103.0" stylesheets="@css/buttomswithoutbackground.css" text="Upload Profile">
+            <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" prefHeight="23.0" prefWidth="103.0" stylesheets="@css/buttomswithoutbackground.css" text="Upload Profile">
                <font>
                   <Font name="Forte" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="followButton" mnemonicParsing="false" onAction="#follow" text="Follow">
+               <font>
+                  <Font name="Pristina" size="10.0" />
                </font>
             </Button>
                 <Label fx:id="username_label" prefHeight="37.0" prefWidth="230.0" text="Username" textFill="#441147">
@@ -116,7 +121,7 @@
                             <children>
                                 <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="71.0" text="followers">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font name="Pristina" size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="followers_label" prefHeight="37.0" prefWidth="30.0" text="10" textFill="#441147">
@@ -270,7 +275,7 @@
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
-                                <Image url="@images/pause-button.png" />
+                                <Image url="@images/Pause.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -281,7 +286,7 @@
                         <Slider fx:id="play_progress_bar" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
                         <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
-                                <Image url="@images/heart.png" />
+                                <Image url="@images/Like.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -296,7 +301,7 @@
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
-                                <Image url="@images/playlist.png" />
+                                <Image url="@images/Queue.png" />
                             </image>
                         </ImageView>
                     </children>

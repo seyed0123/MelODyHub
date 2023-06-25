@@ -6,6 +6,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
 import javax.crypto.BadPaddingException;
@@ -43,6 +49,8 @@ public class LoginSignupPage extends Application {
     public static Cipher cipherDecrypt;
     public static Gson gson;
     public static ObjectMapper objectMapper;
+
+    public static String LOGO = "images/logo.png";
     public static void sendMessage(String message)
     {
         try {
@@ -118,11 +126,34 @@ public class LoginSignupPage extends Application {
     }
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("LoginSignupPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Login / Signup");
-        stage.setScene(scene);
+        File file = new File("src/main/resources/com/example/melodyhub/MELODY HUB.mp4");
+        Media media = new Media(file.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView.setFitHeight(350);
+        mediaView.setFitWidth(700);
+        HBox hBox = new HBox();
+        hBox.getChildren().add(mediaView);
+        Scene scene2 = new Scene(hBox);
+        stage.setScene(scene2);
         stage.show();
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(stage::close);
+        stage.setOnHiding(event -> {
+                mediaPlayer.pause();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("HomePage_nologin.fxml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Scene scene = new Scene(root);
+                Stage stage1 = new Stage();
+                stage1.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                stage1.setTitle("");
+                stage1.setScene(scene);
+                stage1.show();
+            });
     }
 
     public static void main(String[] args) throws IOException {

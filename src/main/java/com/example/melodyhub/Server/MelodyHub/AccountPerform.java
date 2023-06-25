@@ -42,7 +42,7 @@ public class AccountPerform {
 
    public static void follow(UUID Id,UUID user)
     {
-        MelodyHub.sendQuery("insert into follow (user1id, user2id) VALUES (user1id = '"+Id+"' , user2id ='"+user+"');");
+        MelodyHub.sendQuery("insert into follow (user1id, user2id) VALUES ('"+Id+"' , '"+user+"');");
     }
 
    public static void unfollow(UUID Id,UUID user) {

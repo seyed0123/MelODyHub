@@ -9,8 +9,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.JSONObject;
@@ -80,6 +82,17 @@ public class FirstWindowController implements Initializable {
     private TextField password_field1;
     @FXML
     private Button change_btn1;
+    @FXML
+    private RadioButton artistAccount_radio1;
+    @FXML
+    private RadioButton userAccount_radio1;
+    @FXML
+    private RadioButton podcasterAccount_radio1;
+    @FXML
+    private Button confirm_btn1;
+    @FXML
+    private Label newPass_label;
+
 
     public static boolean edited = false;
     public static String job;
@@ -100,30 +113,111 @@ public class FirstWindowController implements Initializable {
         }
     }
 
-    public void confirmForgetPassTOTP() throws IOException {
+    public void getUserNameTotp() {
         String accType;
-        if (artistAccount_radio.isSelected()) accType = "artist";
-        else if (podcasterAccount_radio.isSelected()) accType = "podcaster";
-        else accType = "user";
+        if (artistAccount_radio1.isSelected()) accType = "artist";
+        else if (podcasterAccount_radio1.isSelected()) accType = "podcaster";
+        else if (userAccount_radio1.isSelected()) accType = "user";
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Alert");
+            alert.setHeaderText("account not found");
+            alert.setContentText("");
 
-        setSocket();
+            // Show the alert
+            alert.showAndWait();
+            return;
+        }
+
         sendMessage("forget pass");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("work", "TOTP");
         jsonObject.put("username", username_field1.getText());
         jsonObject.put("type", accType);
         sendMessage(jsonObject.toString());
+        String msg = getMessage();
+        if (msg.equals("TOTP")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Alert");
+            alert.setHeaderText("code send to your email");
+            alert.setContentText("");
+            // Show the alert
+            alert.showAndWait();
+            newPass_label.setVisible(true);
+            authCode_field1.setVisible(true);
+            confirm_btn1.setVisible(true);
+        } else if (msg.equals("account not found")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Alert");
+            alert.setHeaderText("account not found");
+            alert.setContentText("");
+
+            // Show the alert
+            alert.showAndWait();
+        }
+    }
+
+    public void confirmForgetPassTOTP() throws IOException {
 
         sendMessage(authCode_field1.getText());
-        assertEquals("TOTP", getMessage());
+        if (getMessage().equals("you are you")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Alert");
+            alert.setHeaderText("congratulations You are you");
+            alert.setContentText("you can now set pass");
+            // Show the alert
+            alert.showAndWait();
+//            password_field1.setVisible(true);
+//            change_btn.setVisible(true);
 
-        if ("you are you".equals(getMessage())) {
-            new Alert(Alert.AlertType.INFORMATION, "Authenticated Successfully!\n" +
-                    "Now enter a new password.").show();
-            password_field1.setVisible(true);
-            change_btn1.setVisible(true);
+            // Create a text field
+            TextField textField = new TextField();
+            textField.setLayoutX(50);
+            textField.setLayoutY(50);
+
+            // Create a button and add an event handler to it
+            Button button = new Button("submit");
+            button.setLayoutX(50);
+            button.setLayoutY(80);
+            button.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
+                @Override
+                public void handle(javafx.event.ActionEvent actionEvent) {
+                    sendMessage(textField.getText());
+                    getMessage();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Alert");
+                    alert.setHeaderText("you password changes");
+                    alert.setContentText("");
+                    ((Stage) textField.getScene().getWindow()).close();
+                    ((Stage) mainPane.getScene().getWindow()).close();
+                    try {
+                        new LoginSignupPage().start(new Stage());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            // Create a pane and add the text field and button to it'
+
+            HBox HBox = new HBox();
+            HBox.getChildren().addAll(textField, button);
+            Stage stage = new Stage();
+            // Create a scene and add the HBox to it
+            Scene scene = new Scene(HBox);
+
+            // Set the scene of the stage and show it
+            stage.setScene(scene);
+            stage.show();
+
         } else {
-            new Alert(Alert.AlertType.INFORMATION, "Wrong Code!").show();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information Alert");
+            alert.setHeaderText("i'm sorry , We guess you had hard day bro \n you lost yourself , find it.");
+            alert.setContentText("try more");
+
+            // Show the alert
+            alert.showAndWait();
         }
     }
 
@@ -161,18 +255,14 @@ public class FirstWindowController implements Initializable {
     }
 
     public void changePasswordClicked() throws IOException {
-        String newPass = password_field.getText();
-        sendMessage(newPass);
+        sendMessage(password_field1.getText());
+        getMessage();
 
-        if (Objects.equals("password updated", getMessage())) {
+        new Alert(Alert.AlertType.INFORMATION, "Your password is updated.\n" +
+                "Now you can login with your username and new password!").show();
 
-            new Alert(Alert.AlertType.INFORMATION, "Your password is updated.\n" +
-                    "Now you can login with your username and new password!").show();
-
-            ((Stage) this.password_field.getScene().getWindow()).close();
-            new LoginSignupPage().start(new Stage());
-
-        }
+        ((Stage) this.password_field.getScene().getWindow()).close();
+        new LoginSignupPage().start(new Stage());
     }
 
     public void back() throws IOException {
@@ -189,6 +279,10 @@ public class FirstWindowController implements Initializable {
         if (Objects.equals(job, "authentication")) {
             authentication.setVisible(true);
             forgetPassword2.setVisible(false);
+            forgetPassword1.setVisible(false);
+        } else if (job == "forget pass") {
+            authentication.setVisible(false);
+            forgetPassword2.setVisible(true);
             forgetPassword1.setVisible(false);
         }
         ArrayList<String> s = new ArrayList<>();

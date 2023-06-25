@@ -130,7 +130,7 @@ public class Session implements Runnable{
         try {
             while (true)
             {
-                if(count>10)
+                if(count>30)
                 {
                     sendMessage("your are kicked");
                     socket.close();
@@ -160,7 +160,31 @@ public class Session implements Runnable{
                     {
                         sendMessage("login failed");
                     }
-                }else if(Objects.equals(job, "login artist"))
+                }else if (job.equals("get popular")) {
+                    sendMessage(objectMapper.writeValueAsString(SongPerform.popularSong()));
+                }else if (job.equals("get song")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String id = (jsonObject.getString("id"));
+                    Song song = MelodyHub.findSong(id);
+                    sendMessage(objectMapper.writeValueAsString(song));
+                }else if (job.equals("download music cover")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    String id = jsonObject.getString("id");
+                    File file = new File("src/main/java/com/example/melodyhub/Server/download/"+id+".png");
+                    if(!file.exists()) {
+                        try {
+                            MelodyHub.extractCover(id);
+                            sendMessage("sending cover");
+                            MelodyHub.uploadImage(socket, "src/main/java/com/example/melodyhub/Server/download/" + id + ".png");
+                        } catch (Exception e) {
+                            sendMessage("no cover");
+                        }
+                    }else
+                    {
+                        sendMessage("sending cover");
+                        MelodyHub.uploadImage(socket, "src/main/java/com/example/melodyhub/Server/download/" + id + ".png");
+                    }
+                } else if(Objects.equals(job, "login artist"))
                 {
                     String username = getMessage();
                     String password = getMessage();
@@ -477,6 +501,11 @@ public class Session implements Runnable{
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("get playlists")) {
                     ArrayList<UUID> playlists = AccountPerform.getPlaylists(account.getId());
+                    sendMessage(objectMapper.writeValueAsString(playlists));
+                } else if (job.equals("get playlists another")) {
+                    JSONObject jsonObject = new JSONObject(getMessage());
+                    UUID id = UUID.fromString(jsonObject.getString("id"));
+                    ArrayList<UUID> playlists = AccountPerform.getPlaylists(id);
                     sendMessage(objectMapper.writeValueAsString(playlists));
                 } else if (job.equals("get songs artist")) {
                     JSONObject jsonObject = new JSONObject(getMessage());

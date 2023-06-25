@@ -112,19 +112,7 @@
          <top>
             <Pane prefHeight="99.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT" layoutX="342.0" layoutY="37.0" prefHeight="86.0" prefWidth="422.0">
-                     <children>
-                        <Label prefHeight="50.0" prefWidth="338.0" text="Rave &amp; Roses Album" textFill="WHITE">
-                           <font>
-                              <Font name="Pristina" size="25.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="tracksLabel" prefHeight="32.0" prefWidth="58.0" text="15 tracks" textFill="WHITE">
-                           <font>
-                              <Font name="Pristina" size="18.0" />
-                           </font></Label>
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="342.0" layoutY="37.0" prefHeight="86.0" prefWidth="422.0" />
                   <ImageView fx:id="home_button" fitHeight="60.0" fitWidth="59.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/back-icon.png" />
@@ -161,7 +149,7 @@
                   </VBox>
                   <ImageView fx:id="previous_track" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/next-button%20(1).png" />
+                        <Image url="@images/next-button (1).png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">

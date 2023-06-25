@@ -282,6 +282,8 @@ public class MelodyHub {
     }
     public static void updatePass(String table,UUID account,String password)
     {
+        if(Objects.equals(table, "user"))
+            table="person";
         MelodyHub.sendQuery(String.format("update %s set pass = '%s' where id = '%s';",table,hashPassword(password),account));
     }
     public static void updatePremium(String table,String column,UUID account,boolean res)

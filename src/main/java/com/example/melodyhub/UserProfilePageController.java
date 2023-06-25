@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -26,12 +28,19 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
 
 public class UserProfilePageController implements Initializable {
+
+    @FXML
+    private ImageView storyImage;
     @FXML
     private Button uploadButton;
     @FXML
@@ -175,7 +184,10 @@ public class UserProfilePageController implements Initializable {
     }
 
     private List<HBox> getPlaylists() throws IOException {
-        sendMessage("get playlists");
+        sendMessage("get playlists another");
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("id",user.getId());
+        sendMessage(jsonObject1.toString());
         String json = getMessage();
         ArrayList<UUID> uuidList = objectMapper.readValue(json, new TypeReference<>() {
         });
@@ -277,8 +289,11 @@ public class UserProfilePageController implements Initializable {
                     followings_label.setText(following.size() + "");
                     followings_listview.getItems().addAll(following);
                     followers_listview.getItems().addAll(follower);
-                    playlists_listview.getItems().addAll(getPlaylists());
+                }else {
+                    uploadButton.setVisible(false);
+                    storyImage.setVisible(false);
                 }
+                playlists_listview.getItems().addAll(getPlaylists());
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -320,7 +335,7 @@ public class UserProfilePageController implements Initializable {
         continueTimer();
     }
     @FXML
-    public void upload_profile(ActionEvent event) {
+    public void upload_profile(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open File");
 
@@ -337,7 +352,7 @@ public class UserProfilePageController implements Initializable {
         if (selectedFile == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
-            alert.setHeaderText("martike khar mage man maskare to am");
+            alert.setHeaderText("aya shoma sirous hastid ????");
             alert.setContentText("Please be careful!");
 
             alert.showAndWait();
@@ -348,6 +363,17 @@ public class UserProfilePageController implements Initializable {
             jsonObject.put("id",user.getId());
             sendMessage(jsonObject.toString());
             uploadImage(socket,selectedFile.getAbsolutePath());
+            Path sourcePath = Paths.get(selectedFile.getAbsolutePath());
+            Path targetPath = Paths.get("src/main/resources/com/example/melodyhub/images/profile/" + user.getId() + ".png");
+
+            // Create the target directory if it doesn't exist
+            File targetDir = targetPath.getParent().toFile();
+            if (!targetDir.exists()) {
+                targetDir.mkdirs();
+            }
+
+            // Copy the file
+            Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
         }
         try {
         } catch (Exception e) {
@@ -533,5 +559,89 @@ public class UserProfilePageController implements Initializable {
         mediaPlayer.seek(Duration.seconds(playbackPosition));
         playMedia();
 
+    }
+
+    public void follow()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Are you sure you want to follow it?");
+        alert.setContentText("Click OK to proceed, or Cancel to abort.");
+
+        // Get the user's response
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Check if the user clicked the OK button
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            sendMessage("follow");
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("followId",user.getId());
+            sendMessage(jsonObject.toString());
+        } else {
+            // User clicked Cancel, abort the operation
+            // ...
+        }
+    }
+    @FXML
+    public void uploadStory() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+
+        // Set initial directory
+        File initialDirectory = new File(System.getProperty("user.home"));
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Add file filters
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().addAll(imageFilter);
+
+        // Show open file dialog
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("aya shoma sirous hastid ????");
+            alert.setContentText("Please be careful!");
+
+            alert.showAndWait();
+        }else
+        {
+            Path sourcePath = Paths.get(selectedFile.getAbsolutePath());
+            Path targetPath = Paths.get("src/main/resources/com/example/melodyhub/images/profile/" + user.getId() + "story.png");
+
+            // Create the target directory if it doesn't exist
+            File targetDir = targetPath.getParent().toFile();
+            if (!targetDir.exists()) {
+                targetDir.mkdirs();
+            }
+
+            // Copy the file
+            Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+        }
+        try {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    public void showStory()
+    {
+        Stage stage = new Stage();
+        Image image = new Image(Account.class.getResource("images/profile/" + user.getId() + "story.png").toExternalForm());
+
+        // Create an ImageView control to display the image
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(600);
+        imageView.setFitHeight(400);
+
+        // Create a StackPane layout and add the ImageView to it
+        StackPane root = new StackPane();
+        root.getChildren().add(imageView);
+
+        // Create a Scene with the StackPane layout as root and set it on the Stage
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Image Viewer");
+        stage.show();
     }
 }
