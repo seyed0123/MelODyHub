@@ -21,9 +21,9 @@
             <center>
                 <VBox prefHeight="588.0" prefWidth="810.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Label text="your playlists" textFill="WHITE">
+                        <Label text="Your Playlists" textFill="WHITE">
                             <font>
-                                <Font size="20.0" />
+                                <Font name="Pristina" size="22.0" />
                             </font>
                             <VBox.margin>
                                 <Insets top="5.0" />
@@ -42,9 +42,9 @@
                      <children>
                         <VBox>
                            <children>
-                              <Label text="Followings" textFill="WHITE">
+                              <Label prefHeight="30.0" prefWidth="117.0" text="Followings" textFill="WHITE">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Pristina" size="22.0" />
                                  </font>
                               </Label>
                               <ScrollPane hbarPolicy="NEVER" prefHeight="268.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css">
@@ -58,7 +58,7 @@
                            <children>
                               <Label text="Followers" textFill="WHITE">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Pristina" size="23.0" />
                                  </font>
                               </Label>
                               <ScrollPane hbarPolicy="NEVER" prefHeight="268.0" prefWidth="350.0" styleClass="transparent" stylesheets="@css/styles.css">
@@ -84,18 +84,27 @@
         </BorderPane>
         <VBox alignment="CENTER" layoutX="3.0" layoutY="16.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: #D8B5E7;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="830.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fx:id="profile_img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true">
+                <ImageView fx:id="profile_img" fitHeight="86.0" fitWidth="101.0" pickOnBounds="true">
                     <image>
                     </image>
                 </ImageView>
-            <Button mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" text="upload profile">
+            <ImageView fitHeight="37.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/story.png" />
+               </image></ImageView>
+            <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="120.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/profilePage.png" />
+               </image>
+            </ImageView>
+            <Button mnemonicParsing="false" onAction="#upload_profile" onMouseClicked="#upload_profile" prefHeight="23.0" prefWidth="103.0" stylesheets="@css/buttomswithoutbackground.css" text="Upload Profile">
                <font>
                   <Font name="Forte" size="13.0" />
                </font>
             </Button>
                 <Label fx:id="username_label" prefHeight="37.0" prefWidth="230.0" text="Username" textFill="#441147">
                     <font>
-                        <Font size="18.0" />
+                        <Font name="Pristina" size="20.0" />
                     </font>
                     <VBox.margin>
                         <Insets left="10.0" />
@@ -105,28 +114,28 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0">
                             <children>
-                                <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="71.0" text="followers">
+                                <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="71.0" text="Followers">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font name="Pristina" size="18.0" />
                                     </font>
                                 </Label>
                                 <Label fx:id="followers_label" prefHeight="37.0" prefWidth="30.0" text="10" textFill="#441147">
                                     <font>
-                                        <Font size="18.0" />
+                                        <Font name="Pristina" size="24.0" />
                                     </font>
                                 </Label>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="110.0">
                             <children>
-                                <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="78.0" text="followings">
+                                <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="78.0" text="Followings">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font name="Pristina" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="followings_label" prefHeight="37.0" prefWidth="30.0" text="20" textFill="#441147">
+                                <Label fx:id="followings_label" prefHeight="31.0" prefWidth="30.0" text="20" textFill="#441147">
                                     <font>
-                                        <Font size="18.0" />
+                                        <Font name="Pristina" size="25.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -136,9 +145,9 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-                <Label prefHeight="37.0" prefWidth="230.0" text="Account Information" textFill="#441147">
+                <Label prefHeight="28.0" prefWidth="230.0" text="Account Information" textFill="#441147">
                     <font>
-                        <Font size="18.0" />
+                        <Font name="Pristina" size="20.0" />
                     </font>
                     <VBox.margin>
                         <Insets left="10.0" />
@@ -146,31 +155,14 @@
                 </Label>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <children>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="account:">
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="100.0" text="Account:">
                             <font>
-                                <Font size="18.0" />
+                                <Font name="Pristina" size="20.0" />
                             </font>
                         </Label>
-                        <Label fx:id="acctype_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                        <Label fx:id="acctype_label" prefHeight="30.0" prefWidth="100.0" text="set this" textFill="#441147">
                             <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                    <padding>
-                        <Insets left="30.0" right="10.0" />
-                    </padding>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <children>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="age:">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="age_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
-                            <font>
-                                <Font size="18.0" />
+                                <Font name="Pristina" size="18.0" />
                             </font>
                         </Label>
                     </children>
@@ -180,31 +172,14 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <children>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="gender:">
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="100.0" text="Age:">
                             <font>
-                                <Font size="18.0" />
+                                <Font name="Pristina" size="20.0" />
                             </font>
                         </Label>
-                        <Label fx:id="gender_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                        <Label fx:id="age_label" prefHeight="28.0" prefWidth="100.0" text="set this" textFill="#441147">
                             <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                    <padding>
-                        <Insets left="30.0" right="10.0" />
-                    </padding>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <children>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="email:">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="email_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
-                            <font>
-                                <Font size="18.0" />
+                                <Font name="Pristina" size="18.0" />
                             </font>
                         </Label>
                     </children>
@@ -214,14 +189,48 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <children>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="phone:">
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="100.0" text="Gender:">
                             <font>
-                                <Font size="18.0" />
+                                <Font name="Pristina" size="20.0" />
                             </font>
                         </Label>
-                        <Label fx:id="phone_label" prefHeight="37.0" prefWidth="100.0" text="set this" textFill="#441147">
+                        <Label fx:id="gender_label" prefHeight="23.0" prefWidth="100.0" text="set this" textFill="#441147">
                             <font>
-                                <Font size="18.0" />
+                                <Font name="Pristina" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="100.0" text="Email:">
+                            <font>
+                                <Font name="Pristina" size="20.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="email_label" prefHeight="31.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font name="Pristina" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="10.0" />
+                    </padding>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="100.0" text="Phone:">
+                            <font>
+                                <Font name="Pristina" size="20.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="phone_label" prefHeight="14.0" prefWidth="100.0" text="set this" textFill="#441147">
+                            <font>
+                                <Font name="Pristina" size="18.0" />
                             </font>
                         </Label>
                     </children>
@@ -239,12 +248,12 @@
                             <children>
                                 <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Nova" size="16.0" />
+                                        <Font name="Pristina" size="16.0" />
                                     </font>
                                 </Label>
                                 <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Nova Light" size="11.0" />
+                                        <Font name="Pristina" size="12.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -261,7 +270,7 @@
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
-                                <Image url="@images/pause-button.png" />
+                                <Image url="@images/Pause.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -287,14 +296,14 @@
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
-                                <Image url="@images/playlist.png" />
+                                <Image url="@images/Queue.png" />
                             </image>
                         </ImageView>
                     </children>
                 </HBox>
             </children>
         </Pane>
-      <ImageView fx:id="home_button" fitHeight="50.0" fitWidth="47.0" layoutX="1.0" onMouseClicked="#open_home" pickOnBounds="true">
+      <ImageView fx:id="home_button" fitHeight="38.0" fitWidth="32.0" layoutX="1.0" onMouseClicked="#open_home" pickOnBounds="true">
          <image>
             <Image url="@images/back-icon.png" />
          </image>

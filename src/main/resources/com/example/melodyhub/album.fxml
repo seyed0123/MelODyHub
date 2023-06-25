@@ -72,7 +72,7 @@
                   </ImageView>
                   <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
-                        <Image url="@images/playlist.png" />
+                        <Image url="@images/Queue.png" />
                      </image>
                   </ImageView>
                </children>
@@ -105,12 +105,12 @@
                   <Insets left="20.0" />
                </padding>
                <children>
-                  <ImageView fx:id="home_button" fitHeight="40.0" fitWidth="35.0" onMouseClicked="#open_home" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="home_button" fitHeight="40.0" fitWidth="35.0" onMouseClicked="#open_home" onMouseEntered="#enter" onMouseExited="#exit" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/Home.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="43.0" prefWidth="58.0" text="Home">
+                  <Label fx:id="text" prefHeight="43.0" prefWidth="58.0" text="Home">
                      <font>
                         <Font name="Pristina" size="22.0" />
                      </font>

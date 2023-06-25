@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" style="-fx-background-color: #7A3895;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.UserProfilePageController">
+    <children>
+      <Pane layoutX="319.0" layoutY="112.0" prefHeight="92.0" prefWidth="76.0" />
+        <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+            <children>
+                <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="1080.0" spacing="15.0" style="-fx-background-color: #16071C;">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
+                            <children>
+                                <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Pristina" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Pristina" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <ImageView fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/next-button (1).png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/play.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/Pause.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/next-button.png" />
+                            </image>
+                        </ImageView>
+                        <Slider fx:id="play_progress_bar" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                        <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/heart.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/comment.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/lyrics.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                            <image>
+                                <Image url="@images/Queue.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
+      <Label layoutX="44.0" layoutY="41.0" prefHeight="70.0" prefWidth="655.0" text="Thank you for choosing Melody Hub to share your songs and podcasts. " textFill="#efc6c6">
+         <font>
+            <Font name="Pristina" size="23.0" />
+         </font></Label>
+      <Label layoutX="45.0" layoutY="129.0" prefHeight="50.0" prefWidth="954.0" text="Melody Hub is proud to host you. You can share your comments with us through the email address 3melodyhub3@gmail.com." textFill="#efc6c6">
+         <font>
+            <Font name="Pristina" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="214.0" text="The Melody Hub team is at your service!" textFill="#efc6c6">
+         <font>
+            <Font name="Pristina" size="23.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="86.0" fitWidth="58.0" layoutX="44.0" layoutY="312.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/music.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="131.0" layoutY="323.0" prefHeight="39.0" prefWidth="105.0" text="Add Album" textFill="WHITE">
+         <font>
+            <Font name="Pristina" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="86.0" fitWidth="58.0" layoutX="44.0" layoutY="394.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/upload.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="131.0" layoutY="412.0" prefHeight="39.0" prefWidth="105.0" text="Upload Song" textFill="WHITE">
+         <font>
+            <Font name="Pristina" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="86.0" fitWidth="58.0" layoutX="44.0" layoutY="479.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/user.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="131.0" layoutY="488.0" prefHeight="39.0" prefWidth="172.0" text="Check Profile" textFill="WHITE">
+         <font>
+            <Font name="Pristina" size="18.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

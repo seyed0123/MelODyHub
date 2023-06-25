@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,62 +25,66 @@
                             <children>
                                 <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Nova" size="16.0" />
+                                        <Font name="Pristina" size="17.0" />
                                     </font>
                                 </Label>
                                 <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Nova Light" size="11.0" />
+                                        <Font name="Pristina" size="12.0" />
                                     </font>
                                 </Label>
                             </children>
                         </VBox>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons8-love-48.png" />
+                                <Image url="@images/next-button%20(1).png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons8-rewind-50.png" />
+                                <Image url="@images/play.png" />
                             </image>
                         </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="263.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Pause.png" />
+                     </image>
+                  </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@images/icons8-play-50.png" />
+                                <Image url="@images/next-button.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/icons8-fast-forward-50.png" />
-                            </image>
-                        </ImageView>
-                        <Slider prefHeight="19.0" prefWidth="500.0" stylesheets="@css/styles.css" />
+                        <Slider prefHeight="19.0" prefWidth="596.0" stylesheets="@css/styles.css" />
+                  <ImageView fx:id="likeImage" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/Like.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="commentImage" fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/comment.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </HBox>
+            <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" layoutX="1036.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+               <image>
+                  <Image url="@images/Queue.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lyricsImage" fitHeight="31.0" fitWidth="34.0" layoutX="990.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+               <image>
+                  <Image url="@images/lyrics.png" />
+               </image>
+            </ImageView>
             </children>
         </Pane>
         <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #383838;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
             <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                        <Group>
-                            <children>
-                                <TextField fx:id="search_field" prefHeight="42.0" prefWidth="225.0" promptText="search_field" style="-fx-background-color: #919191; -fx-background-radius: 20px;" text="What do you want to listen to?">
-                                    <padding>
-                                        <Insets left="10.0" />
-                                    </padding>
-                                </TextField>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="186.0" layoutY="6.0" onMouseClicked="#searchClicked" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/icons8-search-50.png" />
-                                    </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                                </ImageView>
-                            </children>
-                        </Group>
+                        <Group />
                </children>
                <BorderPane.margin>
                   <Insets top="20.0" />
@@ -109,7 +112,7 @@
                         </ImageView>
                         <Label prefHeight="24.0" prefWidth="79.0" text="Home" textFill="WHITE">
                             <font>
-                                <Font name="Roboto Condensed" size="14.0" />
+                                <Font name="Pristina" size="25.0" />
                             </font>
                             <cursor>
                                 <Cursor fx:constant="HAND" />
@@ -120,82 +123,6 @@
                         <Insets left="20.0" />
                     </padding>
                 </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
-                    <children>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/icons8-search-50-darkmode.png" />
-                            </image>
-                        </ImageView>
-                        <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="WHITE">
-                            <font>
-                                <Font name="Roboto Condensed" size="14.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Label>
-                    </children>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0" spacing="5.0">
-                    <children>
-                        <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/icons8-premium-64.png" />
-                            </image>
-                        </ImageView>
-                        <Label prefHeight="24.0" prefWidth="79.0" text="Premium" textFill="WHITE">
-                            <font>
-                                <Font name="Roboto Condensed" size="14.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Label>
-                    </children>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                </HBox>
-                <Label prefHeight="40.0" prefWidth="136.0" text="Artists" textFill="#bebebe">
-                    <font>
-                        <Font name="Roboto Condensed" size="14.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets top="50.0" />
-                    </VBox.margin>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Label>
-                <Label prefHeight="40.0" prefWidth="136.0" text="Podcasts" textFill="#bebebe">
-                    <font>
-                        <Font name="Roboto Condensed" size="14.0" />
-                    </font>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Label>
-                <Label prefHeight="40.0" prefWidth="136.0" text="Albums" textFill="#bebebe">
-                    <font>
-                        <Font name="Roboto Condensed" size="14.0" />
-                    </font>
-                    <padding>
-                        <Insets left="20.0" />
-                    </padding>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Label>
             </children>
         </VBox>
     </children>
