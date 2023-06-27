@@ -130,7 +130,7 @@ public class Session implements Runnable{
         try {
             while (true)
             {
-                if(count>30)
+                if(count>100000000)
                 {
                     sendMessage("your are kicked");
                     socket.close();

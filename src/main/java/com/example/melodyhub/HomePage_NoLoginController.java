@@ -79,7 +79,13 @@ public class HomePage_NoLoginController implements Initializable {
     }
 
     @FXML
-    void serach(MouseEvent event) {
+    void serach(MouseEvent event) throws IOException {
+        Stage stage = (Stage) popular.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(SearchPage_NoLogin.class.getResource("SearchPage_nologin.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Explore");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

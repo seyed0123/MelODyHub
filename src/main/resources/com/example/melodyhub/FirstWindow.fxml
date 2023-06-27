@@ -39,13 +39,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.FirstWindowController">
     <children>
         <AnchorPane fx:id="mainPane" prefHeight="501.0" prefWidth="498.0" stylesheets="@css/styles.css">
             <children>
-                <AnchorPane fx:id="forgetPassword1" layoutX="30.0" layoutY="35.0" prefHeight="592.0" prefWidth="415.0" stylesheets="@css/design.css">
+                <AnchorPane fx:id="forgetPassword1" layoutX="30.0" layoutY="35.0" prefHeight="592.0" prefWidth="415.0" stylesheets="@css/design.css" visible="false">
                     <children>
                         <Label layoutX="139.0" layoutY="46.0" prefHeight="58.0" prefWidth="163.0" text="Forget Password" textFill="#331336">
                             <font>
@@ -57,7 +58,7 @@
                                 <Font name="Pristina" size="18.0" />
                             </font>
                         </Button>
-                        <Button fx:id="change_btn" layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Change Password" textFill="#441246" visible="false">
+                        <Button layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Change Password" textFill="#441246" visible="false">
                             <font>
                                 <Font name="Pristina" size="20.0" />
                             </font>
@@ -170,77 +171,83 @@
                   </ImageView>
                     </children>
                 </AnchorPane>
-            <AnchorPane fx:id="forgetPassword2" layoutX="30.0" layoutY="34.0" prefHeight="592.0" prefWidth="415.0" stylesheets="@css/design.css" visible="false">
+            <AnchorPane fx:id="forgetPassword2" layoutX="30.0" layoutY="34.0" prefHeight="592.0" prefWidth="415.0" stylesheets="@css/design.css">
                <children>
-                  <Label layoutX="124.0" layoutY="48.0" prefHeight="82.0" prefWidth="179.0" text="Forget Password" textFill="#331336">
-                     <font>
-                        <Font name="Pristina" size="25.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="change_btn1" layoutX="37.0" layoutY="476.0" mnemonicParsing="false" onAction="#confirmForgetPassTOTP" prefHeight="38.0" prefWidth="330.0" styleClass="btn" stylesheets="@css/design.css" text="Confirm" textFill="#441246">
-                     <font>
-                        <Font name="Pristina" size="18.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="104.0" layoutY="528.0" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="254.0" styleClass="btn" stylesheets="@css/design.css" text="Change Password" textFill="#441246" visible="false">
-                     <font>
-                        <Font name="Pristina" size="20.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="username_field1" layoutX="40.0" layoutY="159.0" prefHeight="51.0" prefWidth="330.0" promptText="Username" styleClass="custom-textbox" stylesheets="@css/design.css">
-                     <font>
-                        <Font name="Pristina" size="21.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="password_field1" layoutX="104.0" layoutY="480.0" prefHeight="26.0" prefWidth="254.0" promptText="New Password" styleClass="custom-textbox" stylesheets="@css/design.css" visible="false">
-                     <font>
-                        <Font name="Pristina" size="12.0" />
-                     </font>
-                  </TextField>
-                  <HBox layoutX="40.0" layoutY="396.0" prefHeight="46.0" prefWidth="330.0" spacing="30.0">
+                  <VBox alignment="CENTER" layoutX="42.0" layoutY="-17.0" spacing="10.0">
                      <children>
-                        <RadioButton fx:id="userAccount_radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" text="User">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="accountType1" />
-                           </toggleGroup>
+                        <Label prefHeight="82.0" prefWidth="179.0" text="Forget Password" textFill="#331336">
+                           <font>
+                              <Font name="Pristina" size="25.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="username_field1" prefHeight="51.0" prefWidth="330.0" promptText="Username" styleClass="custom-textbox" stylesheets="@css/design.css">
+                           <font>
+                              <Font name="Pristina" size="21.0" />
+                           </font>
+                        </TextField>
+                        <Label prefHeight="32.0" prefWidth="320.0" text="Account Type:" textAlignment="CENTER" textFill="#331336">
+                           <font>
+                              <Font name="Pristina" size="19.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="46.0" prefWidth="330.0" spacing="30.0">
+                           <children>
+                              <RadioButton fx:id="userAccount_radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" text="User">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="accountType1" />
+                                 </toggleGroup>
+                                 <font>
+                                    <Font name="Pristina" size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="artistAccount_radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Artist" toggleGroup="$accountType1">
+                                 <font>
+                                    <Font name="Pristina" size="18.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="podcasterAccount_radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Podcaster" toggleGroup="$accountType1">
+                                 <font>
+                                    <Font name="Pristina" size="18.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                        <Button fx:id="send_btn" mnemonicParsing="false" onAction="#getUserNameTotp" prefHeight="34.0" prefWidth="118.0" text="send">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label fx:id="newPass_label" prefHeight="32.0" prefWidth="316.0" text="Enter the code you recieved:" textFill="#3e1940" visible="false">
+                           <font>
+                              <Font name="Pristina" size="19.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="authCode_field1" prefHeight="42.0" prefWidth="330.0" promptText="Enter your code..." styleClass="custom-textbox" stylesheets="@css/design.css" visible="false">
+                           <font>
+                              <Font name="Pristina" size="21.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="confirm_btn1" mnemonicParsing="false" onAction="#confirmForgetPassTOTP" prefHeight="38.0" prefWidth="330.0" styleClass="btn" stylesheets="@css/design.css" text="Confirm" textFill="#441246" visible="false">
                            <font>
                               <Font name="Pristina" size="18.0" />
                            </font>
-                        </RadioButton>
-                        <RadioButton fx:id="artistAccount_radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Artist" toggleGroup="$accountType1">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                        <TextField fx:id="password_field1" prefHeight="52.0" prefWidth="330.0" promptText="New Password" styleClass="custom-textbox" stylesheets="@css/design.css" visible="false">
                            <font>
-                              <Font name="Pristina" size="18.0" />
-                           </font></RadioButton>
-                        <RadioButton fx:id="podcasterAccount_radio1" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Podcaster" toggleGroup="$accountType1">
+                              <Font name="Pristina" size="20.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="change_btn" mnemonicParsing="false" onAction="#changePasswordClicked" prefHeight="38.0" prefWidth="330.0" styleClass="btn" stylesheets="@css/design.css" text="Change Password" textFill="#441246" visible="false">
                            <font>
-                              <Font name="Pristina" size="18.0" />
-                           </font></RadioButton>
+                              <Font name="Pristina" size="20.0" />
+                           </font>
+                        </Button>
                      </children>
-                  </HBox>
-                  <Label layoutX="41.0" layoutY="358.0" prefHeight="26.0" prefWidth="126.0" text="Account Type:" textAlignment="CENTER" textFill="#331336">
-                     <font>
-                        <Font name="Pristina" size="19.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="99.0" layoutY="533.0" onMouseClicked="#switchChangeClicked" prefHeight="28.0" prefWidth="229.0" text="Change password with security question" textFill="RED">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="Pristina" size="17.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="37.0" layoutY="249.0" prefHeight="22.0" prefWidth="239.0" text="Enter the code you recieved:" textFill="#3e1940">
-                     <font>
-                        <Font name="Pristina" size="19.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="authCode_field1" layoutX="37.0" layoutY="287.0" prefHeight="42.0" prefWidth="330.0" promptText="Enter your code..." styleClass="custom-textbox" stylesheets="@css/design.css">
-                     <font>
-                        <Font name="Pristina" size="21.0" />
-                     </font>
-                  </TextField>
-                  <ImageView fitHeight="52.0" fitWidth="45.0" layoutX="25.0" layoutY="25.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
+                  </VBox>
+                  <ImageView fitHeight="52.0" fitWidth="45.0" onMouseClicked="#back" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/back-icon.png" />
                      </image>
@@ -248,6 +255,14 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
+                  <Label layoutX="95.0" layoutY="555.0" onMouseClicked="#switchChangeClicked" prefHeight="28.0" prefWidth="229.0" text="Change password with security question" textFill="RED">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Pristina" size="17.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             </children>

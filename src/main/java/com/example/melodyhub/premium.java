@@ -21,11 +21,6 @@ public class premium {
         Process process = processBuilder.start();
 
         process.waitFor();
-        LoginSignupPage.sendMessage("update premium");
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("column","premium");
-        jsonObject.put("premium",true);
-        LoginSignupPage.sendMessage(jsonObject.toString());
         // Get a reference to the stage
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
