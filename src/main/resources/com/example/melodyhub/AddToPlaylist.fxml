@@ -27,7 +27,7 @@
                                         <Image url="@images/covers/IMG_20230612_155238_752.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="songNameLabel1" alignment="CENTER" prefHeight="30.0" prefWidth="147.0" text="Song name" textFill="WHITE">
+                                <Label fx:id="songNameLabel1" alignment="CENTER" prefHeight="30.0" prefWidth="147.0" text="Song name" textFill="WHITE" wrapText="true">
                                     <font>
                                         <Font name="Pristina" size="33.0" />
                                     </font>

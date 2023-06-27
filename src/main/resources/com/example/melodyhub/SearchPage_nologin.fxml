@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SearchPageController_NoLogin">
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SearchPageController_NoLogin">
     <children>
         <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
             <children>
@@ -28,12 +28,12 @@
                             <children>
                                 <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Nova" size="16.0" />
+                                        <Font name="Pristina" size="18.0" />
                                     </font>
                                 </Label>
                                 <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Nova Light" size="11.0" />
+                                        <Font name="Pristina" size="15.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -50,7 +50,7 @@
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                             <image>
-                                <Image url="@images/pause-button.png" />
+                                <Image url="@images/Pause.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
@@ -377,7 +377,7 @@
                <children>
                   <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/house.png" />
+                        <Image url="@images/Home.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="43.0" prefWidth="58.0" text="Home">

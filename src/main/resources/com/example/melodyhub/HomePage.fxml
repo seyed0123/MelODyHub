@@ -82,7 +82,7 @@
             </HBox>
          </children>
       </Pane>
-      <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #301934;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="songsPane" layoutX="119.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="961.0" style="-fx-background-color: #301934;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
             <VBox fx:id="recommended" prefHeight="400.0" prefWidth="740.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
@@ -127,28 +127,28 @@
             </VBox>
          </bottom>
          <top>
-            <ImageView fx:id="banner" fitHeight="182.0" fitWidth="930.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+            <ImageView fx:id="banner" fitHeight="182.0" fitWidth="962.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                <image>
                   <Image url="@images/header.jpg" />
                </image>
             </ImageView>
          </top>
       </BorderPane>
-      <VBox fx:id="side_bar" layoutX="-2.0" layoutY="33.0" prefHeight="590.0" prefWidth="152.0" style="-fx-background-color: #C4A7E1;" stylesheets="@css/texthover.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="side_bar" layoutX="-2.0" layoutY="33.0" prefHeight="590.0" prefWidth="121.0" style="-fx-background-color: #C4A7E1;" stylesheets="@css/texthover.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="961.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox fx:id="profile" alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="152.0" spacing="10.0">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="27.0" onMouseEntered="#enter2" onMouseExited="#exit2" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/user.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="24.0" prefWidth="79.0" text="Profile" textFill="#101010">
+                  <Label fx:id="text2" prefHeight="24.0" prefWidth="79.0" text="Profile">
                      <font>
-                        <Font name="Pristina" size="24.0" />
+                        <Font name="Pristina" size="20.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -161,14 +161,14 @@
             </HBox>
             <HBox fx:id="explore" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="152.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="32.0" fitWidth="33.0" onMouseEntered="#enter3" onMouseExited="#exit3" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/icons8-search-50.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="24.0" prefWidth="79.0" text="Explore" textFill="#101010">
+                  <Label fx:id="text3" prefHeight="24.0" prefWidth="79.0" text="Explore">
                      <font>
-                        <Font name="Pristina" size="24.0" />
+                        <Font name="Pristina" size="20.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />

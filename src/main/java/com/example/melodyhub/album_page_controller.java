@@ -81,6 +81,16 @@ public class album_page_controller implements Initializable {
 
     @FXML
     private BorderPane songsPane;
+    @FXML
+    private Label text;
+    @FXML
+    protected void enter(){
+        text.setVisible(true);
+    }
+    @FXML
+    protected void exit(){
+        text.setVisible(false);
+    }
 
 
     // pop ups
