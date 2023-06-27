@@ -146,6 +146,7 @@ public class PlayList_controller implements Initializable {
                 Label songNameLabel = new Label(song.getName());
                 songNameLabel.setTextFill(Color.DARKMAGENTA);
                 songNameLabel.setFont(new Font("Arial Nova", 16.0));
+                System.out.println(song.getName());
 
                 Label singerNameLabel = new Label(song.getGenre());
                 singerNameLabel.setTextFill(Color.DARKMAGENTA);
@@ -194,6 +195,7 @@ public class PlayList_controller implements Initializable {
                         current_song_genre.setText(song.getGenre());
                         current_song_label.setText(song.getName());
                         current_song_image.setImage(image);
+                        System.out.println();
                         current_song_year.setText(song.getYear()+"");
                     }
                 });

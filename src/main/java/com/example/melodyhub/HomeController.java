@@ -200,7 +200,7 @@ public class HomeController implements Initializable {
                         Image image = new Image("@images/covers/"+id+".png");
                         imageView.setImage(image);
                     }catch (Exception e) {
-                        Image image = new Image("@images/covers/default.png");
+                        Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
                         imageView.setImage(image);
                     }
 
@@ -217,12 +217,24 @@ public class HomeController implements Initializable {
                     singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
 
                     vbox.getChildren().addAll(imageView, songNameLabel, singerNameLabel);
+
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            System.out.println("song clicked");
-                        }
-                });
+                                                   @Override
+                                                   public void handle(MouseEvent event) {
+                                                       Stage stage = new Stage();
+                                                       FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("AddToPlaylist.fxml"));
+                                                       Scene scene = null;
+                                                       AddToPlaylistController.setAccount(song,user);
+                                                       try {
+                                                           scene = new Scene(fxmlLoader.load());
+                                                       } catch (IOException e) {
+                                                           throw new RuntimeException(e);
+                                                       }
+                                                       stage.setTitle("Login / Signup");
+                                                       stage.setScene(scene);
+                                                       stage.show();
+                                                   }
+                                               });
                     this.recom.getChildren().addAll(vbox);
                 }
                 sendMessage("get popular");
