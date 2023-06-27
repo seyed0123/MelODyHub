@@ -2,12 +2,12 @@
 import librosa
 import numpy as np
 
-def get_features(song_path):
+def get_features(audio , sr):
 
     features_list = []
 
     # Load audio file
-    audio, sr = librosa.load(song_path)
+    # audio, sr = librosa.load(song_path)
 
     # the length of the audio file
     length = 661794
