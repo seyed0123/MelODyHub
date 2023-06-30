@@ -70,6 +70,7 @@ public class notification_page_controller implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         {
+
             song_name_label.setText(songs.get(songNumber).getName());
             song_name_label.setWrapText(true);
             play_progress_bar.setValue(current_play_time);

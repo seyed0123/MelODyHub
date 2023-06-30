@@ -94,72 +94,10 @@ public class LoXdy {
             msg.setSentDate(new Date());
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            Transport.send(msg);
+            //Transport.send(msg);
             System.out.println("email was sent successfully to "+toEmail);
         }
         catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public static String saveImage()
-    {
-         final String ACCESS_TOKEN = "sl.BfjcfcWHEYXGhAbixME9vc3uJ2sbtFyU0HP_sir-3uEzIoetDwBNF6MOLeuKFcW-zxhGXQIdngSAs4LyRdZbFMa7_Ju1LmGfVWVPsb-5lj2JRQlgXh3QH-gHfK4QKDg5CgYLfr8";
-        // Create Dropbox client
-        DbxRequestConfig config = DbxRequestConfig.newBuilder("3melodyhub3@gmail.com").build();
-        DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
-
-        // Upload image to Dropbox
-        try {
-            // Specify the local file path and name
-            String localFilePath = "src/main/resources/com/example/melodyhub/image.png";
-
-            // Specify the Dropbox file path and name
-            String dropboxFilePath = "/image.png";
-
-            // Create a file input stream for the image file
-            InputStream inputStream = new FileInputStream(new File(localFilePath));
-
-            // Upload the image to Dropbox
-            FileMetadata metadata = client.files().uploadBuilder(dropboxFilePath)
-                    .uploadAndFinish(inputStream);
-
-            // Print the metadata for the uploaded file
-            System.out.println(metadata.toString());
-
-        } catch (UploadErrorException | FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (DbxException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-    public static void SMSSender(String phoneNumber,String message) {
-        try {
-            Socket socket = new Socket("localhost", 5573);
-            PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-            output.println(phoneNumber);
-            output.println(message);
-            output.close();
-            socket.close();
-        }catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void openGame()
-    {
-        try {
-            // Create process builder for Windows Terminal
-            ProcessBuilder processBuilder = new ProcessBuilder();
-            processBuilder.command("wt.exe", "-d", ".", "Pacman/pacman.exe");
-
-            // Start process
-            Process process = processBuilder.start();
-
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

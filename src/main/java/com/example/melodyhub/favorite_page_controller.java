@@ -185,13 +185,13 @@ public class favorite_page_controller implements Initializable {
 
                     Song song = objectMapper.readValue(getMessage(), Song.class);
 
-                    Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
-                    ImageView imageView = new ImageView(image);
+
+                    ImageView imageView = new ImageView();
                     imageView.setFitHeight(100.0);
                     imageView.setFitWidth(100.0);
                     imageView.setPickOnBounds(true);
                     imageView.setPreserveRatio(true);
-                    imageView.setImage(image);
+
                     // Create the VBox
                     HBox Hbox = new HBox();
                     Hbox.setAlignment(Pos.CENTER_LEFT);
@@ -200,7 +200,7 @@ public class favorite_page_controller implements Initializable {
                     Hbox.getChildren().add(imageView);
 
                     // downloading cover
-                    File file = new File("src/main/resources/com/example/melodyhub/images/covers/"+id+".png");
+                    File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
                     try {
                         if (!file.exists()) {
                             sendMessage("download music cover");
@@ -214,7 +214,7 @@ public class favorite_page_controller implements Initializable {
                                 throw new Exception();
                             }
                         }
-                        Image cover_image = new Image(Account.class.getResource("images/covers/" + id + ".png").toExternalForm());
+                        Image cover_image = new Image(Account.class.getResource("images/profile/" + id + ".png").toExternalForm());
                         imageView.setImage(cover_image);
                     } catch (Exception e) {
                         try {

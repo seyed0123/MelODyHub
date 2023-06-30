@@ -99,13 +99,11 @@ public class PlayPageController implements Initializable {
 
                 Song song = objectMapper.readValue(getMessage(), Song.class);
 
-                Image image = new Image(Account.class.getResource("images/default.png").toExternalForm());
-                ImageView imageView = new ImageView(image);
+                ImageView imageView = new ImageView();
                 imageView.setFitHeight(100.0);
                 imageView.setFitWidth(100.0);
                 imageView.setPickOnBounds(true);
                 imageView.setPreserveRatio(true);
-                imageView.setImage(image);
                 // Create the VBox
                 HBox Hbox = new HBox();
                 Hbox.setAlignment(Pos.CENTER_LEFT);
@@ -116,7 +114,8 @@ public class PlayPageController implements Initializable {
                 // downloading cover
 
                 try {
-                    if (!file.exists()) {
+                    File file1 = new File("src/main/resources/com/example/melodyhub/images/profile/"+song.getId()+".png");
+                    if (!file1.exists()) {
                         sendMessage("download music cover");
                         sendMessage(jsonObject.toString());
                         String response = getMessage();
@@ -128,12 +127,12 @@ public class PlayPageController implements Initializable {
                             throw new Exception();
                         }
                     }
-                    Image cover_image = new Image(Account.class.getResource("images/covers/" + fileName + ".png").toExternalForm());
-                    imageView.setImage(image);
+                    Image cover_image = new Image(Account.class.getResource("images/profile/" + fileName + ".png").toExternalForm());
+                    imageView.setImage(cover_image);
                 } catch (Exception e) {
                     try {
                         Image cover_image = new Image(Account.class.getResource("images/default.png").toExternalForm());
-                        imageView.setImage(image);
+                        imageView.setImage(cover_image);
                     } catch (Exception ep) {
                         ep.printStackTrace();
                     }
@@ -156,7 +155,7 @@ public class PlayPageController implements Initializable {
     private void setCurrent()
     {
         try {
-            songImage.setImage(new Image(Account.class.getResource("images/covers/" + current_song_id + ".png").toExternalForm()));
+            songImage.setImage(new Image(Account.class.getResource("images/profile/" + current_song_id + ".png").toExternalForm()));
         }catch (Exception e)
         {songImage.setImage(new Image(Account.class.getResource("images/default.png").toExternalForm()));}
         songNameLabel1.setText(current_song_name);

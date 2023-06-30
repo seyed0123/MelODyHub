@@ -103,11 +103,12 @@ public class share_page_controller implements Initializable {
                         Button submitButton = new Button("Submit");
                         submitButton.setOnAction(event -> {
                             String inputString = textField.getText();
-                            sendMessage("follow");
+                            sendMessage("share playlist");
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("followId",inputString);
+                            jsonObject.put("user",inputString);
+                            jsonObject.put("playlist",playlist.getId());
                             sendMessage(jsonObject.toString());
-                            if(getMessage()!="done")
+                            if(getMessage().equals("done"))
                             {
                                 // Create a new alert
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

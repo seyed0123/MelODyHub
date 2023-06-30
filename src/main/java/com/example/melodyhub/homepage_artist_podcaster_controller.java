@@ -108,8 +108,6 @@ public class homepage_artist_podcaster_controller implements Initializable {
     public static  ArrayList<File> songs;
 
     public static  int songNumber;
-    public static int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
-
     public static  Timer timer;
     public static  TimerTask task;
 

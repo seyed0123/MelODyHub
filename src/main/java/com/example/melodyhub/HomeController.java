@@ -113,27 +113,6 @@ public class HomeController implements Initializable {
 
     @FXML
     public Label singerNameLabel;
-//    @FXML
-//    private Label text2;
-//    @FXML
-//    protected void enter2(){
-//        text2.setVisible(true);
-//    }
-//    @FXML
-//    protected void exit2(){
-//        text2.setVisible(false);
-//    }
-//    @FXML
-//    private Label text3;
-//    @FXML
-//    protected void exit3(){
-//        text3.setVisible(false);
-//    }
-//    @FXML
-//    protected void enter3(){
-//        text3.setVisible(true);
-//    }
-
 
     @FXML
     public Label song_name_label;
@@ -521,7 +500,14 @@ public class HomeController implements Initializable {
                             user.setPremium(true);
                             sendMessage("update user");
                             HashMap<String,String> command = new HashMap<>();
-                            command.put("premium","false");
+                            command.put("premium","true");
+                            try {
+                                JSONObject jsonObject = new JSONObject();
+                                jsonObject.put("command",objectMapper.writeValueAsString(command));
+                                sendMessage(jsonObject.toString());
+                            } catch (JsonProcessingException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     });
                     stage.setTitle("Login / Signup");
