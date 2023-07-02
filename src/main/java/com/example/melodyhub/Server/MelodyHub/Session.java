@@ -337,7 +337,9 @@ public class Session implements Runnable{
                     if(artist!=null)
                         artistName = artist.toString();
                     UUID firstOwner = MelodyHub.findUserUsername(jsonObject.getString("firstOwner"));
-                    MelodyHub.createPlaylist(firstOwner,new PlayList(UUID.randomUUID().toString(),name,personal,0,0,artistName,firstOwner.toString()));
+                    UUID id = UUID.randomUUID();
+                    MelodyHub.createPlaylist(firstOwner,new PlayList(id.toString(),name,personal,0,0,artistName,firstOwner.toString()));
+                    PlaylistPerform.addOwner(id,firstOwner);
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
                 } else if (job.equals("create song")) {
@@ -579,7 +581,7 @@ public class Session implements Runnable{
                     JSONObject jsonObject = new JSONObject(getMessage());
                     UUID playlist = UUID.fromString(jsonObject.getString("playlist"));
                     String id = (jsonObject.getString("id"));
-                    int order = Integer.parseInt(jsonObject.getString("order"));
+                    int order = (jsonObject.getInt("order"));
                     PlaylistPerform.placesASong(playlist,id,order);
                     jsonObject.put("job",job);
                     MelodyHub.addLog(jsonObject);
@@ -627,6 +629,9 @@ public class Session implements Runnable{
                         sendMessage("don't have permission");
                     }else {
                         UserPerform.sharePlaylist(playlist,user);
+                        User temp = MelodyHub.findUser(user);
+                        temp.addNotification(account.getUsername()+" hae been shared a playlist with you");
+                        UserPerform.save(user,temp.getNotification(),new ArrayList<String>(),new ArrayList<UUID>());
                         jsonObject.put("job",job);
                         MelodyHub.addLog(jsonObject);
                         sendMessage("done");

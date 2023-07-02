@@ -30,6 +30,7 @@ public class PlaylistPerform {
                 "SELECT '"+song+"', '"+id+"', COALESCE(MAX(songOrder), 0) + 1\n" +
                 "FROM Song_Playlist\n" +
                 "WHERE playlistId = '"+id+"';");
+        MelodyHub.sendQuery("update playlists set duration = duration + "+MelodyHub.findSong(song).getDuration()+" where id = '"+id+"';");
     }
 
     public static void removeSong(UUID id,String song) {
@@ -43,35 +44,53 @@ public class PlaylistPerform {
                 "\n" +
                 "DELETE FROM Song_Playlist\n" +
                 "WHERE songId = '"+song+"' AND playlistId = '"+id+"';");
+        MelodyHub.sendQuery("update playlists set duration = duration - "+MelodyHub.findSong(song).getDuration()+" where id = '"+id+"';");
     }
 
     public static void changeSongOrder(UUID playlist,String song1,String song2) {
-        MelodyHub.sendQuery("UPDATE Song_Playlist\n" +
+        MelodyHub.sendQuery("BEGIN;\n" +
+                "\n" +
+                "-- Get the current order of song1 and store it in a CTE\n" +
+                "WITH temp_order AS (\n" +
+                "    SELECT songOrder FROM Song_Playlist\n" +
+                "    WHERE songId = '"+song1+"' AND playlistId = '"+playlist+"'\n" +
+                ")\n" +
+                "-- Update the order of both songs\n" +
+                "UPDATE Song_Playlist\n" +
                 "SET songOrder = CASE songId\n" +
-                "                    WHEN '"+song1+"' THEN (SELECT songOrder FROM Song_Playlist WHERE songId = '"+song2+"' AND playlistId = 'playlist_id')\n" +
-                "                    WHEN '"+song2+"' THEN (SELECT songOrder FROM Song_Playlist WHERE songId = '"+song1+"' AND playlistId = 'playlist_id')\n" +
+                "                    WHEN '"+song1+"' THEN (SELECT songOrder FROM Song_Playlist WHERE songId = '"+song2+"' AND playlistId = '"+playlist+"')\n" +
+                "                    WHEN '"+song2+"' THEN (SELECT songOrder FROM temp_order)\n" +
                 "    END\n" +
-                "WHERE songId IN ('"+song1+"', '"+song2+"') AND playlistId = '"+playlist+"';");
+                "WHERE songId IN ('"+song1+"', '"+song2+"') AND playlistId = '"+playlist+"';\n" +
+                "\n" +
+                "COMMIT;");
     }
 
     public static void placesASong(UUID playlist,String song,int order)
     {
-        MelodyHub.sendQuery("UPDATE Song_Playlist\n" +
-                "SET songOrder = \n" +
-                "    CASE\n" +
-                "        WHEN songOrder = (\n" +
-                "            SELECT songOrder\n" +
-                "            FROM Song_Playlist\n" +
-                "            WHERE songId = '"+song+"' AND playlistId = '"+playlist+"'\n" +
-                "        ) THEN "+order+"\n" +
-                "        WHEN songOrder BETWEEN "+order+" AND (\n" +
-                "            SELECT songOrder\n" +
-                "            FROM Song_Playlist\n" +
-                "            WHERE songId = '"+song+"' AND playlistId = '"+playlist+"'\n" +
-                "        ) - 1 THEN songOrder + 1\n" +
-                "        ELSE songOrder\n" +
+        MelodyHub.sendQuery("WITH old_order AS (\n" +
+                "    SELECT songorder\n" +
+                "    FROM song_playlist\n" +
+                "    WHERE songid = '"+song+"' AND playlistid = '"+playlist+"'\n" +
+                "),\n" +
+                "     new_order AS (\n" +
+                "         SELECT "+order+" AS songorder\n" +
+                "     )\n" +
+                "UPDATE song_playlist\n" +
+                "SET songorder = CASE\n" +
+                "                    WHEN old_order.songorder < new_order.songorder THEN songorder - 1\n" +
+                "                    ELSE songorder + 1\n" +
                 "    END\n" +
-                "WHERE playlistId = '"+playlist+"';");
+                "FROM old_order, new_order\n" +
+                "WHERE playlistid = '"+playlist+"'\n" +
+                "  AND songorder IN (old_order.songorder + 1, new_order.songorder, old_order.songorder - 1);\n" +
+                "with new_order AS (\n" +
+                "         SELECT "+order+" AS songorder\n" +
+                "     )\n" +
+                "UPDATE song_playlist\n" +
+                "SET songorder = new_order.songorder\n" +
+                "FROM new_order\n" +
+                "WHERE songid = '"+song+"' AND playlistid = '"+playlist+"';");
     }
     public static ArrayList<UUID> getOwners(UUID id) {
         ArrayList<UUID> ret = new ArrayList<>();

@@ -130,8 +130,8 @@ public class LoginSignupPage extends Application {
         Media media = new Media(file.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         MediaView mediaView = new MediaView(mediaPlayer);
-        mediaView.setFitHeight(350);
-        mediaView.setFitWidth(700);
+        mediaView.setFitHeight(720);
+        mediaView.setFitWidth(1080);
         HBox hBox = new HBox();
         hBox.getChildren().add(mediaView);
         Scene scene2 = new Scene(hBox);

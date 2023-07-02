@@ -2,16 +2,16 @@ package com.example.melodyhub;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -110,6 +110,23 @@ public class PlayList_controller implements Initializable {
 
     // for playing the playlist
 
+    @FXML
+    private Button smartShuffle;
+    @FXML
+    private Button switchOrder;
+    @FXML
+    private Button removeSong;
+    @FXML
+    private Button shuffle;
+    @FXML
+    private Button changeOrder;
+    @FXML
+    private Button like;
+    @FXML
+    private Button owners;
+    @FXML
+    private Button delete;
+
 
     public static void setPlayList(PlayList playList,User user) {
         PlayList_controller.playlist = playList;
@@ -124,6 +141,15 @@ public class PlayList_controller implements Initializable {
             play_progress_bar.setValue(current_play_time);
             continueTimer();
         }
+        sendMessage("get favorite playlist");
+        ArrayList<UUID> favorite  = null;
+        try {
+            favorite = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<UUID>>() {});
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        if(favorite.contains(playlist.getId()))
+            like.setText("dislike");
         playlist_name.setText(playlist.getName());
         playlist_duration.setText(playlist.getDuration()+"");
         playlist_publicity.setText(playlist.isPersonal()+"");
@@ -133,77 +159,229 @@ public class PlayList_controller implements Initializable {
         sendMessage(jsonObject.toString());
         try {
             playlistSongs = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
-            for(String uuid :playlistSongs)
-            {
-                sendMessage("get song");
-                JSONObject jsonObject1 = new JSONObject();
-                jsonObject1.put("id",uuid);
-                sendMessage(jsonObject1.toString());
-                UUID id = user.getId();
-                Song song = objectMapper.readValue(getMessage(),Song.class);
-                HBox hBox = new HBox();
-
-                Label songNameLabel = new Label(song.getName());
-                songNameLabel.setTextFill(Color.DARKMAGENTA);
-                songNameLabel.setFont(new Font("Arial Nova", 16.0));
-                System.out.println(song.getName());
-
-                Label singerNameLabel = new Label(song.getGenre());
-                singerNameLabel.setTextFill(Color.DARKMAGENTA);
-                singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
-
-
-
-                hBox.getChildren().addAll( songNameLabel, singerNameLabel);
-                hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        Image image = null;
-                        ImageView imageView = new ImageView();
-                        imageView.setFitHeight(100.0);
-                        imageView.setFitWidth(100.0);
-                        imageView.setPickOnBounds(true);
-                        String id = song.getId();
-                        imageView.setPreserveRatio(true);
-                        File file = new File("src/main/resources/com/example/melodyhub/images/profile/"+id+".png");
-                        try {
-                            if (!file.exists()) {
-                                sendMessage("download music cover");
-                                JSONObject jsonObject2 = new JSONObject();
-                                jsonObject2.put("id",id);
-                                sendMessage(jsonObject2.toString());
-                                String response = getMessage();
-                                if(response.equals("sending cover"))
-                                {
-                                    Thread thread =new Thread(() -> downloadImage(socket,"src/main/resources/com/example/melodyhub/images/profile/"+song.getId()+".png"));
-                                    thread.start();
-                                    thread.join();
-                                }else
-                                {
-                                    throw new Exception();
-                                }
-                            }
-                             image = new Image(Account.class.getResource("images/profile/"+id+".png").toExternalForm());
-                        }catch (Exception e) {
-                            try{
-                                 image = new Image(Account.class.getResource("images/default.png").toExternalForm());
-                            }catch (Exception ep)
-                            {
-                                ep.printStackTrace();
-                            }
-                        }
-                        current_song_genre.setText(song.getGenre());
-                        current_song_label.setText(song.getName());
-                        current_song_image.setImage(image);
-                        System.out.println();
-                        current_song_year.setText(song.getYear()+"");
+            setSongs(playlistSongs);
+            like.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if(Objects.equals(like.getText(), "like"))
+                    {
+                        sendMessage("add favorite playlist");
+                        JSONObject jsonObject1 =  new JSONObject();
+                        jsonObject1.put("playlist",playlist.getId());
+                        sendMessage(jsonObject1.toString());
+                        like.setText("dislike");
+                    }else
+                    {
+                        sendMessage("remove favorite playlist");
+                        JSONObject jsonObject1 =  new JSONObject();
+                        jsonObject1.put("playlist",playlist.getId());
+                        sendMessage(jsonObject1.toString());
+                        like.setText("like");
                     }
-                });
-                listSong.getItems().add(hBox);
-            }
+                }
+            });
+            shuffle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Collections.shuffle(playlistSongs);
+                    setSongs(playlistSongs);
+                }
+            });
+            smartShuffle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    sendMessage("smart shuffle");
+                    JSONObject jsonObject1 = new JSONObject();
+                    jsonObject1.put("playlist",playlist.getId());
+                    sendMessage(jsonObject1.toString());
+                    try {
+                        playlistSongs = objectMapper.readValue(getMessage(),new TypeReference<ArrayList<String>>() {});
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                    setSongs(playlistSongs);
+                }
+            });
+            removeSong.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = new Stage();
+                    Label numberLabel = new Label("Enter a song number:");
+                    TextField numberField = new TextField();
+
+                    // Create a button to retrieve the input value
+                    Button submitButton = new Button("Submit");
+                    submitButton.setOnAction(e -> {
+                        int number = Integer.parseInt(numberField.getText())-1;
+                        sendMessage("remove song playlist");
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1.put("playlist",playlist.getId());
+                        jsonObject1.put("song",playlistSongs.get(number));
+                        sendMessage(jsonObject1.toString());
+                        refresh();
+                        stage.close();
+                    });
+
+                    // Create a layout for the input and button
+                    VBox inputLayout = new VBox(10, numberLabel, numberField, submitButton);
+                    Scene resultScene = new Scene(inputLayout);
+
+                    // Set the scene on the primary stage
+                    stage.setScene(resultScene);
+                    stage.show();
+                }
+            });
+            switchOrder.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = new Stage();
+                    TextField numberField = new TextField();
+                    numberField.setPromptText("song 1");
+                    TextField numberField1 = new TextField();
+                    numberField1.setPromptText("song 2");
+
+                    // Create a button to retrieve the input value
+                    Button submitButton = new Button("Submit");
+                    submitButton.setOnAction(e -> {
+                        int number1 = Integer.parseInt(numberField.getText())-1;
+                        int number2 = Integer.parseInt(numberField1.getText())-1;
+                        sendMessage("change song order playlist");
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1.put("playlist",playlist.getId());
+                        jsonObject1.put("song1",playlistSongs.get(number1));
+                        jsonObject1.put("song2",playlistSongs.get(number2));
+                        sendMessage(jsonObject1.toString());
+                        refresh();
+                        stage.close();
+                    });
+
+                    // Create a layout for the input and button
+                    VBox inputLayout = new VBox(numberField,numberField1, submitButton);
+                    Scene resultScene = new Scene(inputLayout);
+
+                    // Set the scene on the primary stage
+                    stage.setScene(resultScene);
+                    stage.show();
+                }
+            });
+            changeOrder.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = new Stage();
+                    TextField numberField = new TextField();
+                    numberField.setPromptText("song 1");
+                    TextField numberField1 = new TextField();
+                    numberField1.setPromptText("place that you want");
+
+                    // Create a button to retrieve the input value
+                    Button submitButton = new Button("Submit");
+                    submitButton.setOnAction(e -> {
+                        int number1 = Integer.parseInt(numberField.getText())-1;
+                        int number2 = Integer.parseInt(numberField1.getText());
+                        sendMessage("place a song in playlist");
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1.put("playlist",playlist.getId());
+                        jsonObject1.put("id",playlistSongs.get(number1));
+                        jsonObject1.put("order",number2);
+                        sendMessage(jsonObject1.toString());
+                        refresh();
+                        stage.close();
+                    });
+
+                    // Create a layout for the input and button
+                    VBox inputLayout = new VBox(numberField,numberField1, submitButton);
+                    Scene resultScene = new Scene(inputLayout);
+
+                    // Set the scene on the primary stage
+                    stage.setScene(resultScene);
+                    stage.show();
+                }
+            });
+            owners.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Stage stage = new Stage();
+                    ListView<HBox> listView = new ListView<>();
+                    listView.setPrefSize(300, 200);
+
+                    // Add each item to the ListView as an HBox
+                    sendMessage("get owners playlist");
+                    JSONObject jsonObject1 = new JSONObject();
+                    jsonObject1.put("playlist",playlist.getId());
+                    sendMessage(jsonObject1.toString());
+                    try {
+                        for (String item : objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
+                        })) {
+                            sendMessage("get user");
+                            JSONObject object = new JSONObject();
+                            object.put("id",item);
+                            sendMessage(object.toString());
+                            User user1 = objectMapper.readValue(getMessage(),User.class);
+                            Label label = new Label(user1.getUsername());
+                            HBox.setHgrow(label, Priority.ALWAYS);
+                            HBox hbox = new HBox(label);
+                            hbox.setPadding(new Insets(5));
+                            hbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                    alert.setTitle("Confirmation");
+                                    alert.setHeaderText("Are you sure?");
+                                    alert.setContentText("Do you really want to remove his/her?");
+
+                                    Optional<ButtonType> result = alert.showAndWait();
+                                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                                        sendMessage("remove owner");
+                                        JSONObject object = new JSONObject();
+                                        object.put("playlist",playlist.getId());
+                                        object.put("id",user1.getId());
+                                        sendMessage(object.toString());
+                                        if(!getMessage().equals("done"))
+                                        {
+                                            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                                            alert1.setTitle("alert");
+                                            alert1.setContentText("you dont have permission");
+                                            alert1.showAndWait();
+                                        }
+                                    } else {
+                                        listView.getSelectionModel().clearSelection();
+                                    }
+                                }
+                            });
+                            listView.getItems().add(hbox);
+                        }
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // Create a layout for the ListView
+                    VBox layout = new VBox(listView);
+                    layout.setPadding(new Insets(10));
+                    layout.setSpacing(10);
+
+                    // Create a scene with the layout
+                    Scene scene = new Scene(layout);
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+        delete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                sendMessage("remove playlist");
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("playlist",playlist.getId());
+                sendMessage(jsonObject1.toString());
+                try {
+                    open_home(null);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     // media playing functions ------------------------------------------------------
@@ -393,6 +571,7 @@ public class PlayList_controller implements Initializable {
     @FXML
     void download_songs()
     {
+        pauseMedia();
         songs = new ArrayList<File>();
         for(String song :playlistSongs)
         {
@@ -413,6 +592,7 @@ public class PlayList_controller implements Initializable {
 
         song_name_label.setText(songs.get(songNumber).getName());
         song_name_label.setWrapText(true);
+        playMedia();
     }
 
     @FXML
@@ -420,6 +600,93 @@ public class PlayList_controller implements Initializable {
 
         download_songs();
     }
+    @FXML
+    void refresh()
+    {
+        sendMessage("get songs playlist");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("playlist",playlist.getId());
+        sendMessage(jsonObject.toString());
+        try {
+            playlistSongs = objectMapper.readValue(getMessage(), new TypeReference<ArrayList<String>>() {
+            });
+            setSongs(playlistSongs);
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    void setSongs(ArrayList<String> playlistSongs){
+        listSong.getItems().clear();
+        try {
+            for (String uuid : playlistSongs) {
+                sendMessage("get song");
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("id", uuid);
+                sendMessage(jsonObject1.toString());
+                UUID id = user.getId();
+                Song song = objectMapper.readValue(getMessage(), Song.class);
+                HBox hBox = new HBox();
+
+                Label songNameLabel = new Label(song.getName());
+                songNameLabel.setTextFill(Color.DARKMAGENTA);
+                songNameLabel.setFont(new Font("Arial Nova", 16.0));
 
 
+                Label singerNameLabel = new Label(song.getGenre());
+                singerNameLabel.setTextFill(Color.DARKMAGENTA);
+                singerNameLabel.setFont(new Font("Arial Nova Light", 11.0));
+
+
+                hBox.getChildren().addAll(songNameLabel, singerNameLabel);
+                hBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Image image = null;
+                        ImageView imageView = new ImageView();
+                        imageView.setFitHeight(100.0);
+                        imageView.setFitWidth(100.0);
+                        imageView.setPickOnBounds(true);
+                        String id = song.getId();
+                        imageView.setPreserveRatio(true);
+                        File file = new File("src/main/resources/com/example/melodyhub/images/profile/" + id + ".png");
+                        try {
+                            if (!file.exists()) {
+                                sendMessage("download music cover");
+                                JSONObject jsonObject2 = new JSONObject();
+                                jsonObject2.put("id", id);
+                                sendMessage(jsonObject2.toString());
+                                String response = getMessage();
+                                if (response.equals("sending cover")) {
+                                    Thread thread = new Thread(() -> downloadImage(socket, "src/main/resources/com/example/melodyhub/images/profile/" + song.getId() + ".png"));
+                                    thread.start();
+                                    thread.join();
+                                } else {
+                                    throw new Exception();
+                                }
+                            }
+                            image = new Image(Account.class.getResource("images/profile/" + id + ".png").toExternalForm());
+                        } catch (Exception e) {
+                            try {
+                                image = new Image(Account.class.getResource("images/default.png").toExternalForm());
+                            } catch (Exception ep) {
+                                ep.printStackTrace();
+                            }
+                        }
+                        current_song_genre.setText(song.getGenre());
+                        current_song_label.setText(song.getName());
+                        current_song_image.setImage(image);
+                        current_song_year.setText(song.getYear() + "");
+                    }
+                });
+                listSong.getItems().add(hBox);
+            }
+        }catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

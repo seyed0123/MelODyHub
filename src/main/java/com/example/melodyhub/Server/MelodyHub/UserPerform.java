@@ -61,7 +61,7 @@ public class UserPerform extends AccountPerform {
     }
 
     public static void addFavouritePlaylist(UUID Id, UUID playlist) {
-        MelodyHub.sendQuery("INSERT INTO favorite_playlists (playlistid, userid) VALUES (playlistid = '" + playlist + "' , userid = '" + Id + "');");
+        MelodyHub.sendQuery("INSERT INTO favorite_playlists (playlistid, userid) VALUES ('" + playlist + "' , '" + Id + "');");
     }
 
     public static void removeFavoritePlaylist(UUID id, UUID playlist) {
@@ -72,7 +72,7 @@ public class UserPerform extends AccountPerform {
         ArrayList<UUID> ret = new ArrayList<>();
         ResultSet res = MelodyHub.sendQuery("SELECT playlistid FROM favorite_playlists WHERE userid='" + Id + "';");
         if (res == null) {
-            return null;
+            return ret;
         }
         while (true) {
             try {

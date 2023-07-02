@@ -10,6 +10,5 @@
 }
 .hide {
     position: relative;
-    border-bottom: 1px dotted black;
     visibility: hidden;
 }
