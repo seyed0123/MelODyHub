@@ -135,7 +135,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="50.0" prefWidth="121.0">
                      <children>
-                        <Label fx:id="songNameLabel2" prefHeight="26.0" prefWidth="92.0" text="Song name" textFill="WHITE">
+                        <Label fx:id="song_name_label" prefHeight="26.0" prefWidth="92.0" text="Song name" textFill="WHITE">
                            <font>
                               <Font name="Pristina" size="16.0" />
                            </font>
@@ -167,7 +167,7 @@
                         <Image url="@images/next-button.png" />
                      </image>
                   </ImageView>
-                  <Slider prefHeight="19.0" prefWidth="554.0" stylesheets="@css/styles.css" />
+                  <Slider fx:id="play_progress_bar" prefHeight="19.0" prefWidth="554.0" stylesheets="@css/styles.css" />
                   <ImageView fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/Like.png" />

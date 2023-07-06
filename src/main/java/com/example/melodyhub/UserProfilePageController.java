@@ -1,5 +1,6 @@
 package com.example.melodyhub;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -36,6 +37,7 @@ import java.util.*;
 
 import static com.example.melodyhub.LoginSignupPage.*;
 import static com.example.melodyhub.homepage_artist_podcaster_controller.*;
+import static com.example.melodyhub.HomeController.*;
 
 public class UserProfilePageController implements Initializable {
 
@@ -333,8 +335,33 @@ public class UserProfilePageController implements Initializable {
             phone_label.setText(account.getPhoneNumber());
             email_label.setText(account.getEmail());
         }
-        song_name_label.setText(songs.get(songNumber).getName());
+        File song_file = songs.get(songNumber);
+        sendMessage("get song");
+        JSONObject jsonObject = new JSONObject();
+        String song_name = song_file.getName();
+        int lastBackslashIndex = song_name.lastIndexOf("\\");
+        int lastDotIndex = song_name.lastIndexOf(".");
+        String fileName = song_name.substring(lastBackslashIndex + 1, lastDotIndex);
+        jsonObject.put("id", fileName);
+        sendMessage(jsonObject.toString());
+
+        Song song = null;
+        try {
+            song = objectMapper.readValue(getMessage(), Song.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        current_song_id = fileName;
+        current_song_name = song.getName();
+        current_song_genre = song.getGenre();
+        current_song_duration = String.valueOf(song.getDuration());
+        current_song_year = String.valueOf(song.getYear());
+        current_song_rate = String.valueOf(song.getRate());
+        current_song_lyrics = song.getLyrics();
+        song_name_label.setText(current_song_name);
         song_name_label.setWrapText(true);
+
         continueTimer();
     }
     @FXML

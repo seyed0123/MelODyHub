@@ -246,6 +246,7 @@ public class HomePage_NoLoginController implements Initializable {
             current_song_lyrics = song.getLyrics();
             song_name_label.setWrapText(true);
             song_name_label.setText(current_song_name);
+            playMedia();
         }
     }
     public void playMedia() {
