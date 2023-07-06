@@ -56,7 +56,7 @@ public class SongPerform {
     public static ArrayList<String> popularSong()
     {
         ArrayList<String> ret = new ArrayList<>();
-        ResultSet res=MelodyHub.sendQuery(String.format("select id from song order by rate DESC limit 10;"));
+        ResultSet res=MelodyHub.sendQuery(String.format("select id from song order by rate DESC limit 15;"));
         if(res==null)
             return ret;
         while (true) {
