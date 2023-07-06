@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -207,6 +208,8 @@ public class FirstWindowController implements Initializable {
             Scene scene = new Scene(HBox);
 
             // Set the scene of the stage and show it
+            stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+            stage.setTitle("MelOXDy hub!!");
             stage.setScene(scene);
             stage.show();
 

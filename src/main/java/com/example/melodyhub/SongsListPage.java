@@ -3,6 +3,7 @@ package com.example.melodyhub;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class SongsListPage extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SongsListPage.class.getResource("SongsListPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Songs List");
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.setScene(scene);
         stage.show();
     }

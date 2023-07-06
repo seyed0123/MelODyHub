@@ -22,7 +22,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                        <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
                            <font>
                               <Font name="Pristina" size="17.0" />
                            </font>
@@ -34,27 +34,27 @@
                         </Label>
                      </children>
                   </VBox>
-                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button (1).png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/play.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/Pause.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="28.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                  <ImageView fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
                      <image>
                         <Image url="@images/next-button.png" />
                      </image>
                   </ImageView>
-                  <Slider prefHeight="19.0" prefWidth="590.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                  <Slider fx:id="play_progress_bar" prefHeight="19.0" prefWidth="590.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
                </children>
             </HBox>
          </children>

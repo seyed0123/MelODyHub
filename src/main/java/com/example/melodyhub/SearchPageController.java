@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -122,7 +123,8 @@ public class SearchPageController implements Initializable {
         SongsListController.setSongList(result1,result2,result3);
         FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("SongsListPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Songs List");
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.setScene(scene);
         stage.show();
     }
@@ -459,7 +461,8 @@ public class SearchPageController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        stage.setTitle("Login / Signup");
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.setScene(scene);
         stage.show();
     }

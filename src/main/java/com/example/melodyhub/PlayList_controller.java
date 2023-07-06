@@ -228,6 +228,8 @@ public class PlayList_controller implements Initializable {
 
                     // Set the scene on the primary stage
                     stage.setScene(resultScene);
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 }
             });
@@ -261,6 +263,8 @@ public class PlayList_controller implements Initializable {
 
                     // Set the scene on the primary stage
                     stage.setScene(resultScene);
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 }
             });
@@ -294,6 +298,8 @@ public class PlayList_controller implements Initializable {
 
                     // Set the scene on the primary stage
                     stage.setScene(resultScene);
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 }
             });
@@ -362,6 +368,8 @@ public class PlayList_controller implements Initializable {
                     // Create a scene with the layout
                     Scene scene = new Scene(layout);
                     stage.setScene(scene);
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 }
             });

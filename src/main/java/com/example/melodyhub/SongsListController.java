@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -78,7 +79,8 @@ public class SongsListController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -108,7 +110,8 @@ public class SongsListController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -139,7 +142,8 @@ public class SongsListController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -170,7 +174,8 @@ public class SongsListController implements Initializable {
         SongsListController.setSongList(result1,result2,result3);
         FXMLLoader fxmlLoader = new FXMLLoader(Account.class.getResource("SongsListPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Songs List");
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.setScene(scene);
         stage.show();
     }

@@ -150,7 +150,7 @@ public class LoginSignupPage extends Application {
                 Scene scene = new Scene(root);
                 Stage stage1 = new Stage();
                 stage1.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
-                stage1.setTitle("");
+                stage1.setTitle("MelOXDy hub!!");
                 stage1.setScene(scene);
                 stage1.show();
             });
