@@ -174,6 +174,8 @@ public class LoginSignupController implements Initializable {
                                         Stage stage = new Stage();
                                         FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage.fxml"));
                                         Scene scene1 = new Scene(fxmlLoader.load());
+                                        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                                        stage.setTitle("MelOXDy hub!!");
                                         stage.setScene(scene1);
                                         stage.show();
                                         ((Stage) banner.getScene().getWindow()).close();
@@ -188,6 +190,8 @@ public class LoginSignupController implements Initializable {
                             }
                         }
                     });
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -229,6 +233,8 @@ public class LoginSignupController implements Initializable {
                                         FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage_artist&podcater.fxml"));
                                         Scene scene1 = new Scene(fxmlLoader.load());
                                         stage.setScene(scene1);
+                                        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                                        stage.setTitle("MelOXDy hub!!");
                                         stage.show();
                                     } catch (JsonProcessingException e) {
                                         throw new RuntimeException(e);
@@ -241,6 +247,8 @@ public class LoginSignupController implements Initializable {
                             }
                         }
                     });
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -282,6 +290,8 @@ public class LoginSignupController implements Initializable {
                                         FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("HomePage_artist&podcater.fxml"));
                                         Scene scene1 = new Scene(fxmlLoader.load());
                                         stage.setScene(scene1);
+                                        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                                        stage.setTitle("MelOXDy hub!!");
                                         stage.show();
 
                                     } catch (JsonProcessingException e) {
@@ -295,6 +305,8 @@ public class LoginSignupController implements Initializable {
                             }
                         }
                     });
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.show();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -687,6 +699,8 @@ public class LoginSignupController implements Initializable {
         FirstWindowController.setJob("forget pass");
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.show();
     }
 

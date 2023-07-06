@@ -141,6 +141,8 @@ public class share_page_controller implements Initializable {
 
                         // Create the scene
                         Scene scene = new Scene(vbox);
+                        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                        stage.setTitle("MelOXDy hub!!");
                         stage.setScene(scene);
                         stage.show();
 

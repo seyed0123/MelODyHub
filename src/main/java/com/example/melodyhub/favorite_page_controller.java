@@ -160,6 +160,8 @@ public class favorite_page_controller implements Initializable {
 
                         // Create the scene
                         Scene scene = new Scene(vbox);
+                        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                        stage.setTitle("MelOXDy hub!!");
                         stage.setScene(scene);
                         stage.show();
 
@@ -244,7 +246,8 @@ public class favorite_page_controller implements Initializable {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            stage.setTitle("Login / Signup");
+                            stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                            stage.setTitle("MelOXDy hub!!");
                             stage.setScene(scene);
                             stage.show();
                         }

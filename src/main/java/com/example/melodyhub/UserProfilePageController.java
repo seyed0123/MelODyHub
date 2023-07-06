@@ -130,7 +130,8 @@ public class UserProfilePageController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -172,7 +173,8 @@ public class UserProfilePageController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -233,7 +235,8 @@ public class UserProfilePageController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 }
@@ -641,7 +644,8 @@ public class UserProfilePageController implements Initializable {
         // Create a Scene with the StackPane layout as root and set it on the Stage
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Image Viewer");
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.show();
     }
 }

@@ -200,6 +200,12 @@ public class HomeController implements Initializable {
                     vbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                                    @Override
                                                    public void handle(MouseEvent event) {
+                                                       sendMessage("logout");
+                                                       try {
+                                                           setSocket();
+                                                       } catch (IOException e) {
+                                                           throw new RuntimeException(e);
+                                                       }
                                                        Stage stage = new Stage();
                                                        FXMLLoader fxmlLoader = new FXMLLoader(LoginSignupPage.class.getResource("AddToPlaylist.fxml"));
                                                        Scene scene = null;
@@ -209,7 +215,8 @@ public class HomeController implements Initializable {
                                                        } catch (IOException e) {
                                                            throw new RuntimeException(e);
                                                        }
-                                                       stage.setTitle("Login / Signup");
+                                                       stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                                                       stage.setTitle("MelOXDy hub!!");
                                                        stage.setScene(scene);
                                                        stage.show();
                                                    }
@@ -290,7 +297,8 @@ public class HomeController implements Initializable {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            stage.setTitle("Login / Signup");
+                            stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                            stage.setTitle("MelOXDy hub!!");
                             stage.setScene(scene);
                             stage.show();
                         }
@@ -377,7 +385,8 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -413,7 +422,8 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -446,6 +456,8 @@ public class HomeController implements Initializable {
                     VBox root = new VBox(textArea);
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -460,7 +472,8 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -510,7 +523,8 @@ public class HomeController implements Initializable {
                             }
                         }
                     });
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -525,7 +539,8 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -563,7 +578,8 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -587,7 +603,8 @@ public class HomeController implements Initializable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    stage.setTitle("Login / Signup");
+                    stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+                    stage.setTitle("MelOXDy hub!!");
                     stage.setScene(scene);
                     stage.show();
                 });
@@ -884,6 +901,8 @@ public class HomeController implements Initializable {
         root.getChildren().add(webView);
         Scene scene = new Scene(root, 800, 600);
         Stage stage = new Stage();
+        stage.getIcons().add(new Image(Account.class.getResource("images/logo.jpg").toExternalForm()));
+        stage.setTitle("MelOXDy hub!!");
         stage.setScene(scene);
         stage.show();
     }
