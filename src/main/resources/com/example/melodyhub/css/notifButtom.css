@@ -1,0 +1,27 @@
+.notificationNOButton {
+    -fx-background-color: rgba(242, 223, 244, 0);
+    -fx-background-image: url('../images/notifNO.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+
+.notificationYESButton {
+    -fx-background-color: rgba(242, 223, 244, 0);
+    -fx-background-image: url('../images/notifYES.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.notificationNOButton:hover {
+    -fx-background-color:linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgb(253, 235, 1));
+    display: none;
+}
+.notificationYESButton:hover {
+    -fx-background-color:linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgb(253, 235, 1));
+    display: none;
+}
+
+.notificationYESButton {
+    display: inline-block;
+}

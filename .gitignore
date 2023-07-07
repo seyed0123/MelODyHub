@@ -11,7 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
-
+src/main/resources/com/example/melodyhub/musics
+src/main/java/com/example/melodyhub/Server/download
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -39,6 +40,13 @@ build/
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,windows,linux,macos,intellij,netbeans,database,python,pycharm,visualstudiocode,maven,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,linux,macos,intellij,netbeans,database,python,pycharm,visualstudiocode,maven,gradle
+src/main/Flutter/adminPanel/android
+src/main/Flutter/adminPanel/ios
+src/main/Flutter/adminPanel/.dart_tool
+src/main/Flutter/adminPanel/build
+!src/main/Flutter/adminPanel/.flutter-plugins
+!src/main/Flutter/adminPanel/.flutter-plugins-dependencies
+!src/main/Flutter/adminPanel/adminpanel.iml
 
 ### Database ###
 *.accdb
@@ -357,7 +365,6 @@ develop-eggs/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/

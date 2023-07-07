@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="579.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.premium">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="609.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/game.jpg" />
+         </image></ImageView>
+      <Button layoutX="257.0" layoutY="245.0" mnemonicParsing="false" onAction="#play" stylesheets="@css/buttomswithoutbackground.css" text="PLAY">
+         <font>
+            <Font name="Pristina" size="25.0" />
+         </font></Button>
+      <Label alignment="CENTER" layoutX="10.0" layoutY="35.0" prefHeight="343.0" prefWidth="188.0" text="If you want to have the permium account you must play this game that is the sponsor of our program :)" textFill="#00ff22" wrapText="true">
+         <font>
+            <Font name="Harrington" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="377.0" layoutY="14.0" prefHeight="200.0" prefWidth="205.0" text="The game giude is in the game!" textFill="#ffd300" wrapText="true">
+         <font>
+            <Font name="Harrington" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="200.0" prefHeight="146.0" prefWidth="219.0" text="If you want to quit game when it wasn't finished just press 'e'" textFill="#00c8ff" wrapText="true">
+         <font>
+            <Font name="Harrington" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

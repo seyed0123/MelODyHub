@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.SongsListController">
+    <children>
+        <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+            <children>
+                <HBox alignment="CENTER" layoutX="106.0" layoutY="-1.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="872.0" spacing="15.0">
+                    <children>
+                        <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Pristina" size="17.0" />
+                                    </font>
+                                </Label>
+                                <Label prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                                    <font>
+                                        <Font name="Pristina" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/next-button%20(1).png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/play.png" />
+                            </image>
+                        </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="263.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Pause.png" />
+                     </image>
+                  </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/next-button.png" />
+                            </image>
+                        </ImageView>
+                        <Slider prefHeight="19.0" prefWidth="596.0" stylesheets="@css/styles.css" />
+                  <ImageView fx:id="likeImage" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/Like.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="commentImage" fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/comment.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </HBox>
+            <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" layoutX="1036.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+               <image>
+                  <Image url="@images/Queue.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lyricsImage" fitHeight="31.0" fitWidth="34.0" layoutX="990.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+               <image>
+                  <Image url="@images/lyrics.png" />
+               </image>
+            </ImageView>
+            </children>
+        </Pane>
+        <BorderPane fx:id="songsPane" layoutX="33.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="740.0" style="-fx-background-color: #383838;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+            <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                        <Group />
+               </children>
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </HBox>
+            </top>
+         <center>
+            <ListView fx:id="songs_table" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="891.0" style="-fx-border-color: 919191;" styleClass="transparent" stylesheets="@css/styles.css" />
+         </center>
+        </BorderPane>
+        <VBox fx:id="side_bar" layoutX="17.0" layoutY="33.0" prefHeight="590.0" prefWidth="150.0" style="-fx-background-color: #282828;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="930.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" onMouseClicked="#back" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                    <VBox.margin>
+                        <Insets top="50.0" />
+                    </VBox.margin>
+                    <children>
+                        <ImageView fitHeight="30.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/icons8-home-50(1).png" />
+                            </image>
+                        </ImageView>
+                        <Label prefHeight="24.0" prefWidth="79.0" text="Home" textFill="WHITE">
+                            <font>
+                                <Font name="Pristina" size="25.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

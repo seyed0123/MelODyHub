@@ -1,0 +1,96 @@
+
+
+.historyButton {
+    -fx-background-color: rgba(242, 223, 244, 0);
+    -fx-background-image: url('../images/his.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.likedSongsButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/likedSongs.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.backButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/back.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.searchButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/search.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.profilePageButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/profilePage.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.premiumButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/premium.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.backLoginButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/backLogin.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.lightModeButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/lightmode.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.darkModeButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/darkmode.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.playButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/play.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.gameButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/game.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.storyButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/story.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.shareButton {
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-background-image: url('../images/share.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+}
+.button:hover{
+    -fx-background-color:linear-gradient(to bottom right, rgba(0, 0, 0, 0), rgb(253, 235, 1));
+}

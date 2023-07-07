@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" style="-fx-background-color: #EBECF0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.LoginSignupController">
+    <children>
+        <Pane fx:id="pane_signup" layoutX="517.0" layoutY="6.0" prefHeight="543.0" prefWidth="555.0">
+            <children>
+                <VBox alignment="CENTER" layoutX="34.0" layoutY="-10.0" prefHeight="541.0" prefWidth="524.0" spacing="5.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="110.0" prefWidth="217.0" text="Sign Up" textAlignment="CENTER" textFill="#8b45dbc7">
+                            <font>
+                                <Font name="Pristina" size="50.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="365.0" prefWidth="531.0">
+                            <children>
+                                <VBox prefHeight="365.0" prefWidth="301.0" spacing="5.0">
+                                    <children>
+                                        <Label fx:id="l6" prefHeight="23.0" prefWidth="304.0" text="Username" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="s_username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <font>
+                                                <Font name="Pristina" size="24.0" />
+                                            </font>
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                        </TextField>
+                                        <Label fx:id="l7" prefHeight="23.0" prefWidth="304.0" text="Email" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="email_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="email" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <font>
+                                                <Font name="Pristina" size="24.0" />
+                                            </font>
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                        </TextField>
+                                        <Label fx:id="l5" prefHeight="23.0" prefWidth="304.0" text="Phone Number" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="phone_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="phone number" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <font>
+                                                <Font name="Pristina" size="24.0" />
+                                            </font>
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                        </TextField>
+                                        <Label fx:id="l8" prefHeight="23.0" prefWidth="304.0" text="Password" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="s_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <font>
+                                                <Font name="Pristina" size="24.0" />
+                                            </font>
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                        </TextField>
+                                        <Label fx:id="l9" prefHeight="23.0" prefWidth="304.0" text="Confirm Password" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets />
+                                            </VBox.margin>
+                                        </Label>
+                                        <TextField fx:id="c_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="confirm password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <font>
+                                                <Font name="Pristina" size="24.0" />
+                                            </font>
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                            <VBox.margin>
+                                                <Insets />
+                                            </VBox.margin>
+                                        </TextField>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="375.0" prefWidth="254.0" spacing="10.0">
+                                    <children>
+                                        <Label fx:id="l10" prefHeight="23.0" prefWidth="304.0" text="Security Question" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="q_combobox" prefHeight="37.0" prefWidth="230.0" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css" visibleRowCount="5">
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                            <VBox.margin>
+                                                <Insets />
+                                            </VBox.margin>
+                                        </ComboBox>
+                                        <Label fx:id="l11" prefHeight="23.0" prefWidth="304.0" text="Security Answer" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="answer_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" promptText="security answer" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <font>
+                                                <Font name="Pristina" size="24.0" />
+                                            </font>
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                        </TextField>
+                                        <Label fx:id="l13" prefHeight="23.0" prefWidth="96.0" text="Birth Date" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <DatePicker fx:id="birthDate" prefHeight="39.0" prefWidth="225.0" styleClass="light-mode" stylesheets="@css/styles.css">
+                                            <effect>
+                                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                                    <color>
+                                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                                    </color>
+                                                    <input>
+                                                        <InnerShadow offsetX="-5.0" offsetY="-5.0">
+                                                            <color>
+                                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                                            </color>
+                                                        </InnerShadow>
+                                                    </input>
+                                                </InnerShadow>
+                                            </effect>
+                                            <VBox.margin>
+                                                <Insets />
+                                            </VBox.margin>
+                                        </DatePicker>
+                                        <Label fx:id="l12" prefHeight="23.0" prefWidth="85.0" text="Gender" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox spacing="25.0">
+                                            <children>
+                                                <RadioButton fx:id="male_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Female">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="gender" />
+                                                    </toggleGroup>
+                                                    <font>
+                                                        <Font name="Pristina" size="20.0" />
+                                                    </font>
+                                                </RadioButton>
+                                                <RadioButton fx:id="female_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Male" toggleGroup="$gender">
+                                                    <font>
+                                                        <Font name="Pristina" size="20.0" />
+                                                    </font>
+                                                </RadioButton>
+                                            </children>
+                                        </HBox>
+                                        <Label fx:id="l14" prefHeight="23.0" prefWidth="199.0" text="Select your account type:" textFill="#363636">
+                                            <font>
+                                                <Font name="Pristina" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox spacing="5.0">
+                                            <children>
+                                                <RadioButton fx:id="listener_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Listener" toggleGroup="$accType">
+                                                    <font>
+                                                        <Font name="Pristina" size="16.0" />
+                                                    </font>
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="accType" />
+                                                    </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton fx:id="podcaster_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Podcaster" toggleGroup="$accType">
+                                                    <font>
+                                                        <Font name="Pristina" size="16.0" />
+                                                    </font>
+                                                </RadioButton>
+                                                <RadioButton fx:id="artist_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Artist" toggleGroup="$accType">
+                                                    <font>
+                                                        <Font name="Pristina" size="16.0" />
+                                                    </font>
+                                                </RadioButton>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                        <Button fx:id="signup_btn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupClicked" prefHeight="47.0" prefWidth="163.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css" text="S U B M I T" textAlignment="CENTER" textFill="#8b45dbc7">
+                            <font>
+                                <Font name="Pristina" size="20.0" />
+                            </font>
+                            <effect>
+                                <DropShadow offsetX="-5.0" offsetY="-5.0">
+                                    <color>
+                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                    </color>
+                                    <input>
+                                        <DropShadow offsetX="5.0" offsetY="5.0">
+                                            <color>
+                                                <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                            </color>
+                                        </DropShadow>
+                                    </input>
+                                </DropShadow>
+                            </effect>
+                            <VBox.margin>
+                                <Insets top="30.0" />
+                            </VBox.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <styleClass>
+                                <String fx:value="btn_hover" />
+                                <String fx:value="light-mode" />
+                            </styleClass>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+        <Pane fx:id="pane_login" layoutX="97.0" layoutY="82.0" prefHeight="425.0" prefWidth="325.0">
+            <children>
+                <VBox alignment="CENTER" layoutX="3.0" prefHeight="355.0" prefWidth="320.0" spacing="10.0">
+                    <children>
+                        <Label fx:id="l3" prefHeight="23.0" prefWidth="304.0" text="Username" textFill="#363636">
+                            <font>
+                                <Font name="Bell MT" size="20.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="username_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="username" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                            <font>
+                                <Font name="Pristina" size="24.0" />
+                            </font>
+                            <effect>
+                                <InnerShadow offsetX="2.0" offsetY="2.0">
+                                    <color>
+                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                    </color>
+                                    <input>
+                                        <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                            <color>
+                                                <Color red="1.0" green="1.0" blue="1.0" />
+                                            </color>
+                                        </InnerShadow>
+                                    </input>
+                                </InnerShadow>
+                            </effect>
+                        </TextField>
+                        <Label fx:id="l31" prefHeight="23.0" prefWidth="304.0" text="Account Type" textFill="#363636">
+                            <font>
+                                <Font name="Pristina" size="20.0" />
+                            </font>
+                        </Label>
+                        <HBox spacing="25.0">
+                            <children>
+                                <RadioButton fx:id="u_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="User">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="gender1" />
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Pristina" size="20.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="a_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Artist" toggleGroup="$gender1">
+                                    <font>
+                                        <Font name="Pristina" size="20.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="p_radio" mnemonicParsing="false" stylesheets="@css/styles.css" text="Podcaster" toggleGroup="$gender1">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="gender11" />
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Pristina" size="20.0" />
+                                    </font>
+                                </RadioButton>
+                            </children>
+                        </HBox>
+                        <Label fx:id="l4" prefHeight="23.0" prefWidth="304.0" text="Password" textFill="#363636">
+                            <font>
+                                <Font name="Pristina" size="20.0" />
+                            </font>
+                        </Label>
+                        <StackPane fx:id="pass_stack">
+                            <children>
+                                <TextField fx:id="v_password_field" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="321.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                    <font>
+                                        <Font name="Lato-Light" size="18.0" />
+                                    </font>
+                                    <effect>
+                                        <InnerShadow offsetX="2.0" offsetY="2.0">
+                                            <color>
+                                                <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                            </color>
+                                            <input>
+                                                <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                    <color>
+                                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                                    </color>
+                                                </InnerShadow>
+                                            </input>
+                                        </InnerShadow>
+                                    </effect>
+                                </TextField>
+                                <PasswordField fx:id="password_field" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" promptText="password" style="-fx-background-radius: 16px;" styleClass="light-mode" stylesheets="@css/styles.css">
+                                    <font>
+                                        <Font name="Pristina" size="24.0" />
+                                    </font>
+                                    <effect>
+                                        <InnerShadow offsetX="2.0" offsetY="2.0">
+                                            <color>
+                                                <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                            </color>
+                                            <input>
+                                                <InnerShadow blurType="GAUSSIAN" offsetX="-5.0" offsetY="-5.0">
+                                                    <color>
+                                                        <Color red="1.0" green="1.0" blue="1.0" />
+                                                    </color>
+                                                </InnerShadow>
+                                            </input>
+                                        </InnerShadow>
+                                    </effect>
+                                </PasswordField>
+                            </children>
+                        </StackPane>
+                        <HBox prefHeight="20.0" prefWidth="285.0" spacing="60.0">
+                            <children>
+                                <CheckBox fx:id="showPass" mnemonicParsing="false" onAction="#showPassword" prefHeight="20.0" prefWidth="169.0" text="Show password" textFill="#363636">
+                                    <font>
+                                        <Font name="Pristina" size="20.0" />
+                                    </font>
+                                </CheckBox>
+                                <Label onMouseClicked="#forgetPassClicked" prefHeight="20.0" prefWidth="159.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Forget password" textFill="#8b45dbe0">
+                                    <font>
+                                        <Font name="Pristina" size="20.0" />
+                                    </font>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </HBox>
+                        <Group />
+                    </children>
+                </VBox>
+                <Button fx:id="login_btn" layoutX="82.0" layoutY="378.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loginClicked" prefHeight="48.0" prefWidth="164.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css" text="L O G I N" textAlignment="CENTER" textFill="#8b45dbc7">
+                    <font>
+                        <Font name="Pristina" size="20.0" />
+                    </font>
+                    <effect>
+                        <DropShadow offsetX="-5.0" offsetY="-5.0">
+                            <color>
+                                <Color red="1.0" green="1.0" blue="1.0" />
+                            </color>
+                            <input>
+                                <DropShadow offsetX="5.0" offsetY="5.0">
+                                    <color>
+                                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                                    </color>
+                                </DropShadow>
+                            </input>
+                        </DropShadow>
+                    </effect>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <styleClass>
+                        <String fx:value="btn_hover" />
+                        <String fx:value="light-mode" />
+                    </styleClass>
+                </Button>
+            </children>
+        </Pane>
+        <Pane fx:id="mode_btn" layoutX="438.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css">
+            <effect>
+                <DropShadow offsetX="-5.0" offsetY="-5.0">
+                    <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                    </color>
+                    <input>
+                        <DropShadow offsetX="5.0" offsetY="5.0">
+                            <color>
+                                <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                            </color>
+                        </DropShadow>
+                    </input>
+                </DropShadow>
+            </effect>
+            <styleClass>
+                <String fx:value="btn_hover" />
+                <String fx:value="light-mode" />
+            </styleClass>
+            <children>
+                <ImageView fx:id="dark_mode" fitHeight="40.0" fitWidth="40.0" layoutX="5.0" layoutY="6.0" onMouseClicked="#changeMode" pickOnBounds="true" preserveRatio="true" styleClass="night-mode">
+                    <image>
+                        <Image url="@images/dark-mode.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+            </children>
+        </Pane>
+        <Label fx:id="l1" alignment="CENTER" layoutX="164.0" layoutY="33.0" prefHeight="48.0" prefWidth="167.0" text="Login" textAlignment="CENTER" textFill="#8b45dbe0">
+            <font>
+                <Font name="Pristina" size="50.0" />
+            </font>
+        </Label>
+        <Label fx:id="l20" layoutX="99.0" layoutY="550.0" prefHeight="25.0" prefWidth="321.0" text="Don't have an account?                   now!" textFill="#363636">
+            <font>
+                <Font name="Pristina" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="255.0" layoutY="552.0" onMouseClicked="#goSignup" prefHeight="20.0" prefWidth="54.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Sign Up" textFill="#8b45dbe0">
+            <font>
+                <Font name="Pristina" size="18.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Label>
+          <HBox alignment="BOTTOM_LEFT" layoutX="553.0" layoutY="590.0">
+              <children>
+                  <Label fx:id="l2" alignment="CENTER" prefHeight="25.0" prefWidth="129.0" text="Have an account?" textAlignment="CENTER" textFill="#363636">
+                      <font>
+                          <Font name="Pristina" size="20.0" />
+                      </font>
+                  </Label>
+                  <Label alignment="CENTER" onMouseClicked="#goLogin" prefHeight="25.0" prefWidth="41.0" styleClass="txt-hover" stylesheets="@css/styles.css" text="Login" textAlignment="CENTER" textFill="#8b45dbc7">
+                      <font>
+                          <Font name="Pristina" size="20.0" />
+                      </font>
+                      <cursor>
+                          <Cursor fx:constant="HAND" />
+                      </cursor>
+                  </Label>
+              </children>
+          </HBox>
+      <Pane fx:id="back_btn" layoutX="23.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#back" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 32;" stylesheets="@css/styles.css">
+         <effect>
+            <DropShadow offsetX="-5.0" offsetY="-5.0">
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color>
+               <input>
+                  <DropShadow offsetX="5.0" offsetY="5.0">
+                     <color>
+                        <Color red="0.729411780834198" green="0.7450980544090271" blue="0.800000011920929" />
+                     </color>
+                  </DropShadow>
+               </input>
+            </DropShadow>
+         </effect>
+         <styleClass>
+            <String fx:value="btn_hover" />
+            <String fx:value="light-mode" />
+         </styleClass>
+         <children>
+            <ImageView fx:id="dark_mode1" fitHeight="40.0" fitWidth="40.0" layoutX="2.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="night-mode">
+               <image>
+                  <Image url="@images/back-icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+        <ImageView fx:id="banner" fitHeight="654.0" fitWidth="570.0" layoutX="501.0" pickOnBounds="true" AnchorPane.bottomAnchor="-4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@images/logo.jpg" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>

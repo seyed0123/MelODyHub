@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainPane" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.melodyhub.HomeController">
+   <children>
+      <Pane fx:id="play_bar" layoutY="590.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="900.0" styleClass="bottom-bar-color" stylesheets="@css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="590.0">
+         <children>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="59.0" prefWidth="1080.0" spacing="15.0" style="-fx-background-color: #16071C;">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="46.0" prefWidth="163.0" style="-fx-background-color: #16071C;">
+                     <children>
+                        <Label fx:id="song_name_label" prefHeight="16.0" prefWidth="139.0" text="Song name" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Nova" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="singerNameLabel" prefHeight="16.0" prefWidth="139.0" text="Singer name" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Nova Light" size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="perButton" fitHeight="25.0" fitWidth="23.0" onMouseClicked="#previousMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/next-button (1).png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="playButton" fitHeight="28.0" fitWidth="33.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/play.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="pauseButton" fitHeight="30.0" fitWidth="29.0" layoutX="256.0" layoutY="24.0" onMouseClicked="#pauseMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/Pause.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="nextButton" fitHeight="28.0" fitWidth="22.0" onMouseClicked="#nextMedia" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/next-button.png" />
+                     </image>
+                  </ImageView>
+                  <Slider fx:id="play_progress_bar" onMouseDragged="#set_play_time" prefHeight="19.0" prefWidth="535.0" styleClass="btn_hover" stylesheets="@css/styles.css" />
+                  <ImageView fx:id="likeImage" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/Like.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="commentImage" fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/comment.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="lyricsImage" fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/lyrics.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="queueImage" fitHeight="30.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_hover">
+                     <image>
+                        <Image url="@images/Queue.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+      <BorderPane fx:id="songsPane" layoutX="119.0" layoutY="33.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="961.0" style="-fx-background-color: #301934;" styleClass="body-back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <VBox fx:id="recommended" prefHeight="400.0" prefWidth="740.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="553.0" text="Melody Hub's recommendations to you!" textFill="WHITE">
+                     <font>
+                        <Font name="Pristina" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <ScrollPane prefHeight="178.0" prefWidth="920.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
+                     <content>
+                        <HBox fx:id="recom" alignment="CENTER_LEFT" prefHeight="151.0" prefWidth="718.0" spacing="20.0">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+                  <Label prefHeight="55.0" prefWidth="321.0" text="Popular Songs" textFill="WHITE">
+                     <font>
+                        <Font name="Pristina" size="17.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <ScrollPane prefHeight="178.0" prefWidth="740.0" styleClass="transparent" stylesheets="@css/styles.css" vbarPolicy="NEVER">
+                     <content>
+                        <HBox fx:id="popular" alignment="CENTER_LEFT" prefHeight="155.0" prefWidth="730.0" spacing="20.0">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+         <top>
+            <ImageView fx:id="banner" fitHeight="182.0" fitWidth="962.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@images/header.jpg" />
+               </image>
+            </ImageView>
+         </top>
+      </BorderPane>
+      <VBox fx:id="side_bar" layoutX="-2.0" layoutY="33.0" prefHeight="590.0" prefWidth="121.0" style="-fx-background-color: #C4A7E1;" stylesheets="@css/texthover.css" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="961.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox fx:id="profile" alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="152.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/user.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="text2" prefHeight="24.0" prefWidth="79.0" text="Profile">
+                     <font>
+                        <Font name="Pristina" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="explore" alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="32.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-search-50.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="text3" prefHeight="24.0" prefWidth="79.0" text="Explore">
+                     <font>
+                        <Font name="Pristina" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="favs" alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8-favorite-48(1).png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Favs">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="history" alignment="CENTER_LEFT" layoutX="10.0" layoutY="140.0" prefHeight="51.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/History.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="History" wrapText="true">
+                     <font>
+                        <Font name="Pristina" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="notif" alignment="CENTER_LEFT" layoutX="10.0" layoutY="180.0" prefHeight="56.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Notificstion.png" />
+                     </image>
+                     <styleClass>
+                        <String fx:value="image-container" />
+                        <String fx:value="overlay" />
+                     </styleClass>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Notifs">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="premium" alignment="CENTER_LEFT" layoutX="10.0" layoutY="260.0" prefHeight="53.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/premium.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Premium" wrapText="true">
+                     <font>
+                        <Font name="Pristina" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="share" alignment="CENTER_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="53.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/share.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Share">
+                     <font>
+                        <Font name="Pristina" size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox fx:id="playlist" alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="50.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/video.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Music Video">
+                     <font>
+                        <Font name="Pristina" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#chat" prefHeight="50.0" prefWidth="152.0" styleClass="btn_hover" text="Chat">
+               <font>
+                  <Font name="Pristina" size="20.0" />
+               </font>
+               <stylesheets>
+                  <URL value="@css/buttomswithoutbackground.css" />
+                  <URL value="@css/styles.css" />
+               </stylesheets>
+            </Button>
+            <HBox fx:id="signOut" alignment="CENTER_LEFT" layoutX="10.0" layoutY="421.0" prefHeight="41.0" prefWidth="152.0" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Out.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="40.0" prefWidth="93.0" text="Sign Out">
+                     <font>
+                        <Font name="Pristina" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
