@@ -62,7 +62,7 @@ Overall, the client interface is designed to be intuitive and easy to use, with 
 This Flutter app has been designed to enable admins to easily check the status of the main application. The app provides a user-friendly interface that displays real-time information on the performance and availability of the application, allowing admins to quickly identify and resolve any issues that may arise.
 
 With the Admin Status Checker, admins can view detailed information on the status of key components of the main application, such as the database, server, and network connection. They can also receive alerts and notifications when issues are detected, enabling them to take immediate action to resolve any problems.
-
+![](diagram/adminPanel.jpg)
 ## class UMLs:
 ### objects
 ![](diagram/objects.png)
@@ -109,6 +109,7 @@ Included below are several images showcasing the functionality  of the project
 ### Login page
 ![](diagram/login.png)
 ### Forget password
+![](diagram/forgetpass.png)
 ### Home page
 ![](diagram/homePage.png)
 ### Profile
