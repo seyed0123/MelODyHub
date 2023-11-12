@@ -165,3 +165,5 @@ One of the standout features of MelodyHub is its personalized song recommendatio
 In addition, MelodyHub allows users to share songs and playlists with others, follow other users, and view their followers and followings within the app. The application has been designed to be user-friendly and accessible on both desktop and mobile devices, enabling users to enjoy a seamless music listening experience regardless of their device.
 
 Overall, MelodyHub is a powerful and versatile music player application that caters to the needs of music enthusiasts of all levels. Whether you're looking to discover new music, create personalized playlists, or simply enjoy your favorite songs, MelodyHub has everything you need to enhance your music listening experience.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=seyed0123/MelODyHub&type=Date)](https://star-history.com/#seyed0123/MelODyHub&Date)
