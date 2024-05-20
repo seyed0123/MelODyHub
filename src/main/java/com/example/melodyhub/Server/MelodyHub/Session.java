@@ -35,7 +35,7 @@ public class Session implements Runnable{
 
     private Gson gson;
 
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;  
 
     public Session(Socket socket,Socket loXdy) {
         this.loXdySocket= loXdy;
